@@ -4,6 +4,9 @@
 
 package com.biscuit.views;
 
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +18,21 @@ import jline.console.ConsoleReader;
 import jline.console.completer.AggregateCompleter;
 import jline.console.completer.Completer;
 
-public abstract class View {
+import javax.swing.*;
+
+public abstract class View implements ActionListener {
+
+	public JFrame mainFrame = new JFrame();
+	public JPanel panel = new JPanel();
+	public JPanel console = new JPanel();
+
+	JButton go_to = new JButton("go_to Dashboard");
+	JButton clear = new JButton("clear");
+	JButton reset = new JButton("reset");
+	JButton exit = new JButton("exit");
+	JButton dashboard = new JButton("dashboard");
+	JButton back = new JButton("back");
+	JButton invalid = new JButton("invalid");
 
 	static ConsoleReader reader;
 	static List<String> promptViews;
@@ -41,8 +58,32 @@ public abstract class View {
 	}
 
 	public View(View previousView, String name) {
+		//mainFrame.setBounds(400,400,400,400);
 		this.previousView = previousView;
 		this.name = name;
+		console.setBackground(Color.LIGHT_GRAY);
+		panel.add(go_to);
+		panel.add(dashboard);
+		panel.add(back);
+		panel.add(clear);
+		panel.add(reset);
+		panel.add(exit);
+		panel.add(invalid);
+		panel.setBackground(Color.DARK_GRAY);
+		go_to.addActionListener(this);
+		dashboard.addActionListener(this);
+		back.addActionListener(this);
+		clear.addActionListener(this);
+		reset.addActionListener(this);
+		exit.addActionListener(this);
+		invalid.addActionListener(this);
+		mainFrame.setLayout(new GridLayout(2,1));
+		mainFrame.add(panel);
+		mainFrame.add(console);
+		mainFrame.pack();
+		mainFrame.setVisible(true);
+
+
 	}
 
 	public void view() {
@@ -57,7 +98,7 @@ public abstract class View {
 
 		addCompleters();
 
-		read();
+
 	}
 
 	protected void clearCompleters() {
@@ -88,51 +129,56 @@ public abstract class View {
 		addCompleters();
 	}
 
-	private void read() {
+	private void read(String line) {
+		line = line.trim();
+		String words[] = line.split("\\s+");
+		for(String iterator: words)
+			console.removeAll();
+		    mainFrame.repaint();
+		    mainFrame.setVisible(true);
 		try {
-			String line;
-			while ((line = reader.readLine()) != null) {
-				line = line.trim();
-
-				if (line.isEmpty()) {
-					continue;
-				}
-
-				String words[] = line.split("\\s+");
-
-				if (checkIfUnivesalCommand(words)) {
-					continue;
-				}
+			if (!checkIfUnivesalCommand(words)) {
 
 				if (!executeCommand(words)) {
-					System.out.println("invalid command!");
+
+					JLabel l = new JLabel("Your command is invalid");
+					console.add(l);
+					mainFrame.repaint();
+					mainFrame.setVisible(true);
 				}
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
+		} }catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-
 	private boolean checkIfUnivesalCommand(String[] words) throws IOException {
 
 		if (words.length == 1) {
 			if (words[0].equals("clear")) {
-				reader.clearScreen();
+				console.add(new JLabel("Command selected: clear"));
+				mainFrame.repaint();
+				mainFrame.setVisible(true);
 				return true;
 			} else if (words[0].equals("exit")) {
-				System.out.println(ColorCodes.BLUE + "See ya!\n" + ColorCodes.RESET);
-				reader.shutdown();
+				console.add(new JLabel("Command selected: exit"));
+				mainFrame.repaint();
+				mainFrame.setVisible(true);
 				System.exit(0);
 			} else if (words[0].equals("dashboard")) {
+				console.add(new JLabel("Command selected: dashboard"));
+				mainFrame.repaint();
+				mainFrame.setVisible(true);
 				gotoDashboard();
 				return true;
 			} else if (words[0].equals("back")) {
+				console.add(new JLabel("Command selected: back"));
+				mainFrame.repaint();
+				mainFrame.setVisible(true);
 				this.close();
 				return true;
 			}
 		} else if (words.length == 2) {
-			if (words[0].equals("go_to") && words[1].equals("dashboard")) {
+			if (words[0].equals("go_to") && words[1].equals("Dashboard")) {
 				gotoDashboard();
 				return true;
 			}
@@ -143,7 +189,10 @@ public abstract class View {
 
 	private void gotoDashboard() throws IOException {
 		if (this.name.equals("Dashboard")) {
-			reader.println("you are in the dashboard already!");
+			console.add(new JLabel("Command selected: dashboard"));
+			JLabel label = new JLabel("You are Already in the DashBoard");
+			console.add(label);
+			mainFrame.repaint();
 		} else {
 			promptViews.remove(name);
 			View v = this.previousView;
@@ -189,5 +238,9 @@ public abstract class View {
 			previousView.view();
 		}
 	}
+	public void actionPerformed(ActionEvent e) {
+		read(e.getActionCommand());
+	}
 
 }
+
