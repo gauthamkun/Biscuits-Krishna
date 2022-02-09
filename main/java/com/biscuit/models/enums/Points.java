@@ -8,5 +8,5 @@ public enum Points {
 
 	_0PT, _1PT, _2PT, _3PT, _5PT, _8PT, _13PT, _21PT, _34PT;
 
-	public static List<String> values = new ArrayList<>(Arrays.asList("0", "1", "2", "3", "5", "8", "13", "21"));
+	public static List<String> values = new ArrayList<>(Arrays.asList("0", "1", "2", "3", "5", "8", "13", "21", "34"));
 }

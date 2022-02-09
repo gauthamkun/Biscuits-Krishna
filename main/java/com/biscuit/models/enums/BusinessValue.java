@@ -10,7 +10,7 @@ public enum BusinessValue {
 
 	private final int value;
 	public static List<String> values = new ArrayList<>(
-			Arrays.asList("nice_to_have", "average", "good", "great", "must_have"));
+			Arrays.asList("must_have", "great", "good", "average", "nice_to_have"));
 
 
 	private BusinessValue(int value) {

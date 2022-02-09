@@ -34,7 +34,8 @@ public class Sprint {
 
 	static {
 		fields = new String[] { "name", "description", "state", "start_date", "due_date", "assigned_effort", "velocity" };
-		fieldsAsHeader = new String[] { "Name", "Description", "State", "Start Date", "Due Date", "Assigned Effort", "Velocity" };
+		fieldsAsHeader = new String[] { "Name", "Description", "State", "Start Date", "Due Date",
+				"Assigned Effort", "Velocity" };
 	}
 
 	public void addUserStory(UserStory userStory) {
