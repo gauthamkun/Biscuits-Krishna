@@ -17,14 +17,17 @@ import com.biscuit.commands.sprint.AddSprint;
 import com.biscuit.commands.sprint.ListSprints;
 import com.biscuit.commands.task.ListTasks;
 import com.biscuit.commands.userStory.AddUserStoryToBacklog;
+import com.biscuit.commands.epic.AddEpicToBacklog;
 import com.biscuit.commands.userStory.ListUserStories;
 import com.biscuit.factories.ProjectCompleterFactory;
 import com.biscuit.models.Project;
 import com.biscuit.models.Release;
 import com.biscuit.models.Sprint;
 import com.biscuit.models.UserStory;
+import com.biscuit.models.services.Finder;
 import com.biscuit.models.services.Finder.Releases;
 import com.biscuit.models.services.Finder.Sprints;
+
 import com.biscuit.models.services.Finder.UserStories;
 
 import jline.console.completer.Completer;
@@ -72,7 +75,15 @@ public class ProjectView extends View {
 					return true;
 				}
 			}
-		} else if (words[0].equals("list")) {
+			else if(words[1].equals("epic")) {
+				if (words[2].equals("filter")) {
+					(new ListUserStories(project.epic, "", true, words[3], false, "")).execute();
+					return true;
+				} else if (words[2].equals("sort")) {
+					(new ListUserStories(project.epic, "", false, "", true, words[3])).execute();
+					return true;
+				}
+		} }else if (words[0].equals("list")) {
 			if (words[1].equals("releases")) {
 				if (words[2].equals("filter")) {
 					(new ListReleases(project, "Releases", true, words[3], false, "")).execute();
@@ -119,8 +130,9 @@ public class ProjectView extends View {
 					return true;
 				}
 			} else if (words[1].equals("sprint")) {
+				Sprint s = null;
 				if (Sprints.getAllNames(project).contains(words[2])) {
-					Sprint s = Sprints.find(project, words[2]);
+					s = Sprints.find(project, words[2]);
 					if (s == null) {
 						return false;
 					}
@@ -131,6 +143,14 @@ public class ProjectView extends View {
 					sv.view();
 					return true;
 				}
+
+
+				// s.project = project;
+
+				SprintView sv = new SprintView(this, s);
+				sv.view();
+				return true;
+			}
 			} else if (words[1].equals("user_story")) {
 				if (UserStories.getAllNames(project).contains(words[2])) {
 					UserStory us = UserStories.find(project, words[2]);
@@ -143,7 +163,7 @@ public class ProjectView extends View {
 					return true;
 				}
 			}
-		}
+
 
 		return false;
 	}
@@ -153,6 +173,9 @@ public class ProjectView extends View {
 		if (words[0].equals("add")) {
 			if (words[1].equals("user_story")) {
 				(new AddUserStoryToBacklog(reader, project)).execute();
+				return true;
+			}else if (words[1].equals("Epic")) {
+				(new AddEpicToBacklog(reader, project)).execute();
 				return true;
 			} else if (words[1].equals("release")) {
 				(new AddRelease(reader, project)).execute();
@@ -178,7 +201,16 @@ public class ProjectView extends View {
 				rsv.view();
 
 				return true;
-			} else if (words[1].equals("sprints")) {
+
+			}
+			else if (words[1].equals("Epic")) {
+
+				EpicView ev = new EpicView(this, this.project.epic);
+				ev.view();
+
+				return true;
+
+			}else if (words[1].equals("sprints")) {
 
 				SprintsView ssv = new SprintsView(this, project);
 				ssv.view();
