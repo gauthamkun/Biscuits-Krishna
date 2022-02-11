@@ -50,6 +50,7 @@ public class AddUserStoryToBacklog implements Command {
 		reader.setPrompt(prompt);
 
 		project.backlog.addUserStory(userStory);
+
 		project.save();
 
 		reader.println();

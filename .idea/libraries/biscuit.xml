@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="biscuit">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/binaries/biscuit.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
