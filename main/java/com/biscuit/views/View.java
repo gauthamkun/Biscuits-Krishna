@@ -22,9 +22,9 @@ import javax.swing.*;
 
 public abstract class View implements ActionListener {
 
-	public JFrame mainFrame = new JFrame();
+	public static JFrame mainFrame = new JFrame();
 	public JPanel panel = new JPanel();
-	public JPanel console = new JPanel();
+	public static JPanel console = new JPanel();
 
 	JButton go_to = new JButton("go_to Dashboard");
 	JButton clear = new JButton("clear");
@@ -33,6 +33,7 @@ public abstract class View implements ActionListener {
 	JButton dashboard = new JButton("dashboard");
 	JButton back = new JButton("back");
 	JButton invalid = new JButton("invalid");
+	JButton help = new JButton("help");
 
 	static ConsoleReader reader;
 	static List<String> promptViews;
@@ -69,6 +70,7 @@ public abstract class View implements ActionListener {
 		panel.add(reset);
 		panel.add(exit);
 		panel.add(invalid);
+		panel.add(help);
 		panel.setBackground(Color.DARK_GRAY);
 		go_to.addActionListener(this);
 		dashboard.addActionListener(this);
@@ -77,6 +79,7 @@ public abstract class View implements ActionListener {
 		reset.addActionListener(this);
 		exit.addActionListener(this);
 		invalid.addActionListener(this);
+		help.addActionListener(this);
 		mainFrame.setLayout(new GridLayout(2,1));
 		mainFrame.add(panel);
 		mainFrame.add(console);
@@ -116,7 +119,7 @@ public abstract class View implements ActionListener {
 		List<Completer> completers = new ArrayList<Completer>();
 
 		completers.addAll(universalCompleters);
-		addSpecificCompleters(completers);
+		//addSpecificCompleters(completers);
 
 		completer = new AggregateCompleter(completers);
 		reader.addCompleter(completer);
@@ -165,13 +168,13 @@ public abstract class View implements ActionListener {
 				mainFrame.setVisible(true);
 				System.exit(0);
 			} else if (words[0].equals("dashboard")) {
-				console.add(new JLabel("Command selected: dashboard"));
+				console.add(new JLabel("Command selected: dashboard... You are already in the dashboard"));
 				mainFrame.repaint();
 				mainFrame.setVisible(true);
 				gotoDashboard();
 				return true;
 			} else if (words[0].equals("back")) {
-				console.add(new JLabel("Command selected: back"));
+				console.add(new JLabel("Command selected: back..Going to previous view"));
 				mainFrame.repaint();
 				mainFrame.setVisible(true);
 				this.close();
