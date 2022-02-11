@@ -43,3 +43,38 @@ for items in resp.json():
   
 print("\nNumber of Sprints in this project: " + str(noOfSprints) + " \n")
 
+resp = requests.get('https://api.taiga.io/api/v1/milestones?project=' + projectId, json=data)
+sprintId = 0
+sprintName = []
+milestonesId = []
+userstoriesId = []
+userstories = {}
+
+for items in resp.json():
+
+    print(items["name"] + "\n")
+    print("Sprint Id:" + str(sprintId))
+    sprintId = sprintId + 1
+    sprintName.append(items["name"])
+    userstories = items["user_stories"]
+    milestonesId.append(items["id"])
+    startDate = datetime.datetime.strptime(items["estimated_start"], '%Y-%m-%d')
+    finishDate = datetime.datetime.strptime(items["estimated_finish"], '%Y-%m-%d')
+    print("Estimated Start Date:" + startDate.strftime('%b %d,%Y'))
+    print("Estimated Finish Date:" + finishDate.strftime('%b %d,%Y'))
+
+    for stories in items["user_stories"]:
+        userstoriesId.append(stories["id"])
+
+    closedPoints = items["closed_points"]
+    if(closedPoints == "null"):
+        print("Number of Closed Points of Total Points = 0 " + str(items["total_points"]))
+    else:
+        print("Number of Closed Points of Total Points =" + str(closedPoints) + " / " + str(items["total_points"]) + "\n")
+
+AM = 0
+AG = 0
+IM = 0
+GK = 0
+FI = 0
+SRB = 0
