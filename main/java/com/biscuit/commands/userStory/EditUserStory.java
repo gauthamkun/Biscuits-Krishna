@@ -34,7 +34,7 @@ public class EditUserStory implements Command {
 	}
 
 
-	public boolean execute()  throws IOException{
+	public boolean execute() throws IOException {
 		String prompt = reader.getPrompt();
 
 		setTitle();

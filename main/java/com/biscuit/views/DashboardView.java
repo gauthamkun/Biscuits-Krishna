@@ -4,8 +4,6 @@
 
 package com.biscuit.views;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.List;
 
@@ -19,13 +17,7 @@ import com.biscuit.models.services.Finder.Projects;
 
 import jline.console.completer.Completer;
 
-import javax.swing.*;
-
-public class DashboardView extends View implements ActionListener {
-	String dest;
-	JTextField destination  = new JTextField(20);
-	Project p;
-	private boolean flag;
+public class DashboardView extends View {
 
 	public DashboardView() {
 		super(null, "Dashboard");
@@ -40,14 +32,11 @@ public class DashboardView extends View implements ActionListener {
 
 	@Override
 	boolean executeCommand(String[] words) throws IOException {
-   System.out.println("The len is " + words.length + " and the word is "  + words[0]) ;
+
 		if (words.length == 1) {
 			return execute1Keyword(words);
 		} else if (words.length == 2) {
-			boolean result =  execute2Keyword(words);
-			System.out.println("result is " + result);
-			words = new String[words.length];
-			return result;
+			return execute2Keyword(words);
 		} else if (words.length == 3) {
 			return execute3Keyword(words);
 		}
@@ -99,31 +88,13 @@ public class DashboardView extends View implements ActionListener {
 			// "project#1", "users", "contacts", "groups"
 
 			// check if project name
-
-			View.panel.add(destination);
-			View.panel.repaint();
-			View.mainFrame.repaint();
-			destination.addActionListener(this);
-//
-
-			System.out.println("reached here");
-
-
-			try {
-				Thread.sleep(10000) ;
-				if (p != null) {
-					//ProjectView pv = new ProjectView(this, p);
-					System.out.println("Project view loading");
-					return true;
-
-				}
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+			Project p = Projects.getProject(words[1]);
+			if (p != null) {
+				ProjectView pv = new ProjectView(this, p);
+				pv.view();
+				return true;
 			}
-
-
 			return false;
-
 
 		} else if (words[0].equals("list")) {
 			// projects
@@ -131,16 +102,16 @@ public class DashboardView extends View implements ActionListener {
 		} else if (words[1].equals("project")) {
 			if (words[0].equals("add")) {
 				(new AddProject(reader)).execute();
-				//resetCompleters();
+				resetCompleters();
 				return true;
 			}
 		}
+
 		return false;
 	}
 
 
 	private boolean execute1Keyword(String[] words) throws IOException {
-		System.out.println("Is a single word");
 		if (words[0].equals("summary")) {
 		} else if (words[0].equals("projects")) {
 		} else if (words[0].equals("alerts")) {
@@ -153,19 +124,4 @@ public class DashboardView extends View implements ActionListener {
 		return false;
 	}
 
-	public void actionPerformed(ActionEvent e) {
-		new Thread(() -> {
-
-			super.actionPerformed(e);
-			if (!e.getSource().getClass().toString().equals("class javax.swing.JButton")) {
-				System.out.println("The command is  " + e.getActionCommand());
-				p = Projects.getProject(e.getActionCommand());
-				if (p != null) {
-					System.out.println("project exists");
-				}
-			}
-
-		}).start();
-
-	}
 }
