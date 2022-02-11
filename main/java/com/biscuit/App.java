@@ -33,9 +33,7 @@ public class App {
 		dbv.view();
 
 	}
-
-
-//	private static void test() {
+	//	private static void test() {
 //		Calendar cal = new GregorianCalendar();
 //		int startingYear = cal.get(Calendar.YEAR) - 2;
 //		int endingYear = startingYear + 4;
@@ -47,5 +45,4 @@ public class App {
 //		}
 //
 //	}
-
 }
