@@ -32,11 +32,13 @@ public class Finder {
 	public static class UserStories {
 
 		public static List<UserStory> getAll(Project p) {
+			System.out.println("2");
 			List<UserStory> all = new ArrayList<>();
 			all.addAll(getAll(p.backlog)); // unplanned
 			all.addAll(getPlanned(p));
 			return all;
 		}
+
 
 
 

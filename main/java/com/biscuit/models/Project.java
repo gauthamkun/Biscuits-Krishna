@@ -35,6 +35,7 @@ public class Project {
 	public void updateChildrenReferences() {
 
 		this.backlog.project = this;
+		this.epic.project = this;
 
 		for (Release r : releases) {
 			r.project = this;

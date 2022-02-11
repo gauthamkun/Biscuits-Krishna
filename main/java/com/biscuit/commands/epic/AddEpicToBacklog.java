@@ -20,10 +20,8 @@ import jline.console.completer.StringsCompleter;
 public class AddEpicToBacklog implements Command {
 
     ConsoleReader reader = null;
-    Project project = null;
+    Project project;
     UserStory userStory = new UserStory();
-
-
     public AddEpicToBacklog(ConsoleReader reader, Project project) {
         super();
         this.reader = reader;
@@ -49,7 +47,8 @@ public class AddEpicToBacklog implements Command {
 
         reader.setPrompt(prompt);
 
-        project.backlog.addUserStory(userStory);
+        project.epic.addUserStory(userStory);
+
         project.save();
 
         reader.println();
@@ -147,4 +146,3 @@ public class AddEpicToBacklog implements Command {
     }
 
 }
-
