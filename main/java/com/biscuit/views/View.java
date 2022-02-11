@@ -22,17 +22,18 @@ import javax.swing.*;
 
 public abstract class View implements ActionListener {
 
-	public JFrame mainFrame = new JFrame();
-	public JPanel panel = new JPanel();
-	public JPanel console = new JPanel();
+	public static JFrame mainFrame = new JFrame();
+	public static JPanel panel = new JPanel();
+	public static JPanel console = new JPanel();
 
 	JButton go_to = new JButton("go_to Dashboard");
 	JButton clear = new JButton("clear");
 	JButton reset = new JButton("reset");
 	JButton exit = new JButton("exit");
 	JButton dashboard = new JButton("dashboard");
-	JButton back = new JButton("back");
-	JButton invalid = new JButton("invalid");
+	JButton back = new JButton("add project");
+	JButton go_to_pjct = new JButton("go_to project");
+	JButton invalid = new JButton("help");
 
 	static ConsoleReader reader;
 	static List<String> promptViews;
@@ -69,6 +70,7 @@ public abstract class View implements ActionListener {
 		panel.add(reset);
 		panel.add(exit);
 		panel.add(invalid);
+		panel.add(go_to_pjct);
 		panel.setBackground(Color.DARK_GRAY);
 		go_to.addActionListener(this);
 		dashboard.addActionListener(this);
@@ -77,6 +79,7 @@ public abstract class View implements ActionListener {
 		reset.addActionListener(this);
 		exit.addActionListener(this);
 		invalid.addActionListener(this);
+		go_to_pjct.addActionListener(this);
 		mainFrame.setLayout(new GridLayout(2,1));
 		mainFrame.add(panel);
 		mainFrame.add(console);
@@ -96,7 +99,7 @@ public abstract class View implements ActionListener {
 
 		clearCompleters();
 
-		addCompleters();
+		//addCompleters();
 
 
 	}
@@ -138,7 +141,7 @@ public abstract class View implements ActionListener {
 		    mainFrame.setVisible(true);
 		try {
 			if (!checkIfUnivesalCommand(words)) {
-
+System.out.println("Not a universal cmnd");
 				if (!executeCommand(words)) {
 
 					JLabel l = new JLabel("Your command is invalid");
@@ -239,6 +242,8 @@ public abstract class View implements ActionListener {
 		}
 	}
 	public void actionPerformed(ActionEvent e) {
+		//System.out.println(e.getSource().getClass().toString());
+		if(e.getSource().getClass().toString().equals("class javax.swing.JButton"))
 		read(e.getActionCommand());
 	}
 
