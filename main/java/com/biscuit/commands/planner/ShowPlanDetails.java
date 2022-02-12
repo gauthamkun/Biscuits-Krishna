@@ -61,7 +61,7 @@ public class ShowPlanDetails implements Command {
 
 		tableString = colorize(tableString);
 
-		System.out.println();
+		System.out.println("\n");
 		System.out.println(tableString);
 	}
 
