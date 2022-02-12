@@ -78,3 +78,111 @@ IM = 0
 GK = 0
 FI = 0
 SRB = 0
+
+while range(1):
+    i = input('Choose a Sprint Id for the sprint details:')
+
+    sprintId = i
+    numStr = int(i)
+    if (sprintId == str(numStr)):
+        if(int(numStr) < 4):
+            print("\n sprint name choosen: :" + sprintName[numStr] + "\n")
+            currentSprint = milestonesId[numStr]
+            for items in resp.json():
+                for stories in items["user_stories"]:
+                    if(stories["milestone"] == currentSprint):
+                        noOfUserstories = len(items["user_stories"])
+            print("No. of user stories in this sprint : " + str(noOfUserstories) + "\n")
+
+            for items in resp.json():
+                for stories in items["user_stories"]:
+                    if(stories["milestone"] == currentSprint):
+                        print("User Story Name: " + stories["subject"])
+                        print("Is this User Story closed :" + str(stories["is_closed"]))
+                        tmp = stories["created_date"]
+                        newDate = ""
+                        for i in tmp:
+                            if(i != "T"):
+                                newDate += i
+                            else:
+                                break
+                        print("UserStory created :" + newDate)
+
+                        userStoryId = stories["id"]
+
+                        nestedResp = requests.get('https://api.taiga.io/api/v1/history/userstory/' + str(userStoryId) + '?milestone=' + str(currentSprint), json=data)
+                        for items in nestedResp.json():
+                            for diff in items["values_diff"]:
+                                if 'milestone' in diff:
+                                    movedToSprint = items["created_at"]
+
+                        tmp = movedToSprint
+                        newDate = ""
+                        for i in tmp:
+                            if(i != "T"):
+                                newDate += i
+                            else:
+                                break
+                        print("Moved to sprint : " + newDate + "\n")
+
+            AM = 0
+            AG = 0
+            IM = 0
+            GK = 0
+            FI = 0
+            SRB = 0
+
+            assignedTo = {}
+            taskResp = requests.get('https://api.taiga.io/api/v1/tasks?project=' + str(projectId) + '&milestone=' + str(currentSprint), json=data)
+            for items in taskResp.json():
+                if(items["milestone"] == currentSprint):
+                    noOfTasks = len(taskResp.json())
+            print("No. of Tasks in this sprint :" + str(noOfTasks) + "\n")
+            print("Showing the Tasks Assigned To" + "\n")
+
+            for items in taskResp.json():
+                if(items["assigned_to_extra_info"] is None):
+                    fullNamePrint = "None"
+                    taskName = items["subject"]
+                    memberName = "None"
+                else:
+                    for extra_info in items["assigned_to_extra_info"]:
+                        if 'full_name_display' in extra_info:
+                            taskName = items["subject"]
+                            assignedTo = items["assigned_to_extra_info"]
+                            fullNamePrint = assignedTo['full_name_display']
+
+                            if(fullNamePrint == "Abhishek Mohabe"):
+                                AM += 1
+                            elif(fullNamePrint == "Venkata Surya Shandilya Kambhampati"):
+                                AG += 1
+                            elif(fullNamePrint == "Gautham Krishna"):
+                                GK += 1
+                            elif(fullNamePrint == "ITIPARNA MAHALA"):
+                                IM += 1
+                            elif(fullNamePrint == "Kevin Gary"):
+                                FI += 1
+                            elif(fullNamePrint == "ser516asu"):
+                                SRB += 1
+                            else:
+                                pass
+                print("Task Name : " + taskName + " > " + fullNamePrint)
+
+            print("\nObtaining information about members based on the number of jobs they have been allocated \n")
+            for member in memberNames:
+                if(member == "Abhishek Mohabe"):
+                    print("No. of Tasks assigned to " + member + " -- " + str(AM))
+                elif(member == "Venkata Surya Shandilya Kambhampati"):
+                    print("No. of Tasks assigned to " + member + " -- " + str(AG))
+                elif(member == "Gautham Krishna"):
+                    print("No. of Tasks assigned to " + member + " -- " + str(GK))
+                elif(member == "ITIPARNA MAHALA"):
+                    print("No. of Tasks assigned to " + member + " -- " + str(IM))
+                elif(member == "Kevin Gary"):
+                    print("No. of Tasks assigned to " + member + " -- " + str(FI))
+                elif(member == "ser516asu"):
+                    print("No. of Tasks assigned to " + member + " -- " + str(SRB))
+                else:
+                    pass
+        else:
+            print("Please enter a valid sprint id")
