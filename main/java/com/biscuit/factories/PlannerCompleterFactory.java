@@ -19,27 +19,30 @@ public class PlannerCompleterFactory {
 		List<Completer> completers = new ArrayList<Completer>();
 
 		// TODO: planner commands
-		// completers.add(new ArgumentCompleter(new StringsCompleter("add"), new
-		// StringsCompleter("release", "sprint", "user_story"), new
-		// NullCompleter()));
 
 		completers.add(new ArgumentCompleter(new StringsCompleter("back", "plan", "releases", "sprints", "user_stories", "backlog", "auto_plan"),
 				new NullCompleter()));
 
-		completers.add(new ArgumentCompleter(new StringsCompleter("plan"), new StringsCompleter("details"), new NullCompleter()));
+		completers.add(new ArgumentCompleter(new StringsCompleter("plan"),
+				new StringsCompleter("details"), new NullCompleter()));
 
-		completers.add(new ArgumentCompleter(new StringsCompleter("show"), new StringsCompleter("plan", "releases", "sprints", "user_stories", "backlog"),
+		completers.add(new ArgumentCompleter(new StringsCompleter("show"),
+				new StringsCompleter("plan", "releases", "sprints", "user_stories", "backlog"),
 				new NullCompleter()));
 
-		completers.add(new ArgumentCompleter(new StringsCompleter("show"), new StringsCompleter("plan"), new StringsCompleter("details"), new NullCompleter()));
+		completers.add(new ArgumentCompleter(new StringsCompleter("show"),
+				new StringsCompleter("plan"), new StringsCompleter("details"), new NullCompleter()));
 
-		completers.add(new ArgumentCompleter(new StringsCompleter("move"), new StringsCompleter(UserStories.getAllNames(project.backlog)),
+		completers.add(new ArgumentCompleter(new StringsCompleter("move"),
+				new StringsCompleter(UserStories.getAllNames(project.backlog)),
 				new StringsCompleter("to"), new StringsCompleter(Sprints.getAllNames(project)), new NullCompleter()));
 
-		completers.add(new ArgumentCompleter(new StringsCompleter("move"), new StringsCompleter(Sprints.getUnplannedNames(project)), new StringsCompleter("to"),
+		completers.add(new ArgumentCompleter(new StringsCompleter("move"),
+				new StringsCompleter(Sprints.getUnplannedNames(project)), new StringsCompleter("to"),
 				new StringsCompleter(Releases.getAllNames(project)), new NullCompleter()));
 
-		completers.add(new ArgumentCompleter(new StringsCompleter("unplan"), new StringsCompleter(getUnplanOptions(project)), new NullCompleter()));
+		completers.add(new ArgumentCompleter(new StringsCompleter("unplan"),
+				new StringsCompleter(getUnplanOptions(project)), new NullCompleter()));
 
 		return completers;
 

@@ -23,7 +23,8 @@ public class TaskCompleterFactory {
 
 		completers.add(new ArgumentCompleter(new StringsCompleter("show", "edit", "back"), new NullCompleter()));
 
-		completers.add(new ArgumentCompleter(new StringsCompleter("change_status_to"), new StringsCompleter(Status.values), new NullCompleter()));
+		completers.add(new ArgumentCompleter(new StringsCompleter("change_status_to"),
+				new StringsCompleter(Status.values), new NullCompleter()));
 
 		return completers;
 	}

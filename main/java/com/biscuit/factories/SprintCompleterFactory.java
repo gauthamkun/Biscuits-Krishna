@@ -20,10 +20,6 @@ public class SprintCompleterFactory {
 		List<Completer> completers = new ArrayList<Completer>();
 
 		// TODO: sprint commands
-		// completers.add(new ArgumentCompleter(
-		// new StringsCompleter("summary", "show", "times", "edit", "back",
-		// "user_stories"), new NullCompleter()));
-
 		completers.add(new ArgumentCompleter(new StringsCompleter("show", "edit", "back", "user_stories"),
 				new NullCompleter()));
 
