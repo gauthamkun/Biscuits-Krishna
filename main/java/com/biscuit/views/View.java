@@ -33,7 +33,7 @@ public abstract class View implements ActionListener {
 	JButton dashboard = new JButton("dashboard");
 	JButton back = new JButton("add project");
 	JButton go_to_pjct = new JButton("go_to project");
-	JButton invalid = new JButton("help");
+	JButton help = new JButton("help");
 
 	static ConsoleReader reader;
 	static List<String> promptViews;
@@ -69,8 +69,8 @@ public abstract class View implements ActionListener {
 		panel.add(clear);
 		panel.add(reset);
 		panel.add(exit);
-		panel.add(invalid);
 		panel.add(go_to_pjct);
+		panel.add(help);
 		panel.setBackground(Color.DARK_GRAY);
 		go_to.addActionListener(this);
 		dashboard.addActionListener(this);
@@ -78,8 +78,8 @@ public abstract class View implements ActionListener {
 		clear.addActionListener(this);
 		reset.addActionListener(this);
 		exit.addActionListener(this);
-		invalid.addActionListener(this);
 		go_to_pjct.addActionListener(this);
+		help.addActionListener(this);
 		mainFrame.setLayout(new GridLayout(2,1));
 		mainFrame.add(panel);
 		mainFrame.add(console);
@@ -119,7 +119,7 @@ public abstract class View implements ActionListener {
 		List<Completer> completers = new ArrayList<Completer>();
 
 		completers.addAll(universalCompleters);
-		addSpecificCompleters(completers);
+		//addSpecificCompleters(completers);
 
 		completer = new AggregateCompleter(completers);
 		reader.addCompleter(completer);
@@ -168,13 +168,13 @@ System.out.println("Not a universal cmnd");
 				mainFrame.setVisible(true);
 				System.exit(0);
 			} else if (words[0].equals("dashboard")) {
-				console.add(new JLabel("Command selected: dashboard"));
+				console.add(new JLabel("Command selected: dashboard... You are already in the dashboard"));
 				mainFrame.repaint();
 				mainFrame.setVisible(true);
 				gotoDashboard();
 				return true;
 			} else if (words[0].equals("back")) {
-				console.add(new JLabel("Command selected: back"));
+				console.add(new JLabel("Command selected: back..Going to previous view"));
 				mainFrame.repaint();
 				mainFrame.setVisible(true);
 				this.close();
