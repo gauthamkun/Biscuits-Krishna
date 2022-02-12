@@ -1,6 +1,11 @@
 # Biscuit
 Is a free command line interface tool for software project management. This project gives you the ability to follow Agaile approach. Current version (0.1.0) is Beta, and it has only the implementation for Scrum so far. Commands are designed to be intuitive and easy to remember. Your work will be saved as json files under your home directory (`$HOME$/biscuit/`).
 
+# Team Members - SER 516
+* Abhishek Mohabe
+* Gautham Krishna
+* Itiparna Mahala
+* Venkata Kambhampati
 
 # Features
 * Autocompelete ability
@@ -62,8 +67,3 @@ The following libraries are used in this project
 * [asciitable 0.2.5](https://github.com/vdmeer/asciitable)
 * [gson 2.8.0](https://github.com/google/gson)
 * [ColorCodes.java](https://gist.github.com/nathan-fiscaletti/9dc252d30b51df7d710a)
-
-
-# Donate
-[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RZC5CWSCTMB8E)
-

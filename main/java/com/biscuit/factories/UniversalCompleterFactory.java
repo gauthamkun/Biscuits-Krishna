@@ -14,31 +14,11 @@ public class UniversalCompleterFactory {
 		List<Completer> completers = new ArrayList<Completer>();
 
 		// TODO: Universal commands
-		// completers.add(new ArgumentCompleter(new StringsCompleter("clear",
-		// "exit", "users", "contacts", "groups",
-		// "dashboard", "toggle_prompt", "undo", "redo", "help"), new
-		// NullCompleter()));
 
-		// completers.add(new ArgumentCompleter(new StringsCompleter("list"),
-		// new StringsCompleter("users"), new StringsCompleter("filter",
-		// "sort"),
-		// new NullCompleter()));
-		//
-		// completers.add(new ArgumentCompleter(new StringsCompleter("list"),
-		// new StringsCompleter("groups"), new StringsCompleter("filter",
-		// "sort"),
-		// new NullCompleter()));
-		//
-		// completers.add(new ArgumentCompleter(new StringsCompleter("list"),
-		// new StringsCompleter("contacts"), new StringsCompleter("filter",
-		// "sort"),
-		// new NullCompleter()));
-
-		// completers.add(new ArgumentCompleter(new StringsCompleter("add"), new
-		// StringsCompleter("user", "group", "contact"), new NullCompleter()));
-
-		completers.add(new ArgumentCompleter(new StringsCompleter("clear", "exit", "dashboard", "help"), new NullCompleter()));
-		completers.add(new ArgumentCompleter(new StringsCompleter("go_to"), new StringsCompleter("dashboard"), new NullCompleter()));
+		completers.add(new ArgumentCompleter(new StringsCompleter("clear", "exit", "dashboard", "help"),
+				new NullCompleter()));
+		completers.add(new ArgumentCompleter(new StringsCompleter("go_to"), new StringsCompleter("dashboard"),
+				new NullCompleter()));
 
 		return completers;
 	}

@@ -20,8 +20,6 @@ public class ReleaseCompleterFactory {
 		List<Completer> completers = new ArrayList<Completer>();
 
 		// TODO: release commands
-		// completers.add(new ArgumentCompleter(new StringsCompleter("summary",
-		// "show", "sprints", "times", "edit", "back"), new NullCompleter()));
 
 		completers.add(new ArgumentCompleter(new StringsCompleter("show", "sprints", "edit", "back"), new NullCompleter()));
 

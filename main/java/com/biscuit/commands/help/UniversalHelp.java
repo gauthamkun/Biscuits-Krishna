@@ -41,7 +41,6 @@ public class UniversalHelp implements Command {
 		return true;
 	}
 
-
 	protected void executeChild(V2_AsciiTable at) {
 	}
 

@@ -17,18 +17,16 @@ public class ShowPlan implements Command {
 
 	Project project;
 
-
 	public ShowPlan(Project project) {
 		super();
 		this.project = project;
 	}
 
-
 	@Override
 	public boolean execute() throws IOException {
 
 		printPlanned();
-		System.out.println();
+		System.out.println("\n");
 		printUnplanned();
 
 		return true;
@@ -43,7 +41,7 @@ public class ShowPlan implements Command {
 			printUserStoryTree(us, isLastUserStory, " ");
 		}
 
-		System.out.println();
+		System.out.println("\n");
 		System.out.println("Sprints");
 		for (Iterator<Sprint> sItr = project.sprints.iterator(); sItr.hasNext();) {
 			Sprint s = sItr.next();
