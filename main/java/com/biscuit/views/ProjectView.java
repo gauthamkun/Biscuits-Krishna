@@ -29,6 +29,8 @@ import com.biscuit.models.services.Finder.UserStories;
 
 import jline.console.completer.Completer;
 
+import javax.swing.*;
+
 public class ProjectView extends View {
 
 	Project project = null;
@@ -37,6 +39,10 @@ public class ProjectView extends View {
 	public ProjectView(View previousView, Project p) {
 		super(previousView, p.name);
 		this.project = p;
+		System.out.println("Current project selected is " + p.name);
+		View.console.add(new JLabel("Your are in the project view"));
+		View.console.repaint();
+		View.mainFrame.repaint();
 	}
 
 

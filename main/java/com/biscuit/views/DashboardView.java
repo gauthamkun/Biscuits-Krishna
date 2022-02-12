@@ -63,6 +63,7 @@ public class DashboardView extends View implements ActionListener {
 			if (words[1].equals("project")) {
 				// check if project name
 				Project p = Projects.getProject(words[2]);
+				System.out.println("reached here at this point");
 				if (p != null) {
 					ProjectView pv = new ProjectView(this, p);
 					pv.view();
@@ -112,7 +113,7 @@ public class DashboardView extends View implements ActionListener {
 			try {
 				Thread.sleep(10000) ;
 				if (p != null) {
-					//ProjectView pv = new ProjectView(this, p);
+					ProjectView pv = new ProjectView(this, p);
 					System.out.println("Project view loading");
 					return true;
 

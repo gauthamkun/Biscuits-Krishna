@@ -81,9 +81,10 @@ public abstract class View implements ActionListener {
 		go_to_pjct.addActionListener(this);
 		help.addActionListener(this);
 		mainFrame.setLayout(new GridLayout(2,1));
+		mainFrame.setBounds(8,800,800,800);
 		mainFrame.add(panel);
 		mainFrame.add(console);
-		mainFrame.pack();
+	//	mainFrame.pack();
 		mainFrame.setVisible(true);
 
 
@@ -195,6 +196,7 @@ System.out.println("Not a universal cmnd");
 			console.add(new JLabel("Command selected: dashboard"));
 			JLabel label = new JLabel("You are Already in the DashBoard");
 			console.add(label);
+			console.repaint();
 			mainFrame.repaint();
 		} else {
 			promptViews.remove(name);
