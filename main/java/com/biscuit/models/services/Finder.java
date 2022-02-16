@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.biscuit.models.Backlog;
+import com.biscuit.models.Epic;
 import com.biscuit.models.Dashboard;
 import com.biscuit.models.Project;
 import com.biscuit.models.Release;
@@ -31,11 +32,14 @@ public class Finder {
 	public static class UserStories {
 
 		public static List<UserStory> getAll(Project p) {
+			System.out.println("2");
 			List<UserStory> all = new ArrayList<>();
 			all.addAll(getAll(p.backlog)); // unplanned
 			all.addAll(getPlanned(p));
 			return all;
 		}
+
+
 
 
 		public static List<UserStory> getAll(Backlog backlog) {
@@ -73,6 +77,9 @@ public class Finder {
 		public static List<String> getAllNames(Backlog backlog) {
 			return backlog.userStories.stream().map(us -> us.title).collect(Collectors.toList());
 		}
+		public static List<String> getAllNames(Epic epic) {
+			return epic.userStories.stream().map(us -> us.title).collect(Collectors.toList());
+		}
 
 
 		public static List<String> getAllNames(Sprint sprint) {
@@ -84,9 +91,12 @@ public class Finder {
 			return getAll(p).stream().filter(us -> us.title.equals(title)).findAny().orElse(null);
 		}
 
-
 		public static UserStory find(Backlog backlog, String title) {
 			return backlog.userStories.stream().filter(us -> us.title.equals(title)).findAny().orElse(null);
+		}
+
+		public static UserStory find(Epic epic, String title) {
+			return epic.userStories.stream().filter(us -> us.title.equals(title)).findAny().orElse(null);
 		}
 
 

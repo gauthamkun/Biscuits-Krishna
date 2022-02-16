@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.biscuit.commands.help.BacklogHelp;
 import com.biscuit.commands.userStory.AddUserStoryToBacklog;
+import com.biscuit.commands.epic.AddEpicToBacklog;
 import com.biscuit.commands.userStory.ListUserStories;
 import com.biscuit.factories.BacklogCompleterFactory;
 import com.biscuit.models.Backlog;
@@ -65,6 +66,12 @@ public class BacklogView extends View {
 		if (words[0].equals("add")) {
 			if (words[1].equals("user_story")) {
 				(new AddUserStoryToBacklog(reader, this.backlog.project)).execute();
+				resetCompleters();
+
+				return true;
+			}
+			else if (words[1].equals("Epic")) {
+				(new AddEpicToBacklog(reader, this.backlog.project)).execute();
 				resetCompleters();
 
 				return true;

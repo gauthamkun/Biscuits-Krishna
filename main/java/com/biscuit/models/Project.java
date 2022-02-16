@@ -12,6 +12,7 @@ public class Project {
 	public String name;
 	public String description;
 	public Backlog backlog = new Backlog();
+	public Epic epic = new Epic();
 	public List<Release> releases = new ArrayList<>();
 	public List<Sprint> sprints = new ArrayList<>();
 
@@ -34,6 +35,7 @@ public class Project {
 	public void updateChildrenReferences() {
 
 		this.backlog.project = this;
+		this.epic.project = this;
 
 		for (Release r : releases) {
 			r.project = this;
@@ -42,6 +44,7 @@ public class Project {
 
 		updateSprintReferences(sprints);
 		updateUserStoryReferences(backlog.userStories);
+		updateUserStoryReferences(epic.userStories);
 	}
 
 
