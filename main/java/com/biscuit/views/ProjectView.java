@@ -15,16 +15,14 @@ import com.biscuit.commands.sprint.AddSprint;
 import com.biscuit.commands.sprint.ListSprints;
 import com.biscuit.commands.task.ListTasks;
 import com.biscuit.commands.userStory.AddUserStoryToBacklog;
-import com.biscuit.commands.epic.AddEpicToBacklog;
+
 import com.biscuit.commands.userStory.ListUserStories;
 import com.biscuit.factories.ProjectCompleterFactory;
 import com.biscuit.models.Project;
 import com.biscuit.models.Release;
 import com.biscuit.models.Sprint;
 import com.biscuit.models.UserStory;
-import com.biscuit.models.Epic;
-import com.biscuit.models.Theme;
-import com.biscuit.models.services.Finder;
+
 import com.biscuit.models.services.Finder.Releases;
 import com.biscuit.models.services.Finder.Sprints;
 
@@ -74,8 +72,15 @@ public class ProjectView extends View {
 					(new ListUserStories(project.backlog, "", false, "", true, words[3])).execute();
 					return true;
 				}
-			}
-			else if(words[1].equals("epic")) {
+			}else if(words[1].equals("theme")) {
+				if (words[2].equals("filter")) {
+					(new ListUserStories((List<UserStory>) project.theme, "", true, words[3], false, "")).execute();
+					return true;
+				} else if (words[2].equals("sort")) {
+					(new ListUserStories((List<UserStory>) project.theme, "", false, "", true, words[3])).execute();
+					return true;
+				}
+			}else if(words[1].equals("epic")) {
 				if (words[2].equals("filter")) {
 					(new ListUserStories(project.epic, "", true, words[3], false, "")).execute();
 					return true;

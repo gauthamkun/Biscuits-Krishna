@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import com.biscuit.models.Backlog;
 import com.biscuit.models.Epic;
+import com.biscuit.models.Theme;
 import com.biscuit.models.Dashboard;
 import com.biscuit.models.Project;
 import com.biscuit.models.Release;
@@ -80,6 +81,9 @@ public class Finder {
 		public static List<String> getAllNames(Epic epic) {
 			return epic.userStories.stream().map(us -> us.title).collect(Collectors.toList());
 		}
+		public static List<String> getAllNames(Theme theme) {
+			return theme.userStories.stream().map(us -> us.title).collect(Collectors.toList());
+		}
 
 
 		public static List<String> getAllNames(Sprint sprint) {
@@ -97,6 +101,9 @@ public class Finder {
 
 		public static UserStory find(Epic epic, String title) {
 			return epic.userStories.stream().filter(us -> us.title.equals(title)).findAny().orElse(null);
+		}
+		public static UserStory find(Theme theme, String title) {
+			return theme.userStories.stream().filter(us -> us.title.equals(title)).findAny().orElse(null);
 		}
 
 
