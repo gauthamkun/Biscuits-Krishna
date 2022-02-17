@@ -85,15 +85,13 @@ public class DashboardView extends View {
 
 	private boolean execute2Keyword(String[] words) throws IOException {
 		if (words[0].equals("go_to")) {
-			// "project#1", "users", "contacts", "groups"
-
-			// check if project name
 			Project p = Projects.getProject(words[1]);
 			if (p != null) {
 				ProjectView pv = new ProjectView(this, p);
 				pv.view();
 				return true;
 			}
+
 			return false;
 
 		} else if (words[0].equals("list")) {

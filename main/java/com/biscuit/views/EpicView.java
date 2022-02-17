@@ -4,16 +4,11 @@ import java.io.IOException;
 import java.util.List;
 
 import com.biscuit.commands.help.BacklogHelp;
-import com.biscuit.commands.userStory.AddUserStoryToBacklog;
 import com.biscuit.commands.epic.AddEpicToBacklog;
 import com.biscuit.commands.userStory.ListUserStories;
-import com.biscuit.factories.BacklogCompleterFactory;
-import com.biscuit.models.Backlog;
-import com.biscuit.models.Project;
 import com.biscuit.models.Epic;
 import com.biscuit.models.UserStory;
 import com.biscuit.models.services.Finder.UserStories;
-
 import jline.console.completer.Completer;
 
 public class EpicView extends View {
@@ -97,7 +92,7 @@ public class EpicView extends View {
 
     private boolean execute1Keyword(String[] words) throws IOException {
         if (words[0].equals("user_stories")) {
-            (new ListUserStories(epic, "Backlog (User Stories)")).execute();
+            (new ListUserStories(epic, "Epic (User Stories)")).execute();
             return true;
         } else if (words[0].equals("help")) {
             return (new BacklogHelp()).execute();

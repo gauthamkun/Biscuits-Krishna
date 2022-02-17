@@ -1,6 +1,4 @@
-/*
-	Author: Hamad Al Marri;
- */
+
 
 package com.biscuit.views;
 
@@ -24,6 +22,8 @@ import com.biscuit.models.Project;
 import com.biscuit.models.Release;
 import com.biscuit.models.Sprint;
 import com.biscuit.models.UserStory;
+import com.biscuit.models.Epic;
+import com.biscuit.models.Theme;
 import com.biscuit.models.services.Finder;
 import com.biscuit.models.services.Finder.Releases;
 import com.biscuit.models.services.Finder.Sprints;
@@ -174,10 +174,7 @@ public class ProjectView extends View {
 			if (words[1].equals("user_story")) {
 				(new AddUserStoryToBacklog(reader, project)).execute();
 				return true;
-			}else if (words[1].equals("Epic")) {
-				(new AddEpicToBacklog(reader, project)).execute();
-				return true;
-			} else if (words[1].equals("release")) {
+			}else if (words[1].equals("release")) {
 				(new AddRelease(reader, project)).execute();
 				resetCompleters();
 
@@ -210,7 +207,15 @@ public class ProjectView extends View {
 
 				return true;
 
-			}else if (words[1].equals("sprints")) {
+			}else if (words[1].equals("theme")) {
+
+				ThemeView tv = new ThemeView(this, this.project.theme);
+				tv.view();
+
+				return true;
+
+			}
+			else if (words[1].equals("sprints")) {
 
 				SprintsView ssv = new SprintsView(this, project);
 				ssv.view();

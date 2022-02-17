@@ -15,9 +15,10 @@ public class Project {
 	public Epic epic = new Epic();
 	public List<Release> releases = new ArrayList<>();
 	public List<Sprint> sprints = new ArrayList<>();
+    public Theme theme = new Theme();
 
 
-	public void save() {
+    public void save() {
 		ModelHelper.save(this, name);
 	}
 
@@ -36,6 +37,7 @@ public class Project {
 
 		this.backlog.project = this;
 		this.epic.project = this;
+		this.theme.project =this;
 
 		for (Release r : releases) {
 			r.project = this;
@@ -44,7 +46,7 @@ public class Project {
 
 		updateSprintReferences(sprints);
 		updateUserStoryReferences(backlog.userStories);
-		updateUserStoryReferences(epic.userStories);
+		updateUserStoryReferences(theme.userStories);
 	}
 
 
