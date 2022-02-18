@@ -40,5 +40,7 @@ public class DashboardHelp extends UniversalHelp {
 
 		View.console.repaint();
 		View.mainFrame.repaint();
+		View.mainFrame.pack();
+		View.mainFrame.setVisible(true);
 	}
 }

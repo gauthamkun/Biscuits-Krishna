@@ -1,56 +1,61 @@
 package com.biscuit.commands.help;
 
+import com.biscuit.views.View;
 import de.vandermeer.asciitable.v2.V2_AsciiTable;
+
+import javax.swing.*;
+import java.awt.*;
 
 public class ProjectHelp extends UniversalHelp {
 
 	@Override
 	public void executeChild(V2_AsciiTable at) {
 
-		at.addRow(null, "Project Commands").setAlignment(new char[] { 'c', 'c' });
-		at.addRule();
 
-		at.addRow("show", "Show project information").setAlignment(new char[] { 'l', 'l' });
-		at.addRow("releases", "List all releases").setAlignment(new char[] { 'l', 'l' });
-		at.addRow("sprints", "List all sprints").setAlignment(new char[] { 'l', 'l' });
-		at.addRow("user_stories", "List all user stories").setAlignment(new char[] { 'l', 'l' });
-		at.addRow("tasks", "List all tasks").setAlignment(new char[] { 'l', 'l' });
-		at.addRow("plan", "Show plan in short form as a tree").setAlignment(new char[] { 'l', 'l' });
-		at.addRow("plan details", "Show plan in details in a table").setAlignment(new char[] { 'l', 'l' });
-		at.addRow("backlog", "List user stories in the backlog").setAlignment(new char[] { 'l', 'l' });
-		at.addRow("show backlog",
-				"Similar to backlog, list user stories in the backlog\n" + "Optional: (filter) to filter out the results (ex. show backlog filter a_string)\n"
-						+ "Optional: (sort) to sort the results based on a chosen column (ex. show backlog sort column_name)\n"
-						+ "          use TAB to autocomplete column names\n"
-						+ "          repeating show backlog command with sort option toggles order between ASC and DESC\n")
-				.setAlignment(new char[] { 'l', 'l' });
 
-		at.addRow("list releases", "List all releases\n" + "Optional: (filter) to filter out the results (ex. list releases filter a_string)\n"
-				+ "Optional: (sort) to sort the results based on a chosen column (ex. list releases sort column_name)\n"
-				+ "          use TAB to autocomplete column names\n" + "          repeating list command with sort option toggles order between ASC and DESC\n")
-				.setAlignment(new char[] { 'l', 'l' });
+		// new code starts here
 
-		at.addRow("list sprints", "List all sprints\n" + "Optional: (filter) to filter out the results (ex. list sprints filter a_string)\n"
-				+ "Optional: (sort) to sort the results based on a chosen column (ex. list sprints sort column_name)\n"
-				+ "          use TAB to autocomplete column names\n" + "          repeating list command with sort option toggles order between ASC and DESC\n")
-				.setAlignment(new char[] { 'l', 'l' });
+		View.console.setLayout(new GridLayout(25,2));
 
-		at.addRow("list user_stories", "List all user stories\n" + "Optional: (filter) to filter out the results (ex. list user_stories filter a_string)\n"
-				+ "Optional: (sort) to sort the results based on a chosen column (ex. list user_stories sort column_name)\n"
-				+ "          use TAB to autocomplete column names\n" + "          repeating list command with sort option toggles order between ASC and DESC\n")
-				.setAlignment(new char[] { 'l', 'l' });
+		JLabel label1= new JLabel("                          Project Commands\n                          " );
+		JLabel label2= new JLabel("\"show\", \"Show project information\n" );
+		JLabel label3= new JLabel("\"releases\", \"List all releases\n" );
+		JLabel label4= new JLabel("\"sprints\", \"List all sprints\n" );
+		JLabel label5= new JLabel("user_stories\", \"List all user stories\n" );
+		JLabel label6= new JLabel("remove project    Remove or delete project (followed by a project name)\n" );
+		JLabel label7= new JLabel("user_stories\", \"List all user stories\n" );
+		JLabel label8= new JLabel("tasks\", \"List all tasks\n" );
+		JLabel label9= new JLabel("plan\", \"Show plan in short form as a tree\n" );
+		JLabel label10= new JLabel("plan details\", \"Show plan in details in a table\n" );
+		JLabel label11= new JLabel("backlog\", \"List user stories in the backlog\n" );
+		JLabel label21= new JLabel("add release\", \"Add new release\n" );
+		JLabel label22= new JLabel("add sprint\", \"Add new sprint\n" );
+		JLabel label23= new JLabel("add user_story\", \"Add new user story to the backlog\n" );
 
-		at.addRow("back", "Go back to previous view (Dashboard)").setAlignment(new char[] { 'l', 'l' });
-		at.addRow("go_to backlog", "Go to backlog view").setAlignment(new char[] { 'l', 'l' });
-		at.addRow("go_to release", "Go to a release view (followed by a release name)").setAlignment(new char[] { 'l', 'l' });
-		at.addRow("go_to sprint", "Go to a sprint view (followed by a sprint name)").setAlignment(new char[] { 'l', 'l' });
-		at.addRow("go_to user_story", "Go to a user story view (followed by a user story name)").setAlignment(new char[] { 'l', 'l' });
-		at.addRow("go_to releases", "Go to all releases view").setAlignment(new char[] { 'l', 'l' });
-		at.addRow("go_to sprints", "Go to all sprints view").setAlignment(new char[] { 'l', 'l' });
-		at.addRow("go_to planner", "Go to planner view").setAlignment(new char[] { 'l', 'l' });
-		at.addRow("add release", "Add new release").setAlignment(new char[] { 'l', 'l' });
-		at.addRow("add sprint", "Add new sprint").setAlignment(new char[] { 'l', 'l' });
-		at.addRow("add user_story", "Add new user story to the backlog").setAlignment(new char[] { 'l', 'l' });
+
+		View.console.add(label1);
+		View.console.add(label2);
+		View.console.add(label3);
+		View.console.add(label4);
+		View.console.add(label5);
+		View.console.add(label6);
+		View.console.add(label7);
+		View.console.add(label8);
+		View.console.add(label9);
+		View.console.add(label10);
+		View.console.add(label11);
+		View.console.add(label21);
+		View.console.add(label22);
+		View.console.add(label23);
+
+
+		View.console.repaint();
+		View.mainFrame.repaint();
+		View.mainFrame.setVisible(true);
+
+		// new code ends here
+
+
 	}
 
 }

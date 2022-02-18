@@ -57,7 +57,7 @@ public abstract class View implements ActionListener {
         }
     }
     public View(View previousView, String name) {
-        //mainFrame.setBounds(400,400,400,400);
+       // mainFrame.setBounds(1400,1400,1400,1400);
         this.previousView = previousView;
         this.name = name;
         if (flag) {
@@ -83,7 +83,7 @@ public abstract class View implements ActionListener {
             mainFrame.setBounds(8, 800, 800, 800);
             mainFrame.add(panel);
             mainFrame.add(console);
-            //	mainFrame.pack();
+            mainFrame.pack();
             mainFrame.setVisible(true);
             flag = false;
         }
@@ -138,14 +138,14 @@ public abstract class View implements ActionListener {
         mainFrame.setVisible(true);
         try {
             if (!checkIfUnivesalCommand(words)) {
-                System.out.println("Not a universal cmnd");
-                if (!executeCommand(words)) {
-
-                    JLabel l = new JLabel("Your command is invalid");
-                    console.add(l);
-                    mainFrame.repaint();
-                    mainFrame.setVisible(true);
-                }
+                executeCommand(words);
+//                if (!executeCommand(words)) {
+//
+//                    JLabel l = new JLabel("Your command is invalid");
+//                    console.add(l);
+//                    mainFrame.repaint();
+//                    mainFrame.setVisible(true);
+//                }
 
             }
         } catch (IOException e) {
@@ -159,22 +159,26 @@ public abstract class View implements ActionListener {
             if (words[0].equals("clear")) {
                 console.add(new JLabel("Command selected: clear"));
                 mainFrame.repaint();
+                mainFrame.pack();
                 mainFrame.setVisible(true);
                 return true;
             } else if (words[0].equals("exit")) {
                 console.add(new JLabel("Command selected: exit"));
                 mainFrame.repaint();
+                mainFrame.pack();
                 mainFrame.setVisible(true);
                 System.exit(0);
             } else if (words[0].equals("dashboard")) {
                 console.add(new JLabel("Command selected: dashboard... You are already in the dashboard"));
                 mainFrame.repaint();
+                mainFrame.pack();
                 mainFrame.setVisible(true);
                 gotoDashboard();
                 return true;
             } else if (words[0].equals("back")) {
                 console.add(new JLabel("Command selected: back..Going to previous view"));
                 mainFrame.repaint();
+                mainFrame.pack();
                 mainFrame.setVisible(true);
                 this.close();
                 return true;
@@ -191,11 +195,14 @@ public abstract class View implements ActionListener {
 
     private void gotoDashboard() throws IOException {
         if (this.name.equals("Dashboard")) {
-            console.add(new JLabel("Command selected: dashboard"));
-            JLabel label = new JLabel("You are Already in the DashBoard");
+            console.add(new JLabel("Command selected: dashboard. "));
+            JLabel label = new JLabel(" You are Already in the DashBoard");
             console.add(label);
             console.repaint();
+            console.setVisible(true);
+            mainFrame.pack();
             mainFrame.repaint();
+            mainFrame.setVisible(true);
         } else {
             promptViews.remove(name);
             View v = this.previousView;

@@ -14,11 +14,14 @@ import com.biscuit.models.Sprint;
 import com.biscuit.models.UserStory;
 import com.biscuit.models.services.DateService;
 
+import com.biscuit.views.View;
 import de.vandermeer.asciitable.v2.RenderedTable;
 import de.vandermeer.asciitable.v2.V2_AsciiTable;
 import de.vandermeer.asciitable.v2.render.V2_AsciiTableRenderer;
 import de.vandermeer.asciitable.v2.render.WidthLongestLine;
 import de.vandermeer.asciitable.v2.themes.V2_E_TableThemes;
+
+import javax.swing.*;
 
 public class ListUserStories implements Command {
 
@@ -103,7 +106,10 @@ public class ListUserStories implements Command {
 		} else if (this.userStories != null) {
 			userStories = this.userStories;
 		} else {
-			System.err.println("error: backlog, sprint, and userStories are null");
+			View.console.add(new JLabel("error: backlog, sprint, and userStories are null"));
+			View.console.repaint();
+			View.mainFrame.repaint();
+			View.mainFrame.setVisible(true);
 			return false;
 		}
 
@@ -117,11 +123,16 @@ public class ListUserStories implements Command {
 
 		at.addRule();
 		if (!this.title.isEmpty()) {
-			at.addRow(null, null, null, null, null, null, null, null, this.title).setAlignment(new char[] { 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c' });
-			at.addRule();
+			View.console.add(new JLabel(this.title));
+			View.console.repaint();
+			View.mainFrame.repaint();
+			View.mainFrame.setVisible(true);
 		}
-		at.addRow("Title", "Description", "State", "Business Value", "Initiated Date", "Planned Date", "Due Date", "Tasks #", "Points")
-				.setAlignment(new char[] { 'l', 'l', 'c', 'c', 'c', 'c', 'c', 'c', 'c' });
+
+		View.console.add(new JLabel("Title\", \"Description\", \"State\", \"Business Value\", \"Initiated Date\", \"Planned Date\", \"Due Date\", \"Tasks #\", \"Points"));
+		View.console.repaint();
+		View.mainFrame.repaint();
+		View.mainFrame.setVisible(true);
 
 		if (userStories.size() == 0) {
 			String message;
@@ -130,33 +141,46 @@ public class ListUserStories implements Command {
 			} else {
 				message = "No results";
 			}
-			at.addRule();
-			at.addRow(null, null, null, null, null, null, null, null, message);
+			//at.addRule();
+			View.console.add(new JLabel(message));
+			View.console.repaint();
+			View.mainFrame.repaint();
+			View.mainFrame.setVisible(true);
+			//at.addRow(null, null, null, null, null, null, null, null, message);
 		} else {
 			for (UserStory us : userStories) {
 				at.addRule();
 
-				at.addRow(us.title, us.description, us.state, us.businessValue, DateService.getDateAsString(us.initiatedDate),
-						DateService.getDateAsString(us.plannedDate), DateService.getDateAsString(us.dueDate), us.tasks.size(), us.points)
-						.setAlignment(new char[] { 'l', 'l', 'c', 'c', 'c', 'c', 'c', 'c', 'c' });
+				View.console.add(new JLabel(us.title +  us.description +  us.state +  us.businessValue +  DateService.getDateAsString(us.initiatedDate) +
+						DateService.getDateAsString(us.plannedDate) +  DateService.getDateAsString(us.dueDate) +  us.tasks.size(), us.points));
+				View.console.repaint();
+				View.mainFrame.repaint();
+				View.mainFrame.setVisible(true);
+
 			} // for
 		}
 
 		at.addRule();
-		at.addRow(null, null, null, null, null, null, null, null, "Total: " + userStories.size());
-		at.addRule();
 
-		V2_AsciiTableRenderer rend = new V2_AsciiTableRenderer();
-		rend.setTheme(V2_E_TableThemes.PLAIN_7BIT.get());
-		rend.setWidth(new WidthLongestLine());
+		View.console.add(new JLabel("Total: " + userStories.size()));
+		View.console.repaint();
+		View.mainFrame.repaint();
+		View.mainFrame.setVisible(true);
 
-		RenderedTable rt = rend.render(at);
-		tableString = rt.toString();
+		//at.addRow(null, null, null, null, null, null, null, null, "Total: " + userStories.size());
+		//at.addRule();
 
-		tableString = colorize(tableString);
-
-		System.out.println();
-		System.out.println(tableString);
+//		V2_AsciiTableRenderer rend = new V2_AsciiTableRenderer();
+//		rend.setTheme(V2_E_TableThemes.PLAIN_7BIT.get());
+//		rend.setWidth(new WidthLongestLine());
+//
+//		RenderedTable rt = rend.render(at);
+//		tableString = rt.toString();
+//
+//		tableString = colorize(tableString);
+//
+//		System.out.println();
+//		System.out.println(tableString);
 
 		return false;
 	}

@@ -40,7 +40,7 @@ public class DashboardView extends View implements ActionListener {
 
 	@Override
 	boolean executeCommand(String[] words) throws IOException {
-   System.out.println("The len is " + words.length + " and the word is "  + words[0]) ;
+  // System.out.println("The len is " + words.length + " and the word is "  + words[0]) ;
 		if (words.length == 1) {
 			return execute1Keyword(words);
 		} else if (words.length == 2) {
@@ -63,7 +63,7 @@ public class DashboardView extends View implements ActionListener {
 			if (words[1].equals("project")) {
 				// check if project name
 				Project p = Projects.getProject(words[2]);
-				System.out.println("reached here at this point");
+				//System.out.println("reached here at this point");
 				if (p != null) {
 					ProjectView pv = new ProjectView(this, p);
 					pv.view();
@@ -104,17 +104,21 @@ public class DashboardView extends View implements ActionListener {
 			View.panel.add(destination);
 			View.panel.repaint();
 			View.mainFrame.repaint();
+		//	View.mainFrame.pack();
+			View.mainFrame.setVisible(true);
 			destination.addActionListener(this);
+
+
 //
 
-			System.out.println("reached here");
+		//	System.out.println("reached here");
 
 
 			try {
 				Thread.sleep(10000) ;
 				if (p != null) {
 					ProjectView pv = new ProjectView(this, p);
-					System.out.println("Project view loading");
+					//System.out.println("Project view loading");
 					return true;
 
 				}
@@ -155,14 +159,25 @@ public class DashboardView extends View implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
+
+
+
 		new Thread(() -> {
 
 			super.actionPerformed(e);
 			if (!e.getSource().getClass().toString().equals("class javax.swing.JButton")) {
-				System.out.println("The command is  " + e.getActionCommand());
+				//System.out.println("The command is  " + e.getActionCommand());
 				p = Projects.getProject(e.getActionCommand());
 				if (p != null) {
-					System.out.println("project exists");
+					//System.out.println("project exists");
+				}
+				else {
+					View.console.add(new JLabel("Project does not exist!!"));
+					View.console.repaint();
+					View.console.setVisible(true);
+					View.mainFrame.repaint();
+					View.mainFrame.pack();
+					View.mainFrame.setVisible(true);
 				}
 			}
 

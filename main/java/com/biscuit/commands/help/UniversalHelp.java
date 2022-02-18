@@ -22,7 +22,7 @@ public class UniversalHelp implements Command {
 		V2_AsciiTable at = new V2_AsciiTable();
 
 		executeChild(at);
-		View.console.setLayout(new GridLayout(20,2));
+	//	View.console.setLayout(new GridLayout(20,2));
 
 		JLabel label1= new JLabel("                                                 Dashboard Commands                                                  \n" );
 		JLabel label2= new JLabel("             go_to             Go to a project and open the project view (followed by a project name)                           \n" );
@@ -52,6 +52,7 @@ public class UniversalHelp implements Command {
 
 		View.console.repaint();
 		View.mainFrame.repaint();
+		View.mainFrame.setVisible(true);
 
 		return true;
 	}
