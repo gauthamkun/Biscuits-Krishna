@@ -29,9 +29,8 @@ public abstract class View implements ActionListener {
 
     JButton go_to = new JButton("go_to Dashboard");
     JButton clear = new JButton("clear");
-    JButton reset = new JButton("reset");
+    JButton back1 = new JButton("back");
     JButton exit = new JButton("exit");
-    JButton dashboard = new JButton("dashboard");
     JButton back = new JButton("add project");
     JButton go_to_pjct = new JButton("go_to project");
     JButton help = new JButton("help");
@@ -63,19 +62,17 @@ public abstract class View implements ActionListener {
         if (flag) {
             console.setBackground(Color.LIGHT_GRAY);
             panel.add(go_to);
-            panel.add(dashboard);
             panel.add(back);
             panel.add(clear);
-            panel.add(reset);
+            panel.add(back1);
             panel.add(exit);
             panel.add(go_to_pjct);
             panel.add(help);
             panel.setBackground(Color.DARK_GRAY);
             go_to.addActionListener(this);
-            dashboard.addActionListener(this);
             back.addActionListener(this);
             clear.addActionListener(this);
-            reset.addActionListener(this);
+            back1.addActionListener(this);
             exit.addActionListener(this);
             go_to_pjct.addActionListener(this);
             help.addActionListener(this);
@@ -168,14 +165,7 @@ public abstract class View implements ActionListener {
                 mainFrame.pack();
                 mainFrame.setVisible(true);
                 System.exit(0);
-            } else if (words[0].equals("dashboard")) {
-                console.add(new JLabel("Command selected: dashboard... You are already in the dashboard"));
-                mainFrame.repaint();
-                mainFrame.pack();
-                mainFrame.setVisible(true);
-                gotoDashboard();
-                return true;
-            } else if (words[0].equals("back")) {
+            }  else if (words[0].equals("back")) {
                 console.add(new JLabel("Command selected: back..Going to previous view"));
                 mainFrame.repaint();
                 mainFrame.pack();
@@ -250,7 +240,7 @@ public abstract class View implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        //System.out.println(e.getSource().getClass().toString());
+        System.out.println("Action performed is called for " + e.getActionCommand() );
         if (e.getSource().getClass().toString().equals("class javax.swing.JButton"))
             read(e.getActionCommand());
     }

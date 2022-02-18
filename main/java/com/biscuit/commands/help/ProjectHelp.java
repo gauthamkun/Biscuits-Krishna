@@ -8,54 +8,33 @@ import java.awt.*;
 
 public class ProjectHelp extends UniversalHelp {
 
-	@Override
-	public void executeChild(V2_AsciiTable at) {
+    @Override
+    public void executeChild(V2_AsciiTable at) {
+        // new code starts here
+        JTable table = new JTable(new String[][]{
+                {"show", "Show project information"},
+                {"releases", "List all sprints"},
+                {"sprints", "Create a new project"},
+                {"user_stories", "List all user stories"},
+                {"tasks", "list all tasks"},
+                {"plan", "Show plan in short form as a tree"},
+                {"plan details", "Show plan in details in a table"},
+                {"backlog", "List user stories in the backlog"},
+                {"add release", "Add new release"},
+                {"add sprint", "Add new sprint"},
+                {"add user_story", "Add new user story to the backlog"}
+        }, new String[]{"Name of the command", "Description of the command"});
+        table.setBackground(Color.black);
+        table.setForeground(Color.yellow);
+        View.console.add(new JScrollPane(table), BorderLayout.CENTER);
+        View.console.repaint();
+        View.mainFrame.repaint();
+        View.mainFrame.setVisible(true);
 
 
-
-		// new code starts here
-
-		View.console.setLayout(new GridLayout(25,2));
-
-		JLabel label1= new JLabel("                          Project Commands\n                          " );
-		JLabel label2= new JLabel("\"show\", \"Show project information\n" );
-		JLabel label3= new JLabel("\"releases\", \"List all releases\n" );
-		JLabel label4= new JLabel("\"sprints\", \"List all sprints\n" );
-		JLabel label5= new JLabel("user_stories\", \"List all user stories\n" );
-		JLabel label6= new JLabel("remove project    Remove or delete project (followed by a project name)\n" );
-		JLabel label7= new JLabel("user_stories\", \"List all user stories\n" );
-		JLabel label8= new JLabel("tasks\", \"List all tasks\n" );
-		JLabel label9= new JLabel("plan\", \"Show plan in short form as a tree\n" );
-		JLabel label10= new JLabel("plan details\", \"Show plan in details in a table\n" );
-		JLabel label11= new JLabel("backlog\", \"List user stories in the backlog\n" );
-		JLabel label21= new JLabel("add release\", \"Add new release\n" );
-		JLabel label22= new JLabel("add sprint\", \"Add new sprint\n" );
-		JLabel label23= new JLabel("add user_story\", \"Add new user story to the backlog\n" );
+        // new code ends here
 
 
-		View.console.add(label1);
-		View.console.add(label2);
-		View.console.add(label3);
-		View.console.add(label4);
-		View.console.add(label5);
-		View.console.add(label6);
-		View.console.add(label7);
-		View.console.add(label8);
-		View.console.add(label9);
-		View.console.add(label10);
-		View.console.add(label11);
-		View.console.add(label21);
-		View.console.add(label22);
-		View.console.add(label23);
-
-
-		View.console.repaint();
-		View.mainFrame.repaint();
-		View.mainFrame.setVisible(true);
-
-		// new code ends here
-
-
-	}
+    }
 
 }

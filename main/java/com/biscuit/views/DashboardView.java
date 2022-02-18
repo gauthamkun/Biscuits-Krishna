@@ -152,6 +152,7 @@ public class DashboardView extends View implements ActionListener {
 		} else if (words[0].equals("check_alert")) {
 		} else if (words[0].equals("search")) {
 		} else if (words[0].equals("help")) {
+			System.out.println("called for help");
 			return (new DashboardHelp().execute());
 		}
 

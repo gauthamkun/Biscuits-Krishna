@@ -114,6 +114,8 @@ public class ProjectView extends View implements ActionListener {
 
 	@Override
 	boolean executeCommand(String[] words) throws IOException {
+		System.out.println("i am called");
+
 		if (words.length == 1) {
 			return execute1Keyword(words);
 		} else if (words.length == 2) {
@@ -338,11 +340,12 @@ public class ProjectView extends View implements ActionListener {
 		 super.actionPerformed(e);
 		String command = e.getActionCommand();
 		String[] words = command.split(" ");
-		try {
-			executeCommand(words);
-		} catch (IOException ioException) {
-			ioException.printStackTrace();
-		}
+//		try {
+//			System.out.println("here");
+//			executeCommand(words);
+//		} catch (IOException ioException) {
+//			ioException.printStackTrace();
+//		}
 	}
 
 }
