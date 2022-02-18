@@ -13,11 +13,14 @@ import com.biscuit.models.Project;
 import com.biscuit.models.Release;
 import com.biscuit.models.services.DateService;
 
+import com.biscuit.views.View;
 import de.vandermeer.asciitable.v2.RenderedTable;
 import de.vandermeer.asciitable.v2.V2_AsciiTable;
 import de.vandermeer.asciitable.v2.render.V2_AsciiTableRenderer;
 import de.vandermeer.asciitable.v2.render.WidthLongestLine;
 import de.vandermeer.asciitable.v2.themes.V2_E_TableThemes;
+
+import javax.swing.*;
 
 public class ListReleases implements Command {
 
@@ -68,10 +71,17 @@ public class ListReleases implements Command {
 
 		at.addRule();
 		if (!this.title.isEmpty()) {
-			at.addRow(null, null, null, null, null, this.title).setAlignment(new char[] { 'c', 'c', 'c', 'c', 'c', 'c' });
-			at.addRule();
+
+			View.console.add(new JLabel(this.title));
+			View.console.repaint();
+			View.mainFrame.repaint();
+			View.mainFrame.setVisible(true);
 		}
-		at.addRow("Name", "Description", "State", "Start Date", "Due Date", "Assigned Effort").setAlignment(new char[] { 'l', 'l', 'c', 'c', 'c', 'c' });
+		View.console.add(new JLabel("Name\" + \"Description\"  +  \"State\" +  \"Start Date\" + \"Due Date\" + \"Assigned Effort"));
+		View.console.repaint();
+		View.mainFrame.repaint();
+		View.mainFrame.setVisible(true);
+
 
 		if (releases.size() == 0) {
 			String message;

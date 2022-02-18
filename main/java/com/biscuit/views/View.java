@@ -4,6 +4,9 @@
 
 package com.biscuit.views;
 
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,179 +18,232 @@ import jline.console.ConsoleReader;
 import jline.console.completer.AggregateCompleter;
 import jline.console.completer.Completer;
 
-public abstract class View {
+import javax.swing.*;
 
-	static ConsoleReader reader;
-	static List<String> promptViews;
-	static List<Completer> universalCompleters;
-	static Completer completer;
+public abstract class View implements ActionListener {
 
-	String name;
-	View previousView = null;
-	boolean isViewed = false;
+    public static JFrame mainFrame = new JFrame();
+    public static JPanel panel = new JPanel();
+    public static JPanel console = new JPanel();
+    private static boolean flag = true;
 
-	static {
-		promptViews = new ArrayList<String>();
-		universalCompleters = new ArrayList<Completer>();
-		completer = null;
+    JButton go_to = new JButton("go_to Dashboard");
+    JButton clear = new JButton("clear");
+    JButton back1 = new JButton("back");
+    JButton exit = new JButton("exit");
+    JButton back = new JButton("add project");
+    JButton go_to_pjct = new JButton("go_to project");
+    JButton help = new JButton("help");
 
-		try {
-			reader = new ConsoleReader();
-			addUniversalCompleters();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+    static ConsoleReader reader;
+    static List<String> promptViews;
+    static List<Completer> universalCompleters;
+    static Completer completer;
+    String name;
+    View previousView = null;
+    boolean isViewed = false;
+    static {
+        promptViews = new ArrayList<String>();
+        universalCompleters = new ArrayList<Completer>();
+        completer = null;
 
-	public View(View previousView, String name) {
-		this.previousView = previousView;
-		this.name = name;
-	}
+        try {
+            reader = new ConsoleReader();
+            addUniversalCompleters();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    public View(View previousView, String name) {
+       // mainFrame.setBounds(1400,1400,1400,1400);
+        this.previousView = previousView;
+        this.name = name;
+        if (flag) {
+            console.setBackground(Color.LIGHT_GRAY);
+            panel.add(go_to);
+            panel.add(back);
+            panel.add(clear);
+            panel.add(back1);
+            panel.add(exit);
+            panel.add(go_to_pjct);
+            panel.add(help);
+            panel.setBackground(Color.DARK_GRAY);
+            go_to.addActionListener(this);
+            back.addActionListener(this);
+            clear.addActionListener(this);
+            back1.addActionListener(this);
+            exit.addActionListener(this);
+            go_to_pjct.addActionListener(this);
+            help.addActionListener(this);
+            mainFrame.setLayout(new GridLayout(2, 1));
+            mainFrame.setBounds(8, 800, 800, 800);
+            mainFrame.add(panel);
+            mainFrame.add(console);
+            mainFrame.pack();
+            mainFrame.setVisible(true);
+            flag = false;
+        }
+    }
+    public void view() {
+        if (!isViewed) {
+            addPromptViews();
+            isViewed = true;
+        }
 
-	public void view() {
-		if (!isViewed) {
-			addPromptViews();
-			isViewed = true;
-		}
+        setPrompt();
 
-		setPrompt();
+        clearCompleters();
 
-		clearCompleters();
+        //addCompleters();
+    }
 
-		addCompleters();
+    protected void clearCompleters() {
+        if (completer != null)
+            reader.removeCompleter(completer);
+    }
 
-		read();
-	}
+    private static void addUniversalCompleters() {
+        universalCompleters.addAll(UniversalCompleterFactory.getUniversalCompleters());
+        completer = new AggregateCompleter(universalCompleters);
+        reader.addCompleter(completer);
+    }
 
-	protected void clearCompleters() {
-		if (completer != null)
-			reader.removeCompleter(completer);
-	}
+    protected void addCompleters() {
+        List<Completer> completers = new ArrayList<Completer>();
 
-	private static void addUniversalCompleters() {
-		universalCompleters.addAll(UniversalCompleterFactory.getUniversalCompleters());
-		completer = new AggregateCompleter(universalCompleters);
-		reader.addCompleter(completer);
-	}
+        completers.addAll(universalCompleters);
+        //addSpecificCompleters(completers);
 
-	protected void addCompleters() {
-		List<Completer> completers = new ArrayList<Completer>();
+        completer = new AggregateCompleter(completers);
+        reader.addCompleter(completer);
+    }
 
-		completers.addAll(universalCompleters);
-		addSpecificCompleters(completers);
+    abstract void addSpecificCompleters(List<Completer> completers);
 
-		completer = new AggregateCompleter(completers);
-		reader.addCompleter(completer);
-	}
+    protected void resetCompleters() {
+        clearCompleters();
+        addCompleters();
+    }
 
-	abstract void addSpecificCompleters(List<Completer> completers);
+    private void read(String line) {
+        line = line.trim();
+        String words[] = line.split("\\s+");
+        for (String iterator : words)
+            console.removeAll();
+        mainFrame.repaint();
+        mainFrame.setVisible(true);
+        try {
+            if (!checkIfUnivesalCommand(words)) {
+                executeCommand(words);
+//                if (!executeCommand(words)) {
+//
+//                    JLabel l = new JLabel("Your command is invalid");
+//                    console.add(l);
+//                    mainFrame.repaint();
+//                    mainFrame.setVisible(true);
+//                }
 
-	protected void resetCompleters() {
-		clearCompleters();
-		addCompleters();
-	}
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-	private void read() {
-		try {
-			String line;
-			while ((line = reader.readLine()) != null) {
-				line = line.trim();
+    private boolean checkIfUnivesalCommand(String[] words) throws IOException {
 
-				if (line.isEmpty()) {
-					continue;
-				}
+        if (words.length == 1) {
+            if (words[0].equals("clear")) {
+                console.add(new JLabel("Command selected: clear"));
+                mainFrame.repaint();
+                mainFrame.pack();
+                mainFrame.setVisible(true);
+                return true;
+            } else if (words[0].equals("exit")) {
+                console.add(new JLabel("Command selected: exit"));
+                mainFrame.repaint();
+                mainFrame.pack();
+                mainFrame.setVisible(true);
+                System.exit(0);
+            }  else if (words[0].equals("back")) {
+                console.add(new JLabel("Command selected: back..Going to previous view"));
+                mainFrame.repaint();
+                mainFrame.pack();
+                mainFrame.setVisible(true);
+                this.close();
+                return true;
+            }
+        } else if (words.length == 2) {
+            if (words[0].equals("go_to") && words[1].equals("Dashboard")) {
+                gotoDashboard();
+                return true;
+            }
+        }
 
-				String words[] = line.split("\\s+");
+        return false;
+    }
 
-				if (checkIfUnivesalCommand(words)) {
-					continue;
-				}
+    private void gotoDashboard() throws IOException {
+        if (this.name.equals("Dashboard")) {
+            console.add(new JLabel("Command selected: dashboard. "));
+            JLabel label = new JLabel(" You are Already in the DashBoard");
+            console.add(label);
+            console.repaint();
+            console.setVisible(true);
+            mainFrame.pack();
+            mainFrame.repaint();
+            mainFrame.setVisible(true);
+        } else {
+            promptViews.remove(name);
+            View v = this.previousView;
+            while (!v.name.equals("Dashboard")) {
+                promptViews.remove(v.name);
+                v = v.previousView;
+            }
+            v.view();
+        }
+    }
 
-				if (!executeCommand(words)) {
-					System.out.println("invalid command!");
-				}
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+    abstract boolean executeCommand(String[] words) throws IOException;
 
-	private boolean checkIfUnivesalCommand(String[] words) throws IOException {
+    void addPromptViews() {
+        promptViews.add(name);
+    }
 
-		if (words.length == 1) {
-			if (words[0].equals("clear")) {
-				reader.clearScreen();
-				return true;
-			} else if (words[0].equals("exit")) {
-				System.out.println(ColorCodes.BLUE + "See ya!\n" + ColorCodes.RESET);
-				reader.shutdown();
-				System.exit(0);
-			} else if (words[0].equals("dashboard")) {
-				gotoDashboard();
-				return true;
-			} else if (words[0].equals("back")) {
-				this.close();
-				return true;
-			}
-		} else if (words.length == 2) {
-			if (words[0].equals("go_to") && words[1].equals("dashboard")) {
-				gotoDashboard();
-				return true;
-			}
-		}
+    void updatePromptViews() {
+        promptViews.remove(promptViews.size() - 1);
+        promptViews.add(name);
+        setPrompt();
+    }
 
-		return false;
-	}
+    static void setPrompt() {
+        StringBuilder prompt = new StringBuilder();
 
-	private void gotoDashboard() throws IOException {
-		if (this.name.equals("Dashboard")) {
-			reader.println("you are in the dashboard already!");
-		} else {
-			promptViews.remove(name);
-			View v = this.previousView;
-			while (!v.name.equals("Dashboard")) {
-				promptViews.remove(v.name);
-				v = v.previousView;
-			}
-			v.view();
-		}
-	}
+        for (int i = 0; i < promptViews.size(); i++) {
+            String pv = promptViews.get(i);
+            prompt.append(ColorCodes.PURPLE + pv);
 
-	abstract boolean executeCommand(String[] words) throws IOException;
+            if (i < promptViews.size() - 1)
+                prompt.append(ColorCodes.CYAN + ">");
+        }
 
-	void addPromptViews() {
-		promptViews.add(name);
-	}
+        prompt.append(ColorCodes.YELLOW + "~" + ColorCodes.GREEN + "$ " + ColorCodes.RESET);
 
-	void updatePromptViews() {
-		promptViews.remove(promptViews.size() - 1);
-		promptViews.add(name);
-		setPrompt();
-	}
+        reader.setPrompt(prompt.toString());
+    }
 
-	static void setPrompt() {
-		StringBuilder prompt = new StringBuilder();
+    public void close() {
+        if (previousView != null) {
+            promptViews.remove(name);
+            previousView.view();
+        }
+    }
 
-		for (int i = 0; i < promptViews.size(); i++) {
-			String pv = promptViews.get(i);
-			prompt.append(ColorCodes.PURPLE + pv);
-
-			if (i < promptViews.size() - 1)
-				prompt.append(ColorCodes.CYAN + ">");
-		}
-
-		prompt.append(ColorCodes.YELLOW + "~" + ColorCodes.GREEN + "$ " + ColorCodes.RESET);
-
-		reader.setPrompt(prompt.toString());
-	}
-
-	public void close() {
-		if (previousView != null) {
-			promptViews.remove(name);
-			previousView.view();
-		}
-	}
+    public void actionPerformed(ActionEvent e) {
+        System.out.println("Action performed is called for " + e.getActionCommand() );
+        if (e.getSource().getClass().toString().equals("class javax.swing.JButton"))
+            read(e.getActionCommand());
+    }
 
 }
+
