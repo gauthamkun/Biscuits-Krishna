@@ -19,7 +19,7 @@ import jline.console.completer.StringsCompleter;
 
 public class AddTaskToUserStory implements Command {
 
-	ConsoleReader reader = null;
+	ConsoleReader reader;
 	Project project = null;
 	UserStory userStory = null;
 	Task task = new Task();
