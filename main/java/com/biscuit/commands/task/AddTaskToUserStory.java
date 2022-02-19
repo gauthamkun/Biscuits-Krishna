@@ -8,6 +8,7 @@ import com.biscuit.commands.Command;
 import com.biscuit.models.Project;
 import com.biscuit.models.Task;
 import com.biscuit.models.UserStory;
+import com.biscuit.models.enums.Happiness;
 import com.biscuit.models.enums.Status;
 
 import jline.console.ConsoleReader;
@@ -39,6 +40,7 @@ public class AddTaskToUserStory implements Command {
 		task.project = project;
 		setTitle();
 		setDescription(description);
+		setBusinessValue();
 		task.state = Status.OPEN;
 		setTime();
 		task.initiatedDate = new Date();
@@ -104,5 +106,38 @@ public class AddTaskToUserStory implements Command {
 		reader.setPrompt(ColorCodes.BLUE + "title: " + ColorCodes.RESET);
 		task.title = reader.readLine();
 	}
+	private void setBusinessValue() throws IOException {
+		// List<String> businessValues = new ArrayList<String>();
+		String line;
+		Completer oldCompleter = (Completer) reader.getCompleters().toArray()[0];
+
+		// for (BusinessValue bv : BusinessValue.values()) {
+		// businessValues.add(bv.name().toLowerCase());
+		// }
+
+		Completer businessValuesCompleter = new ArgumentCompleter(new StringsCompleter(Happiness.values), new NullCompleter());
+
+		reader.removeCompleter(oldCompleter);
+		reader.addCompleter(businessValuesCompleter);
+
+		reader.setPrompt(ColorCodes.BLUE + "\nHappiness value:\n" + ColorCodes.YELLOW + "(hit Tab to see valid values)\n" + ColorCodes.RESET);
+
+		while ((line = reader.readLine()) != null) {
+			line = line.trim().toUpperCase();
+
+			try {
+				task.happiness= Happiness.valueOf(line);
+			} catch (IllegalArgumentException e) {
+				System.out.println(ColorCodes.RED + "invalid value" + ColorCodes.RESET);
+				continue;
+			}
+
+			reader.removeCompleter(businessValuesCompleter);
+			reader.addCompleter(oldCompleter);
+			break;
+		}
+
+	}
+
 
 }
