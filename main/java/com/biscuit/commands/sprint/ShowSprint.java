@@ -10,7 +10,6 @@ import com.biscuit.models.services.DateService;
 public class ShowSprint implements Command {
 	Sprint s = null;
 
-
 	public ShowSprint(Sprint s) {
 		super();
 		this.s = s;

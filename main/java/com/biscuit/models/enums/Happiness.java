@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public enum BusinessValue {
+public enum Happiness {
 
-	MUST_HAVE(0), GREAT(1), GOOD(2), AVERAGE(3), NICE_TO_HAVE(4);
+	SAD(0), MAD(1), CONFUSED(2), HAPPY(3);
 
 	private final int value;
 	public static List<String> values = new ArrayList<>(
-			Arrays.asList("must_have", "great", "good", "average", "nice_to_have"));
+			Arrays.asList("sad", "mad", "confused", "happy"));
 
 
-	private BusinessValue(int value) {
+	private Happiness(int value) {
 		this.value = value;
 	}
 

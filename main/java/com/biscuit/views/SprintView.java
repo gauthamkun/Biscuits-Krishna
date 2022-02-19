@@ -52,10 +52,12 @@ public class SprintView extends View {
 		if (words[0].equals("list")) {
 			if (words[1].equals("user_stories")) {
 				if (words[2].equals("filter")) {
-					(new ListUserStories(sprint, sprint.name + " (User Stories)", true, words[3], false, "")).execute();
+					(new ListUserStories(sprint, sprint.name + " (User Stories)",
+							true, words[3], false, "")).execute();
 					return true;
 				} else if (words[2].equals("sort")) {
-					(new ListUserStories(sprint, sprint.name + " (User Stories)", false, "", true, words[3])).execute();
+					(new ListUserStories(sprint, sprint.name + " (User Stories)",
+							false, "", true, words[3])).execute();
 					return true;
 				}
 			}

@@ -63,14 +63,6 @@ public class Project {
 			for (Task t : us.tasks) {
 				t.project = this;
 			}
-
-			// for (Bug b : us.bugs) {
-			// b.project = this;
-			// }
-
-			// for (Test t : us.tests) {
-			// t.project = this;
-			// }
 		}
 	}
 

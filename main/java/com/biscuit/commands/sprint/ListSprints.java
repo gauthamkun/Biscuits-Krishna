@@ -40,9 +40,9 @@ public class ListSprints implements Command {
 	}
 
 
-	public ListSprints(Project porject, String title, boolean isFilter, String filterBy, boolean isSort, String sortBy) {
+	public ListSprints(Project project, String title, boolean isFilter, String filterBy, boolean isSort, String sortBy) {
 		super();
-		this.project = porject;
+		this.project = project;
 		this.title = title;
 		this.isFilter = isFilter;
 		this.filterBy = filterBy.toLowerCase();
@@ -112,9 +112,10 @@ public class ListSprints implements Command {
 			for (Sprint s : sprints) {
 				at.addRule();
 
-				at.addRow(s.name, s.description, s.state, DateService.getDateAsString(s.startDate), DateService.getDateAsString(s.dueDate), s.assignedEffort,
+				at.addRow(s.name, s.description, s.state, DateService.getDateAsString(s.startDate),
+						DateService.getDateAsString(s.dueDate), s.assignedEffort,
 						s.velocity).setAlignment(new char[] { 'l', 'l', 'c', 'c', 'c', 'c', 'c' });
-			} // for
+			}
 		}
 
 		at.addRule();
@@ -185,9 +186,12 @@ public class ListSprints implements Command {
 
 	private void doFilter(List<Sprint> sprints) {
 		List<Sprint> filtered = sprints.stream()
-				.filter(r -> r.name.toLowerCase().contains(filterBy) || r.description.toLowerCase().contains(filterBy)
-						|| r.state.toString().toLowerCase().contains(filterBy) || DateService.getDateAsString(r.startDate).toLowerCase().contains(filterBy)
-						|| DateService.getDateAsString(r.dueDate).toLowerCase().contains(filterBy) || String.valueOf(r.assignedEffort).contains(filterBy)
+				.filter(r -> r.name.toLowerCase().contains(filterBy)
+						|| r.description.toLowerCase().contains(filterBy)
+						|| r.state.toString().toLowerCase().contains(filterBy)
+						|| DateService.getDateAsString(r.startDate).toLowerCase().contains(filterBy)
+						|| DateService.getDateAsString(r.dueDate).toLowerCase().contains(filterBy)
+						|| String.valueOf(r.assignedEffort).contains(filterBy)
 						|| String.valueOf(r.velocity).contains(filterBy))
 				.collect(Collectors.toList());
 		sprints.clear();

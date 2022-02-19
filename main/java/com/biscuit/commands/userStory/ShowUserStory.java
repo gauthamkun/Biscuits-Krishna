@@ -15,6 +15,7 @@ public class ShowUserStory implements Command {
 	public ShowUserStory(UserStory us) {
 		super();
 		this.us = us;
+
 	}
 
 

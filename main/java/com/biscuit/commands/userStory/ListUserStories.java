@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import com.biscuit.ColorCodes;
 import com.biscuit.commands.Command;
 import com.biscuit.models.Backlog;
+import com.biscuit.models.Epic;
 import com.biscuit.models.Sprint;
 import com.biscuit.models.UserStory;
 import com.biscuit.models.services.DateService;
@@ -26,6 +27,7 @@ import javax.swing.*;
 public class ListUserStories implements Command {
 
 	Backlog backlog = null;
+	Epic epic = null;
 	Sprint sprint = null;
 	List<UserStory> userStories = null;
 	String title = "";
@@ -40,6 +42,11 @@ public class ListUserStories implements Command {
 	public ListUserStories(Backlog backlog, String title) {
 		super();
 		this.backlog = backlog;
+		this.title = title;
+	}
+	public ListUserStories(Epic epic, String title) {
+		super();
+		this.epic = epic;
 		this.title = title;
 	}
 
@@ -61,6 +68,15 @@ public class ListUserStories implements Command {
 	public ListUserStories(Backlog backlog, String title, boolean isFilter, String filterBy, boolean isSort, String sortBy) {
 		super();
 		this.backlog = backlog;
+		this.title = title;
+		this.isFilter = isFilter;
+		this.filterBy = filterBy.toLowerCase();
+		this.isSort = isSort;
+		this.sortBy = sortBy.toLowerCase();
+	}
+	public ListUserStories(Epic epic, String title, boolean isFilter, String filterBy, boolean isSort, String sortBy) {
+		super();
+		this.epic = epic;
 		this.title = title;
 		this.isFilter = isFilter;
 		this.filterBy = filterBy.toLowerCase();
@@ -101,12 +117,14 @@ public class ListUserStories implements Command {
 
 		if (backlog != null) {
 			userStories.addAll(backlog.userStories);
+		} else if (epic != null) {
+			userStories.addAll(epic.userStories);
 		} else if (sprint != null) {
 			userStories.addAll(sprint.userStories);
 		} else if (this.userStories != null) {
 			userStories = this.userStories;
 		} else {
-			View.console.add(new JLabel("error: backlog, sprint, and userStories are null"));
+			View.console.add(new JLabel("error: backlog, sprint,epic and userStories are null"));
 			View.console.repaint();
 			View.mainFrame.repaint();
 			View.mainFrame.setVisible(true);

@@ -27,25 +27,9 @@ public class App {
 
 		Dashboard.getInstance().save();
 
-//		test();
-
 		DashboardView dbv = new DashboardView();
 		dbv.view();
 
 	}
-
-
-//	private static void test() {
-//		Calendar cal = new GregorianCalendar();
-//		int startingYear = cal.get(Calendar.YEAR) - 2;
-//		int endingYear = startingYear + 4;
-//		cal.set(startingYear, 0, 1);
-//
-//		while (cal.get(Calendar.YEAR) <= endingYear) {
-//			System.out.println(cal.getTime());
-//			cal.add(Calendar.DAY_OF_MONTH, 1);
-//		}
-//
-//	}
 
 }

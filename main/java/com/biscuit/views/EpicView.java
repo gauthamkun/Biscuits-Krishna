@@ -49,10 +49,10 @@ public class EpicView extends View {
         if (words[0].equals("list")) {
             if (words[1].equals("user_stories")) {
                 if (words[2].equals("filter")) {
-                    (new ListUserStories(epic, "Epic(User Stories)", true, words[3], false, "")).execute();
+                    (new ListUserStories((List<UserStory>) epic, "Epic(User Stories)", true, words[3], false, "")).execute();
                     return true;
                 } else if (words[2].equals("sort")) {
-                    (new ListUserStories(epic, "Epic(User Stories)", false, "", true, words[3])).execute();
+                    (new ListUserStories((List<UserStory>) epic, "Epic(User Stories)", false, "", true, words[3])).execute();
                     return true;
                 }
             }
@@ -73,7 +73,7 @@ public class EpicView extends View {
 
         } else if (words[0].equals("list")) {
             if (words[1].equals("user_stories")) {
-                (new ListUserStories(epic, "Backlog (User Stories)")).execute();
+                (new ListUserStories((List<UserStory>) epic, "Backlog (User Stories)")).execute();
                 return true;
             }
         } else if (words[0].equals("go_to")) {
@@ -97,7 +97,7 @@ public class EpicView extends View {
 
     private boolean execute1Keyword(String[] words) throws IOException {
         if (words[0].equals("user_stories")) {
-            (new ListUserStories(epic, "Backlog (User Stories)")).execute();
+            (new ListUserStories((List<UserStory>) epic, "Backlog (User Stories)")).execute();
             return true;
         } else if (words[0].equals("help")) {
             return (new BacklogHelp()).execute();

@@ -6,11 +6,13 @@ import java.util.List;
 
 public enum Status {
 
-	CREATED(0), OPEN(1), PLANNED(2), UNPLANNED(3), IN_PROGRESS(4), IN_TESTING(5), DONE(6), OVERDUE(7), REMOVED(8);
+	CREATED(0), OPEN(1), PLANNED(2), UNPLANNED(3), IN_PROGRESS(4),
+	IN_TESTING(5), DONE(6), OVERDUE(7), REMOVED(8);
 
 	private final int value;
 	public static List<String> values = new ArrayList<>(
-			Arrays.asList("created", "open", "planned", "unplanned", "in_progress", "in_testing", "done", "overdue", "removed"));
+			Arrays.asList("created", "open", "planned", "unplanned", "in_progress", "in_testing", "done",
+					"overdue", "removed"));
 
 
 	private Status(int value) {
