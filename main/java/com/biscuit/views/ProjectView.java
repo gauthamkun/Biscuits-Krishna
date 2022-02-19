@@ -121,7 +121,21 @@ public class ProjectView extends View {
 
 	private boolean execute3Keywords(String[] words) {
 		if (words[0].equals("go_to")) {
-			if (words[1].equals("release")) {
+
+			if (words[1].equals("user_story")) {
+
+				if (UserStories.getAllNames(project).contains(words[2])) {
+					UserStory us = UserStories.find(project, words[2]);
+					if (us == null) {
+						return false;
+					}
+
+					UserStroryView usv = new UserStroryView(this, us);
+					usv.view();
+					return true;
+				}
+			}
+			else if (words[1].equals("release")) {
 				if (Releases.getAllNames(project).contains(words[2])) {
 					Release r = Releases.find(project, words[2]);
 					if (r == null) {
@@ -134,7 +148,7 @@ public class ProjectView extends View {
 					rv.view();
 					return true;
 				}
-			} else if (words[1].equals("sprint")) {
+			}else if (words[1].equals("sprint")) {
 				Sprint s = null;
 				if (Sprints.getAllNames(project).contains(words[2])) {
 					s = Sprints.find(project, words[2]);
@@ -155,18 +169,7 @@ public class ProjectView extends View {
 				SprintView sv = new SprintView(this, s);
 				sv.view();
 				return true;
-			}
-			} else if (words[1].equals("user_story")) {
-				if (UserStories.getAllNames(project).contains(words[2])) {
-					UserStory us = UserStories.find(project, words[2]);
-					if (us == null) {
-						return false;
-					}
-
-					UserStroryView usv = new UserStroryView(this, us);
-					usv.view();
-					return true;
-				}
+			}System.out.println("4");
 			}
 
 
@@ -192,6 +195,7 @@ public class ProjectView extends View {
 			}
 
 		} else if (words[0].equals("go_to")) {
+			System.out.println("3");
 			if (words[1].equals("backlog")) {
 				this.project.backlog.project = this.project;
 				BacklogView bv = new BacklogView(this, this.project.backlog);

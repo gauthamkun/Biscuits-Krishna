@@ -49,10 +49,10 @@ public class ThemeView extends View {
         if (words[0].equals("list")) {
             if (words[1].equals("user_stories")) {
                 if (words[2].equals("filter")) {
-                    (new ListUserStories(theme, "Backlog (User Stories)", true, words[3], false, "")).execute();
+                    (new ListUserStories(theme, "Theme (User Stories)", true, words[3], false, "")).execute();
                     return true;
                 } else if (words[2].equals("sort")) {
-                    (new ListUserStories(theme, "Backlog (User Stories)", false, "", true, words[3])).execute();
+                    (new ListUserStories(theme, "Theme (User Stories)", false, "", true, words[3])).execute();
                     return true;
                 }
             }
@@ -78,7 +78,7 @@ public class ThemeView extends View {
             }
         } else if (words[0].equals("list")) {
             if (words[1].equals("user_stories")) {
-                (new ListUserStories(theme, "Backlog (User Stories)")).execute();
+                (new ListUserStories(theme, "Theme (User Stories)")).execute();
                 return true;
             }
         } else if (words[0].equals("go_to")) {
@@ -102,7 +102,7 @@ public class ThemeView extends View {
 
     private boolean execute1Keyword(String[] words) throws IOException {
         if (words[0].equals("user_stories")) {
-            (new ListUserStories((List<UserStory>) theme, "Backlog (User Stories)")).execute();
+            (new ListUserStories((List<UserStory>) theme, "Theme (User Stories)")).execute();
             return true;
         } else if (words[0].equals("help")) {
             return (new BacklogHelp()).execute();

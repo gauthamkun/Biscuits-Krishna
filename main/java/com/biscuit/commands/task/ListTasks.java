@@ -68,10 +68,10 @@ public class ListTasks implements Command {
 
 		at.addRule();
 		if (!this.title.isEmpty()) {
-			at.addRow(null, null, null, null, null, null, this.title).setAlignment(new char[] { 'c', 'c', 'c', 'c', 'c', 'c', 'c' });
+			at.addRow(null,null, null, null, null, null, null, this.title).setAlignment(new char[] { 'c', 'c', 'c', 'c', 'c', 'c', 'c' ,'c'});
 			at.addRule();
 		}
-		at.addRow("Title", "Description", "State", "Initiated Date", "Planned Date", "Due Date", "Estimated Time")
+		at.addRow("Title", "Description", "State", "Initiated Date", "Planned Date", "Due Date", "Estimated Time","Happiness")
 				.setAlignment(new char[] { 'l', 'l', 'c', 'c', 'c', 'c', 'c' });
 
 		if (tasks.size() == 0) {
@@ -82,18 +82,18 @@ public class ListTasks implements Command {
 				message = "No results";
 			}
 			at.addRule();
-			at.addRow(null, null, null, null, null, null, message);
+			at.addRow(null,null, null, null, null, null, null, message);
 		} else {
 			for (Task t : tasks) {
 				at.addRule();
 
 				at.addRow(t.title, t.description, t.state, DateService.getDateAsString(t.initiatedDate), DateService.getDateAsString(t.plannedDate),
-						DateService.getDateAsString(t.dueDate), t.estimatedTime).setAlignment(new char[] { 'l', 'l', 'c', 'c', 'c', 'c', 'c' });
+						DateService.getDateAsString(t.dueDate), t.estimatedTime,t.happiness).setAlignment(new char[] { 'l', 'l', 'c', 'c', 'c', 'c', 'c','c' });
 			} // for
 		}
 
 		at.addRule();
-		at.addRow(null, null, null, null, null, null, "Total: " + tasks.size());
+		at.addRow(null,null, null, null, null, null, null, "Total: " + tasks.size());
 		at.addRule();
 
 		V2_AsciiTableRenderer rend = new V2_AsciiTableRenderer();
@@ -179,6 +179,7 @@ public class ListTasks implements Command {
 		tableString = tableString.replaceFirst("Planned Date", ColorCodes.BLUE + "Planned Date" + ColorCodes.RESET);
 		tableString = tableString.replaceFirst("Due Date", ColorCodes.BLUE + "Due Date" + ColorCodes.RESET);
 		tableString = tableString.replaceFirst("Estimated Time", ColorCodes.BLUE + "Estimated Time" + ColorCodes.RESET);
+		tableString = tableString.replaceFirst("Happiness", ColorCodes.BLUE + "Happiness" + ColorCodes.RESET);
 
 		return tableString;
 		// return tableString.replaceAll("MUST_HAVE", ColorCodes.YELLOW +

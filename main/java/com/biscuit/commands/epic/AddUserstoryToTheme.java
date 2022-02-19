@@ -52,7 +52,7 @@ public class AddUserstoryToTheme implements Command {
         project.save();
 
         reader.println();
-        reader.println(ColorCodes.GREEN + "User Story \"" + userStory.title + "\" has been added to the backlog!" + ColorCodes.RESET);
+        reader.println(ColorCodes.GREEN + "User Story \"" + userStory.title + "\" has been added to the Theme!" + ColorCodes.RESET);
 
         return false;
     }
