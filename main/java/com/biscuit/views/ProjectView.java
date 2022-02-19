@@ -4,6 +4,9 @@
 
 package com.biscuit.views;
 
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.List;
 
@@ -32,7 +35,9 @@ import com.biscuit.models.services.Finder.UserStories;
 
 import jline.console.completer.Completer;
 
-public class ProjectView extends View {
+import javax.swing.*;
+
+public class ProjectView extends View implements ActionListener {
 
 	Project project = null;
 
@@ -40,6 +45,67 @@ public class ProjectView extends View {
 	public ProjectView(View previousView, Project p) {
 		super(previousView, p.name);
 		this.project = p;
+
+		JButton info = new JButton("info");
+		info.addActionListener(this);
+		info.setForeground(Color.GREEN);
+
+		JButton backlog = new JButton("backlog");
+		backlog.addActionListener(this);
+		backlog.setForeground(Color.GREEN);
+
+
+		JButton releases = new JButton("releases");
+		releases.addActionListener(this);
+		releases.setForeground(Color.GREEN);
+
+
+		JButton user_stories = new JButton("user_stories");
+		user_stories.addActionListener(this);
+		user_stories.setForeground(Color.GREEN);
+
+
+		JButton plan = new JButton("plan");
+		plan.addActionListener(this);
+		plan.setForeground(Color.GREEN);
+
+
+		JButton tasks = new JButton("tasks");
+		tasks.addActionListener(this);
+		tasks.setForeground(Color.GREEN);
+
+		JButton show = new JButton("show");
+		show.addActionListener(this);
+		show.setForeground(Color.GREEN);
+
+		JButton project_help = new JButton("project_help");
+		project_help.addActionListener(this);
+		project_help.setForeground(Color.GREEN);
+
+
+		View.panel.add(info);
+		View.panel.add(backlog);
+		View.panel.add(releases);
+		View.panel.add(user_stories);
+		View.panel.add(plan);
+		View.panel.add(tasks);
+		View.panel.add(show);
+		View.panel.add(project_help);
+
+
+		View.panel.repaint();
+		View.mainFrame.repaint();
+
+		View.panel.setVisible(true);
+		View.mainFrame.setVisible(true);
+
+
+		System.out.println("Current project selected is " + p.name);
+		View.console.add(new JLabel("Your are in the project view"));
+		View.console.repaint();
+		View.mainFrame.repaint();
+		//View.mainFrame.pack();
+		View.mainFrame.setVisible(true);
 	}
 
 
@@ -51,6 +117,8 @@ public class ProjectView extends View {
 
 	@Override
 	boolean executeCommand(String[] words) throws IOException {
+		System.out.println("i am called");
+
 		if (words.length == 1) {
 			return execute1Keyword(words);
 		} else if (words.length == 2) {
@@ -252,7 +320,14 @@ public class ProjectView extends View {
 
 	private boolean execute1Keyword(String[] words) throws IOException {
 		if (words[0].equals("info")) {
-			reader.println(project.toString());
+			JLabel description = new JLabel(project.toString());
+			View.console.add(description);
+			View.console.repaint();
+			View.mainFrame.repaint();
+		//	View.mainFrame.pack();
+			View.mainFrame.setVisible(true);
+			//System.out.println("THIS IS THE PLACE" + project.toString());
+			//reader.println(project.toString());
 			return true;
 		} else if (words[0].equals("backlog")) {
 			(new ListUserStories(project.backlog, "Backlog (User Stories)")).execute();
@@ -286,11 +361,23 @@ public class ProjectView extends View {
 			return true;
 		} else if (words[0].equals("show")) {
 			return (new ShowProject(project).execute());
-		} else if (words[0].equals("help")) {
+		} else if (words[0].equals("project_help")) {
 			return (new ProjectHelp().execute());
 		}
 
 		return false;
+	}
+
+	public void actionPerformed(ActionEvent e){
+		 super.actionPerformed(e);
+		String command = e.getActionCommand();
+		String[] words = command.split(" ");
+//		try {
+//			System.out.println("here");
+//			executeCommand(words);
+//		} catch (IOException ioException) {
+//			ioException.printStackTrace();
+//		}
 	}
 
 }
