@@ -22,6 +22,7 @@ import com.biscuit.commands.task.ListTasks;
 import com.biscuit.commands.userStory.AddUserStoryToBacklog;
 import com.biscuit.commands.epic.AddEpicToBacklog;
 import com.biscuit.commands.userStory.ListUserStories;
+import com.biscuit.commands.epic.AddMember;
 import com.biscuit.factories.ProjectCompleterFactory;
 import com.biscuit.models.Project;
 import com.biscuit.models.Release;
@@ -74,6 +75,10 @@ public class ProjectView extends View implements ActionListener {
 		tasks.addActionListener(this);
 		tasks.setForeground(Color.GREEN);
 
+		JButton members = new JButton("Members");
+		plan.addActionListener(this);
+		plan.setForeground(Color.GREEN);
+
 		JButton show = new JButton("show");
 		show.addActionListener(this);
 		show.setForeground(Color.GREEN);
@@ -83,12 +88,14 @@ public class ProjectView extends View implements ActionListener {
 		project_help.setForeground(Color.GREEN);
 
 
+
 		View.panel.add(info);
 		View.panel.add(backlog);
 		View.panel.add(releases);
 		View.panel.add(user_stories);
 		View.panel.add(plan);
 		View.panel.add(tasks);
+		View.panel.add(members);
 		View.panel.add(show);
 		View.panel.add(project_help);
 
@@ -242,15 +249,18 @@ public class ProjectView extends View implements ActionListener {
 			if (words[1].equals("user_story")) {
 				(new AddUserStoryToBacklog(reader, project)).execute();
 				return true;
-			}else if (words[1].equals("Epic")) {
+			} else if (words[1].equals("Epic")) {
 				(new AddEpicToBacklog(reader, project)).execute();
 				return true;
 			} else if (words[1].equals("release")) {
 				(new AddRelease(reader, project)).execute();
 				resetCompleters();
-
 				return true;
-			} else if (words[1].equals("sprint")) {
+			} else if (words[1].equals("member")){
+				(new AddMember(reader, project)).execute();
+				resetCompleters();
+				return true;
+		    }else if (words[1].equals("sprint")) {
 				(new AddSprint(reader, project)).execute();
 				resetCompleters();
 
