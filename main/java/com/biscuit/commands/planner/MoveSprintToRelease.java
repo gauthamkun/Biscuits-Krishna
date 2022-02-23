@@ -15,8 +15,8 @@ import jline.console.ConsoleReader;
 
 public class MoveSprintToRelease implements Command {
 
-	ConsoleReader reader = null;
-	Project project = null;
+	ConsoleReader reader;
+	Project project;
 	private String sprintName;
 	private String releaseNam;
 

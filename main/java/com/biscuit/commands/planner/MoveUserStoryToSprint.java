@@ -18,8 +18,8 @@ import jline.console.ConsoleReader;
 
 public class MoveUserStoryToSprint implements Command {
 
-	ConsoleReader reader = null;
-	Project project = null;
+	ConsoleReader reader;
+	Project project;
 	private String userStoryName;
 	private String sprintName;
 
