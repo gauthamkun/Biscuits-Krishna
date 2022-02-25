@@ -327,4 +327,3 @@ public abstract class View implements ActionListener {
     }
 
 }
-
