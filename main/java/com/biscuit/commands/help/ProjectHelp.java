@@ -9,7 +9,7 @@ import java.awt.*;
 public class ProjectHelp extends UniversalHelp {
 
     @Override
-    public void executeChild(V2_AsciiTable at) {
+    public void executeChild() {
         // new code starts here
         JTable table = new JTable(new String[][]{
                 {"show", "Show project information"},
@@ -30,11 +30,6 @@ public class ProjectHelp extends UniversalHelp {
         View.console.repaint();
         View.mainFrame.repaint();
         View.mainFrame.setVisible(true);
-
-
-        // new code ends here
-
-
     }
 
 }

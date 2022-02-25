@@ -1,0 +1,4 @@
+
+*.class
+out/production/main/com/biscuit/commands/help/BacklogHelp.class
+*.class
