@@ -40,7 +40,7 @@ public class DashboardView extends View implements ActionListener {
 
 	@Override
 	boolean executeCommand(String[] words) throws IOException {
-  // System.out.println("The len is " + words.length + " and the word is "  + words[0]) ;
+		// System.out.println("The len is " + words.length + " and the word is "  + words[0]) ;
 		if (words.length == 1) {
 			return execute1Keyword(words);
 		} else if (words.length == 2) {
@@ -104,14 +104,14 @@ public class DashboardView extends View implements ActionListener {
 			View.panel.add(destination);
 			View.panel.repaint();
 			View.mainFrame.repaint();
-		//	View.mainFrame.pack();
+			//	View.mainFrame.pack();
 			View.mainFrame.setVisible(true);
 			destination.addActionListener(this);
 
 
 //
 
-		//	System.out.println("reached here");
+			//	System.out.println("reached here");
 
 
 			try {
@@ -166,7 +166,7 @@ public class DashboardView extends View implements ActionListener {
 		new Thread(() -> {
 
 			super.actionPerformed(e);
-			if (!e.getSource().getClass().toString().equals("class javax.swing.JButton")) {
+			if (!e.getSource().getClass().toString().equals("class javax.swing.JButton") || !e.getSource().getClass().toString().equals("class javax.swing.JMenuItem")) {
 				//System.out.println("The command is  " + e.getActionCommand());
 				p = Projects.getProject(e.getActionCommand());
 				if (p != null) {
