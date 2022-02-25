@@ -166,7 +166,7 @@ public class DashboardView extends View implements ActionListener {
 		new Thread(() -> {
 
 			super.actionPerformed(e);
-			if (!e.getSource().getClass().toString().equals("class javax.swing.JButton")) {
+			if (!e.getSource().getClass().toString().equals("class javax.swing.JButton") && !e.getSource().getClass().toString().equals("class javax.swing.JMenuItem")) {
 				//System.out.println("The command is  " + e.getActionCommand());
 				p = Projects.getProject(e.getActionCommand());
 				if (p != null) {

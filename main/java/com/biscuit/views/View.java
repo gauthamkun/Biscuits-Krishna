@@ -27,6 +27,9 @@ public abstract class View implements ActionListener {
     public static JPanel panel = new JPanel();
     public static JPanel console = new JPanel();
     private static boolean flag = true;
+    private JMenu menu = new JMenu("Help");
+
+    JMenuBar mb = new JMenuBar();
 
     JButton go_to = new JButton("go_to Dashboard");
     JButton clear = new JButton("clear");
@@ -34,18 +37,17 @@ public abstract class View implements ActionListener {
     JButton exit = new JButton("exit");
     JButton back = new JButton("add project");
     JButton go_to_pjct = new JButton("go_to project");
-    JButton help = new JButton("help");
-    JButton BacklogHelper = new JButton("BacklogHelp");
-    JButton DashBoardHelper = new JButton("DashBoardHelp");
-    JButton PlannerHelper = new JButton("PlannerHelp");
-    JButton ProjectHelper = new JButton("ProjectHelp");
-    JButton ReleaseHelper = new JButton("ReleaseHelp");
-    JButton ReleasesHelper = new JButton("ReleasesHelp");
-    JButton SprintHelper = new JButton("SprintHelp");
-    JButton SprintsHelper = new JButton("SprintsHelp");
-    JButton TaskHelper = new JButton("TaskHelp");
-    JButton UserStoryHelper = new JButton("UserStoryHelp");
 
+    JMenuItem BacklogHelper = new JMenuItem("BacklogHelp");
+    JMenuItem DashBoardHelper = new JMenuItem("DashBoardHelp");
+    JMenuItem PlannerHelper = new JMenuItem("PlannerHelp");
+    JMenuItem ProjectHelper = new JMenuItem("ProjectHelp");
+    JMenuItem ReleaseHelper = new JMenuItem("ReleaseHelp");
+    JMenuItem ReleasesHelper = new JMenuItem("ReleasesHelp");
+    JMenuItem SprintHelper = new JMenuItem("SprintHelp");
+    JMenuItem SprintsHelper = new JMenuItem("SprintsHelp");
+    JMenuItem TaskHelper = new JMenuItem("TaskHelp");
+    JMenuItem UserStoryHelper = new JMenuItem("UserStoryHelp");
 
     static ConsoleReader reader;
     static List<String> promptViews;
@@ -76,6 +78,39 @@ public abstract class View implements ActionListener {
         if (flag) {
             console.setBackground(Color.LIGHT_GRAY);
 
+            mb.setBorderPainted(true);
+            mb.setForeground(Color.ORANGE);
+
+            menu.add(BacklogHelper);
+            mb.add(menu);
+
+            menu.add(DashBoardHelper);
+            mb.add(menu);
+
+            menu.add(PlannerHelper);
+            mb.add(menu);
+
+            menu.add(ProjectHelper);
+            mb.add(menu);
+
+            menu.add(ReleaseHelper);
+            mb.add(menu);
+
+            menu.add(ReleasesHelper);
+            mb.add(menu);
+
+            menu.add(SprintHelper);
+            mb.add(menu);
+
+            menu.add(SprintsHelper);
+            mb.add(menu);
+
+            menu.add(TaskHelper);
+            mb.add(menu);
+
+            menu.add(UserStoryHelper);
+            mb.add(menu);
+
 
             panel.add(go_to);
             panel.add(back);
@@ -83,24 +118,8 @@ public abstract class View implements ActionListener {
             panel.add(back1);
             panel.add(exit);
             panel.add(go_to_pjct);
-            panel.add(help);
-            panel.add(BacklogHelper);
-            panel.add(DashBoardHelper);
-            panel.add(PlannerHelper);
-            panel.add(ProjectHelper);
-            panel.add(ReleaseHelper);
-            panel.add(ReleasesHelper);
-            panel.add(SprintHelper);
-            panel.add(SprintsHelper);
-            panel.add(TaskHelper);
-            panel.add(UserStoryHelper);
+            panel.add(mb);
 
-
-            BacklogHelper.setForeground(Color.ORANGE);
-            DashBoardHelper.setForeground(Color.ORANGE);
-            PlannerHelper.setForeground(Color.ORANGE);
-            ProjectHelper.setForeground(Color.ORANGE);
-            ReleaseHelper.setForeground(Color.ORANGE);
 
             panel.setBackground(Color.DARK_GRAY);
             go_to.addActionListener(this);
@@ -109,7 +128,6 @@ public abstract class View implements ActionListener {
             back1.addActionListener(this);
             exit.addActionListener(this);
             go_to_pjct.addActionListener(this);
-            help.addActionListener(this);
             BacklogHelper.addActionListener(this);
             DashBoardHelper.addActionListener(this);
             ProjectHelper.addActionListener(this);
@@ -222,16 +240,19 @@ public abstract class View implements ActionListener {
                 return new ProjectHelp().execute();
             } else if (words[0].equals("ReleaseHelp")) {
                 return new ReleaseHelp().execute();
-            }else if (words[0].equals("ReleasesHelp")) {
+            } else if (words[0].equals("ReleasesHelp")) {
                 return new ReleasesHelp().execute();
-            }else if (words[0].equals("SprintHelp")) {
+            } else if (words[0].equals("SprintHelp")) {
                 return new SprintHelp().execute();
-            }else if (words[0].equals("SprintsHelp")) {
+            } else if (words[0].equals("SprintsHelp")) {
                 return new SprintsHelp().execute();
-            }else if (words[0].equals("TaskHelp")) {
+            } else if (words[0].equals("TaskHelp")) {
                 return new TaskHelp().execute();
-            }else if (words[0].equals("UserStoryHelp")) {
+            } else if (words[0].equals("UserStoryHelp")) {
                 return new UserStoryHelp().execute();
+            } else if (words[0].equals("This")) {
+                System.out.println("bypassed");
+                return true;
             }
         } else if (words.length == 2) {
             if (words[0].equals("go_to") && words[1].equals("Dashboard")) {
@@ -300,8 +321,8 @@ public abstract class View implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Action performed is called for " + e.getActionCommand());
-        if (e.getSource().getClass().toString().equals("class javax.swing.JButton"))
+        System.out.println("Action performed is called for " + e.getSource().getClass().toString());
+        if (e.getSource().getClass().toString().equals("class javax.swing.JButton") || e.getSource().getClass().toString().equals("class javax.swing.JMenuItem"))
             read(e.getActionCommand());
     }
 
