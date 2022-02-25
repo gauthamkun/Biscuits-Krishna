@@ -40,6 +40,12 @@ public abstract class View implements ActionListener {
     JButton PlannerHelper = new JButton("PlannerHelp");
     JButton ProjectHelper = new JButton("ProjectHelp");
     JButton ReleaseHelper = new JButton("ReleaseHelp");
+    JButton ReleasesHelper = new JButton("ReleasesHelp");
+    JButton SprintHelper = new JButton("SprintHelp");
+    JButton SprintsHelper = new JButton("SprintsHelp");
+    JButton TaskHelper = new JButton("TaskHelp");
+    JButton UserStoryHelper = new JButton("UserStoryHelp");
+
 
     static ConsoleReader reader;
     static List<String> promptViews;
@@ -48,6 +54,7 @@ public abstract class View implements ActionListener {
     String name;
     View previousView = null;
     boolean isViewed = false;
+
     static {
         promptViews = new ArrayList<String>();
         universalCompleters = new ArrayList<Completer>();
@@ -61,13 +68,13 @@ public abstract class View implements ActionListener {
             e.printStackTrace();
         }
     }
+
     public View(View previousView, String name) {
-       // mainFrame.setBounds(1400,1400,1400,1400);
+        // mainFrame.setBounds(1400,1400,1400,1400);
         this.previousView = previousView;
         this.name = name;
         if (flag) {
             console.setBackground(Color.LIGHT_GRAY);
-
 
 
             panel.add(go_to);
@@ -82,6 +89,12 @@ public abstract class View implements ActionListener {
             panel.add(PlannerHelper);
             panel.add(ProjectHelper);
             panel.add(ReleaseHelper);
+            panel.add(ReleasesHelper);
+            panel.add(SprintHelper);
+            panel.add(SprintsHelper);
+            panel.add(TaskHelper);
+            panel.add(UserStoryHelper);
+
 
             BacklogHelper.setForeground(Color.ORANGE);
             DashBoardHelper.setForeground(Color.ORANGE);
@@ -102,6 +115,12 @@ public abstract class View implements ActionListener {
             ProjectHelper.addActionListener(this);
             PlannerHelper.addActionListener(this);
             ReleaseHelper.addActionListener(this);
+            ReleasesHelper.addActionListener(this);
+            SprintHelper.addActionListener(this);
+            SprintsHelper.addActionListener(this);
+            TaskHelper.addActionListener(this);
+            UserStoryHelper.addActionListener(this);
+
 
             mainFrame.setLayout(new GridLayout(2, 1));
             mainFrame.setBounds(8, 800, 800, 800);
@@ -112,6 +131,7 @@ public abstract class View implements ActionListener {
             flag = false;
         }
     }
+
     public void view() {
         if (!isViewed) {
             addPromptViews();
@@ -192,16 +212,26 @@ public abstract class View implements ActionListener {
                 mainFrame.pack();
                 mainFrame.setVisible(true);
                 System.exit(0);
-            }  else if (words[0].equals("BacklogHelp")) {
-                return  new BacklogHelp().execute();
-            }else if (words[0].equals("DashBoardHelp")) {
+            } else if (words[0].equals("BacklogHelp")) {
+                return new BacklogHelp().execute();
+            } else if (words[0].equals("DashBoardHelp")) {
                 return new DashboardHelp().execute();
-            }else if (words[0].equals("PlannerHelp")) {
+            } else if (words[0].equals("PlannerHelp")) {
                 return new PlannerHelp().execute();
-            }else if (words[0].equals("ProjectHelp")) {
+            } else if (words[0].equals("ProjectHelp")) {
                 return new ProjectHelp().execute();
-            }else if (words[0].equals("ReleaseHelp")) {
-               return new ReleaseHelp().execute();
+            } else if (words[0].equals("ReleaseHelp")) {
+                return new ReleaseHelp().execute();
+            }else if (words[0].equals("ReleasesHelp")) {
+                return new ReleasesHelp().execute();
+            }else if (words[0].equals("SprintHelp")) {
+                return new SprintHelp().execute();
+            }else if (words[0].equals("SprintsHelp")) {
+                return new SprintsHelp().execute();
+            }else if (words[0].equals("TaskHelp")) {
+                return new TaskHelp().execute();
+            }else if (words[0].equals("UserStoryHelp")) {
+                return new UserStoryHelp().execute();
             }
         } else if (words.length == 2) {
             if (words[0].equals("go_to") && words[1].equals("Dashboard")) {
@@ -270,7 +300,7 @@ public abstract class View implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Action performed is called for " + e.getActionCommand() );
+        System.out.println("Action performed is called for " + e.getActionCommand());
         if (e.getSource().getClass().toString().equals("class javax.swing.JButton"))
             read(e.getActionCommand());
     }

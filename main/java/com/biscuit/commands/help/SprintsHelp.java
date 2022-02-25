@@ -1,18 +1,28 @@
 package com.biscuit.commands.help;
-
+import com.biscuit.views.View;
 import de.vandermeer.asciitable.v2.V2_AsciiTable;
+import javax.swing.*;
+import java.awt.*;
 
 public class SprintsHelp extends UniversalHelp {
 
+    public void executeChild() {
 
-	public void executeChild(V2_AsciiTable at) {
+        JTable table = new JTable(new String[][]{
 
-		at.addRow(null, "Sprints Commands").setAlignment(new char[] { 'c', 'c' });
-		at.addRule();
-		at.addRow("sprints", "List all sprints").setAlignment(new char[] { 'l', 'l' });
-		at.addRow("back", "Go back to previous view (Project)").setAlignment(new char[] { 'l', 'l' });
-		at.addRow("go_to sprint", "Go to a sprint view (followed by a sprint name)").setAlignment(new char[] { 'l', 'l' });
-		at.addRow("add sprint", "Add new sprint").setAlignment(new char[] { 'l', 'l' });
-	}
+                {"sprints", "List all sprints"},
+                {"back", "Go back to previous view (Project)"},
+                {"go_to sprint", "Go to a sprint view (followed by a sprint name)"},
+                {"add sprint", "Add new sprint"}
+
+        }, new String[]{"Name of the command", "Description of the command"});
+        table.setBackground(Color.black);
+        table.setForeground(Color.yellow);
+        View.console.add(new JScrollPane(table), BorderLayout.CENTER);
+        View.console.repaint();
+        View.mainFrame.repaint();
+        View.mainFrame.setVisible(true);
+
+    }
 
 }

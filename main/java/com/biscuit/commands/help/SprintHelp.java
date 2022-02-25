@@ -2,33 +2,35 @@ package com.biscuit.commands.help;
 
 import com.biscuit.models.enums.Status;
 
+import com.biscuit.views.View;
 import de.vandermeer.asciitable.v2.V2_AsciiTable;
+
+import javax.swing.*;
+import java.awt.*;
 
 public class SprintHelp extends UniversalHelp {
 
+    public void executeChild() {
+        System.out.println("Helper is called");
 
-	public void executeChild(V2_AsciiTable at) {
+        JTable table = new JTable(new String[][]{
 
-		at.addRow(null, "Sprint Commands").setAlignment(new char[] { 'c', 'c' });
-		at.addRule();
-		at.addRow("show", "Show sprint information").setAlignment(new char[] { 'l', 'l' });
-		at.addRow("edit", "Edit sprint").setAlignment(new char[] { 'l', 'l' });
-		at.addRow("change_status_to", "Change status of sprint (use TAB to autocomplete)\n" + "Status: " + Status.allStatus() + "\n")
-				.setAlignment(new char[] { 'l', 'l' });
+                {"show", "Show sprint information"},
+                {"edit", "Edit sprint"},
+                {"change_status_to", "Change status of sprint (use TAB to autocomplete)\n" + "Status: "},
+                {"user_stories", "List user stories planned in this sprint"},
+                {"List user stories planned in this sprint" ,"Optional: (filter) to filter out the results (ex. list user_stories filter a_string)\n"},
+                {"back", "Go back to previous view"},
+                {"go_to user_story", "Go to a user story view (followed by a user story name)"},
+                {"add user_story", "Add new user story to this sprint"}
 
-		at.addRow("user_stories", "List user stories planned in this sprint").setAlignment(new char[] { 'l', 'l' });
+        }, new String[]{"Name of the command", "Description of the command"});
+        table.setBackground(Color.black);
+        table.setForeground(Color.yellow);
+        View.console.add(new JScrollPane(table), BorderLayout.CENTER);
+        View.console.repaint();
+        View.mainFrame.repaint();
+        View.mainFrame.setVisible(true);
 
-		at.addRow("list user_stories",
-				"List user stories planned in this sprint\n" + "Optional: (filter) to filter out the results (ex. list user_stories filter a_string)\n"
-						+ "Optional: (sort) to sort the results based on a chosen column (ex. list user_stories sort column_name)\n"
-						+ "          use TAB to autocomplete column names\n"
-						+ "          repeating list command with sort option toggles order between ASC and DESC\n")
-				.setAlignment(new char[] { 'l', 'l' });
-
-		at.addRow("back", "Go back to previous view").setAlignment(new char[] { 'l', 'l' });
-		at.addRow("go_to user_story", "Go to a user story view (followed by a user story name)").setAlignment(new char[] { 'l', 'l' });
-		at.addRow("add user_story", "Add new user story to this sprint").setAlignment(new char[] { 'l', 'l' });
-
-	}
-
+    }
 }
