@@ -9,6 +9,6 @@ import java.awt.*;
 public class DashboardHelp extends UniversalHelp {
 
 	@Override
-	public void executeChild(V2_AsciiTable ar) {
+	public void executeChild() {
 	}
 }

@@ -4,7 +4,7 @@ import de.vandermeer.asciitable.v2.V2_AsciiTable;
 
 public class SprintsHelp extends UniversalHelp {
 
-	@Override
+
 	public void executeChild(V2_AsciiTable at) {
 
 		at.addRow(null, "Sprints Commands").setAlignment(new char[] { 'c', 'c' });

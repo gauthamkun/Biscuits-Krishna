@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.biscuit.ColorCodes;
+import com.biscuit.commands.help.*;
 import com.biscuit.factories.UniversalCompleterFactory;
 
 import jline.console.ConsoleReader;
@@ -34,6 +35,11 @@ public abstract class View implements ActionListener {
     JButton back = new JButton("add project");
     JButton go_to_pjct = new JButton("go_to project");
     JButton help = new JButton("help");
+    JButton BacklogHelper = new JButton("BacklogHelp");
+    JButton DashBoardHelper = new JButton("DashBoardHelp");
+    JButton PlannerHelper = new JButton("PlannerHelp");
+    JButton ProjectHelper = new JButton("ProjectHelp");
+    JButton ReleaseHelper = new JButton("ReleaseHelp");
 
     static ConsoleReader reader;
     static List<String> promptViews;
@@ -61,6 +67,9 @@ public abstract class View implements ActionListener {
         this.name = name;
         if (flag) {
             console.setBackground(Color.LIGHT_GRAY);
+
+
+
             panel.add(go_to);
             panel.add(back);
             panel.add(clear);
@@ -68,6 +77,18 @@ public abstract class View implements ActionListener {
             panel.add(exit);
             panel.add(go_to_pjct);
             panel.add(help);
+            panel.add(BacklogHelper);
+            panel.add(DashBoardHelper);
+            panel.add(PlannerHelper);
+            panel.add(ProjectHelper);
+            panel.add(ReleaseHelper);
+
+            BacklogHelper.setForeground(Color.ORANGE);
+            DashBoardHelper.setForeground(Color.ORANGE);
+            PlannerHelper.setForeground(Color.ORANGE);
+            ProjectHelper.setForeground(Color.ORANGE);
+            ReleaseHelper.setForeground(Color.ORANGE);
+
             panel.setBackground(Color.DARK_GRAY);
             go_to.addActionListener(this);
             back.addActionListener(this);
@@ -76,6 +97,12 @@ public abstract class View implements ActionListener {
             exit.addActionListener(this);
             go_to_pjct.addActionListener(this);
             help.addActionListener(this);
+            BacklogHelper.addActionListener(this);
+            DashBoardHelper.addActionListener(this);
+            ProjectHelper.addActionListener(this);
+            PlannerHelper.addActionListener(this);
+            ReleaseHelper.addActionListener(this);
+
             mainFrame.setLayout(new GridLayout(2, 1));
             mainFrame.setBounds(8, 800, 800, 800);
             mainFrame.add(panel);
@@ -165,13 +192,16 @@ public abstract class View implements ActionListener {
                 mainFrame.pack();
                 mainFrame.setVisible(true);
                 System.exit(0);
-            }  else if (words[0].equals("back")) {
-                console.add(new JLabel("Command selected: back..Going to previous view"));
-                mainFrame.repaint();
-                mainFrame.pack();
-                mainFrame.setVisible(true);
-                this.close();
-                return true;
+            }  else if (words[0].equals("BacklogHelp")) {
+                return  new BacklogHelp().execute();
+            }else if (words[0].equals("DashBoardHelp")) {
+                return new DashboardHelp().execute();
+            }else if (words[0].equals("PlannerHelp")) {
+                return new PlannerHelp().execute();
+            }else if (words[0].equals("ProjectHelp")) {
+                return new ProjectHelp().execute();
+            }else if (words[0].equals("ReleaseHelp")) {
+               return new ReleaseHelp().execute();
             }
         } else if (words.length == 2) {
             if (words[0].equals("go_to") && words[1].equals("Dashboard")) {
