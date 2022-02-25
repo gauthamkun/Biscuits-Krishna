@@ -42,56 +42,61 @@ public class ProjectView extends View implements ActionListener {
 	Project project = null;
 
 
+	JMenuBar mb  = new JMenuBar();
+	JMenu menu = new JMenu("Project Menu");
+
 	public ProjectView(View previousView, Project p) {
 		super(previousView, p.name);
 		this.project = p;
 
-		JButton info = new JButton("info");
+		JMenuItem info = new JMenuItem("info");
 		info.addActionListener(this);
 		info.setForeground(Color.GREEN);
 
-		JButton backlog = new JButton("backlog");
+		JMenuItem backlog = new JMenuItem("backlog");
 		backlog.addActionListener(this);
 		backlog.setForeground(Color.GREEN);
 
 
-		JButton releases = new JButton("releases");
+		JMenuItem releases = new JMenuItem("releases");
 		releases.addActionListener(this);
 		releases.setForeground(Color.GREEN);
 
 
-		JButton user_stories = new JButton("user_stories");
+		JMenuItem user_stories = new JMenuItem("user_stories");
 		user_stories.addActionListener(this);
 		user_stories.setForeground(Color.GREEN);
 
 
-		JButton plan = new JButton("plan");
+		JMenuItem plan = new JMenuItem("plan");
 		plan.addActionListener(this);
 		plan.setForeground(Color.GREEN);
 
 
-		JButton tasks = new JButton("tasks");
+		JMenuItem tasks = new JMenuItem("tasks");
 		tasks.addActionListener(this);
 		tasks.setForeground(Color.GREEN);
 
-		JButton show = new JButton("show");
+		JMenuItem show = new JMenuItem("show");
 		show.addActionListener(this);
 		show.setForeground(Color.GREEN);
 
-		JButton project_help = new JButton("project_help");
+		JMenuItem project_help = new JMenuItem("project_help");
 		project_help.addActionListener(this);
 		project_help.setForeground(Color.GREEN);
 
+		menu.add(info);
+		menu.add(backlog);
+		menu.add(releases);
+		menu.add(user_stories);
+		menu.add(plan);
+		menu.add(tasks);
+		menu.add(show);
+		menu.add(project_help);
 
-		View.panel.add(info);
-		View.panel.add(backlog);
-		View.panel.add(releases);
-		View.panel.add(user_stories);
-		View.panel.add(plan);
-		View.panel.add(tasks);
-		View.panel.add(show);
-		View.panel.add(project_help);
+		mb.add(menu);
 
+		View.panel.add(mb);
 
 		View.panel.repaint();
 		View.mainFrame.repaint();
@@ -372,6 +377,8 @@ public class ProjectView extends View implements ActionListener {
 		 super.actionPerformed(e);
 		String command = e.getActionCommand();
 		String[] words = command.split(" ");
+
+		System.out.println("called for " + e.getActionCommand());
 //		try {
 //			System.out.println("here");
 //			executeCommand(words);
