@@ -19,8 +19,8 @@ import jline.console.completer.StringsCompleter;
 
 public class AddEpicToSprint implements Command {
 
-    ConsoleReader reader = null;
-    Sprint sprint = null;
+    ConsoleReader reader;
+    Sprint sprint;
     UserStory userStory = new UserStory();
 
 
@@ -60,13 +60,9 @@ public class AddEpicToSprint implements Command {
 
 
     private void setPoints() throws IOException {
-        // List<String> points = new ArrayList<String>();
         String line;
         Completer oldCompleter = (Completer) reader.getCompleters().toArray()[0];
 
-        // for (Points p : Points.values()) {
-        // points.add(p.name().substring(1, p.name().length() - 2));
-        // }
 
         Completer pointsCompleter = new ArgumentCompleter(new StringsCompleter(Points.values), new NullCompleter());
 

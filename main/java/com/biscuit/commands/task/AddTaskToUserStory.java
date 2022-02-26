@@ -107,13 +107,9 @@ public class AddTaskToUserStory implements Command {
 		task.title = reader.readLine();
 	}
 	private void setBusinessValue() throws IOException {
-		// List<String> businessValues = new ArrayList<String>();
 		String line;
 		Completer oldCompleter = (Completer) reader.getCompleters().toArray()[0];
 
-		// for (BusinessValue bv : BusinessValue.values()) {
-		// businessValues.add(bv.name().toLowerCase());
-		// }
 
 		Completer businessValuesCompleter = new ArgumentCompleter(new StringsCompleter(Happiness.values), new NullCompleter());
 

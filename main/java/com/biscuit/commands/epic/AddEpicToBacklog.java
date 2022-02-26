@@ -59,13 +59,8 @@ public class AddEpicToBacklog implements Command {
 
 
     private void setPoints() throws IOException {
-        // List<String> points = new ArrayList<String>();
         String line;
         Completer oldCompleter = (Completer) reader.getCompleters().toArray()[0];
-
-        // for (Points p : Points.values()) {
-        // points.add(p.name().substring(1, p.name().length() - 2));
-        // }
 
         Completer pointsCompleter = new ArgumentCompleter(new StringsCompleter(Points.values), new NullCompleter());
 
