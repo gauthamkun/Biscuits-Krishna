@@ -6,8 +6,7 @@ import com.biscuit.models.Issues;
 import com.biscuit.models.Project;
 import com.biscuit.models.Task;
 import com.biscuit.models.UserStory;
-import com.biscuit.models.enums.Happiness;
-import com.biscuit.models.enums.Status;
+import com.biscuit.models.enums.*;
 import jline.console.ConsoleReader;
 import jline.console.completer.ArgumentCompleter;
 import jline.console.completer.Completer;
@@ -38,16 +37,18 @@ public class AddIssues implements Command {
 		String prompt = reader.getPrompt();
 
 		issues.project = project;
-		//setTitle();
-		//setDescription(description);
-		//setBusinessValue();
-		//setTime();
+		setTitle();
+		setDescription(description);
+		setIssuePriority();
+		setIssueSeverity();
+		setIssueType();
+		setTime();
 		issues.initiatedDate = new Date();
 		issues.dueDate = new Date(0);
 
 		reader.setPrompt(prompt);
 
-		//userStory.tasks.add(issues);
+		userStory.issues.add(issues);
 		project.save();
 
 		reader.println();
@@ -55,8 +56,140 @@ public class AddIssues implements Command {
 
 		return false;
 	}
+	private void setTime() throws IOException {
+		String line;
+		Completer oldCompleter = (Completer) reader.getCompleters().toArray()[0];
+
+		Completer timeCompleter = new ArgumentCompleter(new StringsCompleter("1", "1.5", "2", "2.25", "3"), new NullCompleter());
+
+		reader.removeCompleter(oldCompleter);
+		reader.addCompleter(timeCompleter);
+
+		reader.setPrompt(ColorCodes.BLUE + "\nestimated time (in hours):\n" + ColorCodes.YELLOW + "(hit Tab to see an example)\n" + ColorCodes.RESET);
+
+		while ((line = reader.readLine()) != null) {
+			line = line.trim();
+
+			try {
+				issues.estimatedTime = Float.valueOf(line);
+				break;
+			} catch (NumberFormatException e) {
+				System.out.println(ColorCodes.RED + "invalid value: must be a float value!" + ColorCodes.RESET);
+			}
+		}
+
+		reader.removeCompleter(timeCompleter);
+		reader.addCompleter(oldCompleter);
+	}
 
 
+	private void setDescription(StringBuilder description) throws IOException {
+		String line;
+		reader.setPrompt(ColorCodes.BLUE + "\ndescription:\n" + ColorCodes.YELLOW + "(\\q to end writing)\n" + ColorCodes.RESET);
+
+		while ((line = reader.readLine()) != null) {
+			if (line.equals("\\q")) {
+				break;
+			}
+			description.append(line).append("\n");
+			reader.setPrompt("");
+		}
+
+		issues.description = description.toString();
+	}
+
+
+	private void setTitle() throws IOException {
+		reader.setPrompt(ColorCodes.BLUE + "title: " + ColorCodes.RESET);
+		issues.title = reader.readLine();
+	}
+
+	private void setIssuePriority() throws IOException {
+		String line;
+		Completer oldCompleter = (Completer) reader.getCompleters().toArray()[0];
+
+
+		Completer businessValuesCompleter = new ArgumentCompleter(new StringsCompleter(IssuePriority.values), new NullCompleter());
+
+		reader.removeCompleter(oldCompleter);
+		reader.addCompleter(businessValuesCompleter);
+
+		reader.setPrompt(ColorCodes.BLUE + "\nPriority value:\n" + ColorCodes.YELLOW + "(hit Tab to see valid values)\n" + ColorCodes.RESET);
+
+		while ((line = reader.readLine()) != null) {
+			line = line.trim().toUpperCase();
+
+			try {
+				issues.issuePriority = IssuePriority.valueOf(line);
+			} catch (IllegalArgumentException e) {
+				System.out.println(ColorCodes.RED + "invalid value" + ColorCodes.RESET);
+				continue;
+			}
+
+			reader.removeCompleter(businessValuesCompleter);
+			reader.addCompleter(oldCompleter);
+			break;
+		}
+	}
+
+		private void setIssueSeverity() throws IOException {
+			String line;
+			Completer oldCompleter = (Completer) reader.getCompleters().toArray()[0];
+
+
+			Completer businessValuesCompleter = new ArgumentCompleter(new StringsCompleter(IssueSeverity.values), new NullCompleter());
+
+			reader.removeCompleter(oldCompleter);
+			reader.addCompleter(businessValuesCompleter);
+
+			reader.setPrompt(ColorCodes.BLUE + "\nSeverity value:\n" + ColorCodes.YELLOW + "(hit Tab to see valid values)\n" + ColorCodes.RESET);
+
+			while ((line = reader.readLine()) != null) {
+				line = line.trim().toUpperCase();
+
+				try {
+					issues.issueSeverity= IssueSeverity.valueOf(line);
+				} catch (IllegalArgumentException e) {
+					System.out.println(ColorCodes.RED + "invalid value" + ColorCodes.RESET);
+					continue;
+				}
+
+				reader.removeCompleter(businessValuesCompleter);
+				reader.addCompleter(oldCompleter);
+				break;
+			}
+
+	}
+
+	private void setIssueType() throws IOException {
+		String line;
+		Completer oldCompleter = (Completer) reader.getCompleters().toArray()[0];
+
+
+		Completer businessValuesCompleter = new ArgumentCompleter(new StringsCompleter(IssueType.values), new NullCompleter());
+
+		reader.removeCompleter(oldCompleter);
+		reader.addCompleter(businessValuesCompleter);
+
+		reader.setPrompt(ColorCodes.BLUE + "\nIssue Type value:\n" + ColorCodes.YELLOW + "(hit Tab to see valid values)\n" + ColorCodes.RESET);
+
+		while ((line = reader.readLine()) != null) {
+			line = line.trim().toUpperCase();
+
+			try {
+				issues.issueType= IssueType.valueOf(line);
+			} catch (IllegalArgumentException e) {
+				System.out.println(ColorCodes.RED + "invalid value" + ColorCodes.RESET);
+				continue;
+			}
+
+			reader.removeCompleter(businessValuesCompleter);
+			reader.addCompleter(oldCompleter);
+			break;
+		}
+
+	}
 
 
 }
+
