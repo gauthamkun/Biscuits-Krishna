@@ -27,6 +27,7 @@ public class UserStory {
 	public static String[] fields;
 
 	public List<Task> tasks = new ArrayList<>();
+	public List<Issues> issues = new ArrayList<>();
 	public List<Bug> bugs = new ArrayList<>();
 	public List<Test> tests = new ArrayList<>();
 
