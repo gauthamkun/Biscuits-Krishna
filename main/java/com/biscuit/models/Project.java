@@ -5,6 +5,7 @@
 package com.biscuit.models;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Project {
@@ -15,9 +16,10 @@ public class Project {
 	public Epic epic = new Epic();
 	public List<Release> releases = new ArrayList<>();
 	public List<Sprint> sprints = new ArrayList<>();
+    public Members members;
 
 
-	public void save() {
+    public void save() {
 		ModelHelper.save(this, name);
 	}
 
@@ -43,6 +45,7 @@ public class Project {
 		}
 
 		updateSprintReferences(sprints);
+		updateMembers((List<Members>) members);
 		updateUserStoryReferences(backlog.userStories);
 		updateUserStoryReferences(epic.userStories);
 	}
@@ -52,6 +55,11 @@ public class Project {
 		for (Sprint s : sprints) {
 			s.project = this;
 			updateUserStoryReferences(s.userStories);
+		}
+	}
+	private void updateMembers(List<Members> members) {
+		for (Members s : members) {
+			s.project = this;
 		}
 	}
 

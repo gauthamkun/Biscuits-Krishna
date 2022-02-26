@@ -10,6 +10,7 @@ import jline.console.completer.ArgumentCompleter;
 import jline.console.completer.Completer;
 import jline.console.completer.NullCompleter;
 import jline.console.completer.StringsCompleter;
+
 import java.io.IOException;
 
 
@@ -29,16 +30,17 @@ public class AddMember implements Command{
         member.project = project;
         setTitle();
         setRole();
+        project.save();
+
+        reader.println();
+        reader.println(ColorCodes.GREEN + "Member \"" + Members.title + "\" has been added to the project as\"" + Members.role.name() +"\"!\"" + ColorCodes.RESET);
         return false;
     }
         private void setRole() throws IOException {
-            // List<String> businessValues = new ArrayList<String>();
             String line;
             Completer oldCompleter = (Completer) reader.getCompleters().toArray()[0];
 
-            // for (BusinessValue bv : BusinessValue.values()) {
-            // businessValues.add(bv.name().toLowerCase());
-            // }
+
 
             Completer businessValuesCompleter = new ArgumentCompleter(new StringsCompleter(Roles.values), new NullCompleter());
 
@@ -52,6 +54,7 @@ public class AddMember implements Command{
 
                 try {
                     Members.role = Roles.valueOf(line);
+
                 } catch (IllegalArgumentException e) {
                     System.out.println(ColorCodes.RED + "invalid value" + ColorCodes.RESET);
                     continue;
@@ -65,7 +68,7 @@ public class AddMember implements Command{
         }
 
     private void setTitle() throws IOException {
-        reader.setPrompt(ColorCodes.BLUE + "title: " + ColorCodes.RESET);
+        reader.setPrompt(ColorCodes.BLUE + "Member Name: " + ColorCodes.RESET);
         member.title = reader.readLine();
     }
 }

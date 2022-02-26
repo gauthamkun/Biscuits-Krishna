@@ -19,15 +19,13 @@ import com.biscuit.commands.release.ListReleases;
 import com.biscuit.commands.sprint.AddSprint;
 import com.biscuit.commands.sprint.ListSprints;
 import com.biscuit.commands.task.ListTasks;
+import com.biscuit.commands.epic.ListMembers;
 import com.biscuit.commands.userStory.AddUserStoryToBacklog;
 import com.biscuit.commands.epic.AddEpicToBacklog;
 import com.biscuit.commands.userStory.ListUserStories;
 import com.biscuit.commands.epic.AddMember;
 import com.biscuit.factories.ProjectCompleterFactory;
-import com.biscuit.models.Project;
-import com.biscuit.models.Release;
-import com.biscuit.models.Sprint;
-import com.biscuit.models.UserStory;
+import com.biscuit.models.*;
 import com.biscuit.models.services.Finder;
 import com.biscuit.models.services.Finder.Releases;
 import com.biscuit.models.services.Finder.Sprints;
@@ -40,7 +38,7 @@ import javax.swing.*;
 
 public class ProjectView extends View implements ActionListener {
 
-	Project project = null;
+	Project project;
 
 
 	public ProjectView(View previousView, Project p) {
@@ -159,30 +157,34 @@ public class ProjectView extends View implements ActionListener {
 					return true;
 				}
 		} }else if (words[0].equals("list")) {
-			if (words[1].equals("releases")) {
-				if (words[2].equals("filter")) {
-					(new ListReleases(project, "Releases", true, words[3], false, "")).execute();
-					return true;
-				} else if (words[2].equals("sort")) {
-					(new ListReleases(project, "Releases", false, "", true, words[3])).execute();
-					return true;
-				}
-			} else if (words[1].equals("sprints")) {
-				if (words[2].equals("filter")) {
-					(new ListSprints(project, "Sprints", true, words[3], false, "")).execute();
-					return true;
-				} else if (words[2].equals("sort")) {
-					(new ListSprints(project, "Sprints", false, "", true, words[3])).execute();
-					return true;
-				}
-			} else if (words[1].equals("user_stories")) {
-				if (words[2].equals("filter")) {
-					(new ListUserStories(UserStories.getAll(project), "User Stories (Filtered)", true, words[3], false, "")).execute();
-					return true;
-				} else if (words[2].equals("sort")) {
-					(new ListUserStories(UserStories.getAll(project), "All User Stories", false, "", true, words[3])).execute();
-					return true;
-				}
+			switch (words[1]) {
+				case "releases":
+					if (words[2].equals("filter")) {
+						(new ListReleases(project, "Releases", true, words[3], false, "")).execute();
+						return true;
+					} else if (words[2].equals("sort")) {
+						(new ListReleases(project, "Releases", false, "", true, words[3])).execute();
+						return true;
+					}
+					break;
+				case "sprints":
+					if (words[2].equals("filter")) {
+						(new ListSprints(project, "Sprints", true, words[3], false, "")).execute();
+						return true;
+					} else if (words[2].equals("sort")) {
+						(new ListSprints(project, "Sprints", false, "", true, words[3])).execute();
+						return true;
+					}
+					break;
+				case "user_stories":
+					if (words[2].equals("filter")) {
+						(new ListUserStories(UserStories.getAll(project), "User Stories (Filtered)", true, words[3], false, "")).execute();
+						return true;
+					} else if (words[2].equals("sort")) {
+						(new ListUserStories(UserStories.getAll(project), "All User Stories", false, "", true, words[3])).execute();
+						return true;
+					}
+					break;
 			}
 		}
 		return false;
@@ -222,6 +224,7 @@ public class ProjectView extends View implements ActionListener {
 
 				// s.project = project;
 
+				assert s != null;
 				SprintView sv = new SprintView(this, s);
 				sv.view();
 				return true;
@@ -317,6 +320,7 @@ public class ProjectView extends View implements ActionListener {
 				(new ListUserStories(UserStories.getAll(project), "All User Stories")).execute();
 				return true;
 			}
+
 		} else if (words[0].equals("plan")) {
 			if (words[1].equals("details")) {
 				(new ShowPlanDetails(project)).execute();
