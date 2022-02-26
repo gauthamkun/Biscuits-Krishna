@@ -43,6 +43,7 @@ public class AddIssues implements Command {
 		setIssueSeverity();
 		setIssueType();
 		setTime();
+		issues.state = Status.OPEN;
 		issues.initiatedDate = new Date();
 		issues.dueDate = new Date(0);
 
