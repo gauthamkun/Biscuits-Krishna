@@ -12,6 +12,7 @@ import com.biscuit.models.Release;
 import com.biscuit.models.Sprint;
 import com.biscuit.models.Task;
 import com.biscuit.models.UserStory;
+import com.biscuit.models.Members;
 
 public class Finder {
 
@@ -32,7 +33,7 @@ public class Finder {
 	public static class UserStories {
 
 		public static List<UserStory> getAll(Project p) {
-			System.out.println("2");
+
 			List<UserStory> all = new ArrayList<>();
 			all.addAll(getAll(p.backlog)); // unplanned
 			all.addAll(getPlanned(p));
@@ -80,6 +81,8 @@ public class Finder {
 		public static List<String> getAllNames(Epic epic) {
 			return epic.userStories.stream().map(us -> us.title).collect(Collectors.toList());
 		}
+
+
 
 
 		public static List<String> getAllNames(Sprint sprint) {
@@ -255,4 +258,13 @@ public class Finder {
 		}
 	}
 
+	public static class Members {
+		public static List<String> getAll(Project p) {
+			List<String> MemberName = new ArrayList<>();
+			for (Release r : p.releases) {
+				MemberName.addAll(r.sprints.stream().map(s -> s.name).collect(Collectors.toList()));
+			}
+			return MemberName;
+		}
+	}
 }

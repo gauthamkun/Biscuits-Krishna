@@ -18,8 +18,8 @@ import jline.console.completer.Completer;
 
 public class AddSprint implements Command {
 
-	ConsoleReader reader = null;
-	Project project = null;
+	ConsoleReader reader;
+	Project project;
 	Sprint sprint = new Sprint();
 
 
@@ -78,7 +78,7 @@ public class AddSprint implements Command {
 
 		while ((line = reader.readLine()) != null) {
 			line = line.trim();
-			String words[] = line.split("\\s+");
+			String[] words = line.split("\\s+");
 
 			if (line.isEmpty()) {
 				reader.removeCompleter(dateCompleter);
@@ -133,7 +133,7 @@ public class AddSprint implements Command {
 			}
 
 			try {
-				duration = Integer.valueOf(line);
+				duration = Integer.parseInt(line);
 				if (duration <= 0) {
 					throw new IllegalArgumentException();
 				}
@@ -166,7 +166,7 @@ public class AddSprint implements Command {
 
 		while ((line = reader.readLine()) != null) {
 			line = line.trim();
-			String words[] = line.split("\\s+");
+			String[] words = line.split("\\s+");
 
 			if (line.isEmpty()) {
 				reader.removeCompleter(dateCompleter);
@@ -212,7 +212,7 @@ public class AddSprint implements Command {
 			line = line.trim();
 
 			try {
-				sprint.velocity = Integer.valueOf(line);
+				sprint.velocity = Integer.parseInt(line);
 				break;
 			} catch (NumberFormatException e) {
 				System.out.println(ColorCodes.RED + "invalid value: must be an integer value!" + ColorCodes.RESET);

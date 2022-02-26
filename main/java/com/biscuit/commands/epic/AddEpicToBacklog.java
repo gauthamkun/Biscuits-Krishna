@@ -19,7 +19,7 @@ import jline.console.completer.StringsCompleter;
 
 public class AddEpicToBacklog implements Command {
 
-    ConsoleReader reader = null;
+    ConsoleReader reader;
     Project project;
     UserStory userStory = new UserStory();
     public AddEpicToBacklog(ConsoleReader reader, Project project) {
@@ -78,7 +78,7 @@ public class AddEpicToBacklog implements Command {
             line = line.trim();
 
             try {
-                userStory.points = Integer.valueOf(line);
+                userStory.points = Integer.parseInt(line);
                 break;
             } catch (NumberFormatException e) {
                 System.out.println(ColorCodes.RED + "invalid value: must be an integer value!" + ColorCodes.RESET);

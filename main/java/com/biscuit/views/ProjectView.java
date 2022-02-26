@@ -19,14 +19,13 @@ import com.biscuit.commands.release.ListReleases;
 import com.biscuit.commands.sprint.AddSprint;
 import com.biscuit.commands.sprint.ListSprints;
 import com.biscuit.commands.task.ListTasks;
+import com.biscuit.commands.epic.ListMembers;
 import com.biscuit.commands.userStory.AddUserStoryToBacklog;
 import com.biscuit.commands.epic.AddEpicToBacklog;
 import com.biscuit.commands.userStory.ListUserStories;
+import com.biscuit.commands.epic.AddMember;
 import com.biscuit.factories.ProjectCompleterFactory;
-import com.biscuit.models.Project;
-import com.biscuit.models.Release;
-import com.biscuit.models.Sprint;
-import com.biscuit.models.UserStory;
+import com.biscuit.models.*;
 import com.biscuit.models.services.Finder;
 import com.biscuit.models.services.Finder.Releases;
 import com.biscuit.models.services.Finder.Sprints;
@@ -39,7 +38,7 @@ import javax.swing.*;
 
 public class ProjectView extends View implements ActionListener {
 
-	Project project = null;
+	Project project;
 
 
 	JMenuBar mb  = new JMenuBar();
@@ -67,7 +66,10 @@ public class ProjectView extends View implements ActionListener {
 		JMenuItem tasks = new JMenuItem("tasks");
 		tasks.addActionListener(this);
 
+
+
 		JMenuItem show = new JMenuItem("show");
+
 		show.addActionListener(this);
 
 		JMenuItem project_help = new JMenuItem("project_help");
@@ -82,7 +84,7 @@ public class ProjectView extends View implements ActionListener {
 		menu.add(show);
 		menu.add(project_help);
 
-		mb.add(menu);
+
 
 		View.panel.add(mb);
 
@@ -142,31 +144,7 @@ public class ProjectView extends View implements ActionListener {
 					(new ListUserStories(project.epic, "", false, "", true, words[3])).execute();
 					return true;
 				}
-			} }else if (words[0].equals("list")) {
-			if (words[1].equals("releases")) {
-				if (words[2].equals("filter")) {
-					(new ListReleases(project, "Releases", true, words[3], false, "")).execute();
-					return true;
-				} else if (words[2].equals("sort")) {
-					(new ListReleases(project, "Releases", false, "", true, words[3])).execute();
-					return true;
-				}
-			} else if (words[1].equals("sprints")) {
-				if (words[2].equals("filter")) {
-					(new ListSprints(project, "Sprints", true, words[3], false, "")).execute();
-					return true;
-				} else if (words[2].equals("sort")) {
-					(new ListSprints(project, "Sprints", false, "", true, words[3])).execute();
-					return true;
-				}
-			} else if (words[1].equals("user_stories")) {
-				if (words[2].equals("filter")) {
-					(new ListUserStories(UserStories.getAll(project), "User Stories (Filtered)", true, words[3], false, "")).execute();
-					return true;
-				} else if (words[2].equals("sort")) {
-					(new ListUserStories(UserStories.getAll(project), "All User Stories", false, "", true, words[3])).execute();
-					return true;
-				}
+
 			}
 		}
 		return false;
@@ -206,6 +184,7 @@ public class ProjectView extends View implements ActionListener {
 
 				// s.project = project;
 
+				assert s != null;
 				SprintView sv = new SprintView(this, s);
 				sv.view();
 				return true;
@@ -233,15 +212,18 @@ public class ProjectView extends View implements ActionListener {
 			if (words[1].equals("user_story")) {
 				(new AddUserStoryToBacklog(reader, project)).execute();
 				return true;
-			}else if (words[1].equals("Epic")) {
+			} else if (words[1].equals("Epic")) {
 				(new AddEpicToBacklog(reader, project)).execute();
 				return true;
 			} else if (words[1].equals("release")) {
 				(new AddRelease(reader, project)).execute();
 				resetCompleters();
-
 				return true;
-			} else if (words[1].equals("sprint")) {
+			} else if (words[1].equals("member")){
+				(new AddMember(reader, project)).execute();
+				resetCompleters();
+				return true;
+		    }else if (words[1].equals("sprint")) {
 				(new AddSprint(reader, project)).execute();
 				resetCompleters();
 
@@ -298,6 +280,7 @@ public class ProjectView extends View implements ActionListener {
 				(new ListUserStories(UserStories.getAll(project), "All User Stories")).execute();
 				return true;
 			}
+
 		} else if (words[0].equals("plan")) {
 			if (words[1].equals("details")) {
 				(new ShowPlanDetails(project)).execute();
