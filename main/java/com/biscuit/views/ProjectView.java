@@ -18,6 +18,7 @@ import com.biscuit.commands.sprint.ListSprints;
 import com.biscuit.commands.task.ListTasks;
 import com.biscuit.commands.userStory.AddUserStoryToBacklog;
 import com.biscuit.commands.epic.AddEpicToBacklog;
+import com.biscuit.commands.epic.AddMember;
 import com.biscuit.commands.userStory.ListUserStories;
 import com.biscuit.factories.ProjectCompleterFactory;
 import com.biscuit.models.Project;
@@ -34,7 +35,7 @@ import jline.console.completer.Completer;
 
 public class ProjectView extends View {
 
-	Project project = null;
+	Project project;
 
 
 	public ProjectView(View previousView, Project p) {
@@ -180,9 +181,12 @@ public class ProjectView extends View {
 			} else if (words[1].equals("release")) {
 				(new AddRelease(reader, project)).execute();
 				resetCompleters();
-
 				return true;
-			} else if (words[1].equals("sprint")) {
+			} else if (words[1].equals("member")){
+				(new AddMember(reader, project)).execute();
+				resetCompleters();
+				return true;
+			}else if (words[1].equals("sprint")) {
 				(new AddSprint(reader, project)).execute();
 				resetCompleters();
 
