@@ -41,62 +41,52 @@ public class ProjectView extends View implements ActionListener {
 	Project project;
 
 
+	JMenuBar mb  = new JMenuBar();
+	JMenu menu = new JMenu("Project Menu");
+
 	public ProjectView(View previousView, Project p) {
 		super(previousView, p.name);
 		this.project = p;
 
-		JButton info = new JButton("info");
+		JMenuItem info = new JMenuItem("info");
 		info.addActionListener(this);
-		info.setForeground(Color.GREEN);
 
-		JButton backlog = new JButton("backlog");
+		JMenuItem backlog = new JMenuItem("backlog");
 		backlog.addActionListener(this);
-		backlog.setForeground(Color.GREEN);
 
-
-		JButton releases = new JButton("releases");
+		JMenuItem releases = new JMenuItem("releases");
 		releases.addActionListener(this);
-		releases.setForeground(Color.GREEN);
 
-
-		JButton user_stories = new JButton("user_stories");
+		JMenuItem user_stories = new JMenuItem("user_stories");
 		user_stories.addActionListener(this);
-		user_stories.setForeground(Color.GREEN);
 
-
-		JButton plan = new JButton("plan");
+		JMenuItem plan = new JMenuItem("plan");
 		plan.addActionListener(this);
-		plan.setForeground(Color.GREEN);
 
-
-		JButton tasks = new JButton("tasks");
+		JMenuItem tasks = new JMenuItem("tasks");
 		tasks.addActionListener(this);
-		tasks.setForeground(Color.GREEN);
 
-		JButton members = new JButton("Members");
-		plan.addActionListener(this);
-		plan.setForeground(Color.GREEN);
 
-		JButton show = new JButton("show");
+
+		JMenuItem show = new JMenuItem("show");
+
 		show.addActionListener(this);
-		show.setForeground(Color.GREEN);
 
-		JButton project_help = new JButton("project_help");
+		JMenuItem project_help = new JMenuItem("project_help");
 		project_help.addActionListener(this);
-		project_help.setForeground(Color.GREEN);
+
+		menu.add(info);
+		menu.add(backlog);
+		menu.add(releases);
+		menu.add(user_stories);
+		menu.add(plan);
+		menu.add(tasks);
+		menu.add(show);
+		menu.add(project_help);
 
 
 
-		View.panel.add(info);
-		View.panel.add(backlog);
-		View.panel.add(releases);
-		View.panel.add(user_stories);
-		View.panel.add(plan);
-		View.panel.add(tasks);
-		View.panel.add(members);
-		View.panel.add(show);
-		View.panel.add(project_help);
-
+		View.panel.add(mb);
 
 		View.panel.repaint();
 		View.mainFrame.repaint();
@@ -104,8 +94,6 @@ public class ProjectView extends View implements ActionListener {
 		View.panel.setVisible(true);
 		View.mainFrame.setVisible(true);
 
-
-		System.out.println("Current project selected is " + p.name);
 		View.console.add(new JLabel("Your are in the project view"));
 		View.console.repaint();
 		View.mainFrame.repaint();
@@ -122,7 +110,6 @@ public class ProjectView extends View implements ActionListener {
 
 	@Override
 	boolean executeCommand(String[] words) throws IOException {
-		System.out.println("i am called");
 
 		if (words.length == 1) {
 			return execute1Keyword(words);
@@ -141,6 +128,7 @@ public class ProjectView extends View implements ActionListener {
 		if (words[0].equals("show")) {
 			if (words[1].equals("backlog")) {
 				if (words[2].equals("filter")) {
+					View.console.removeAll();
 					(new ListUserStories(project.backlog, "", true, words[3], false, "")).execute();
 					return true;
 				} else if (words[2].equals("sort")) {
@@ -156,35 +144,7 @@ public class ProjectView extends View implements ActionListener {
 					(new ListUserStories(project.epic, "", false, "", true, words[3])).execute();
 					return true;
 				}
-		} }else if (words[0].equals("list")) {
-			switch (words[1]) {
-				case "releases":
-					if (words[2].equals("filter")) {
-						(new ListReleases(project, "Releases", true, words[3], false, "")).execute();
-						return true;
-					} else if (words[2].equals("sort")) {
-						(new ListReleases(project, "Releases", false, "", true, words[3])).execute();
-						return true;
-					}
-					break;
-				case "sprints":
-					if (words[2].equals("filter")) {
-						(new ListSprints(project, "Sprints", true, words[3], false, "")).execute();
-						return true;
-					} else if (words[2].equals("sort")) {
-						(new ListSprints(project, "Sprints", false, "", true, words[3])).execute();
-						return true;
-					}
-					break;
-				case "user_stories":
-					if (words[2].equals("filter")) {
-						(new ListUserStories(UserStories.getAll(project), "User Stories (Filtered)", true, words[3], false, "")).execute();
-						return true;
-					} else if (words[2].equals("sort")) {
-						(new ListUserStories(UserStories.getAll(project), "All User Stories", false, "", true, words[3])).execute();
-						return true;
-					}
-					break;
+
 			}
 		}
 		return false;
@@ -229,18 +189,18 @@ public class ProjectView extends View implements ActionListener {
 				sv.view();
 				return true;
 			}
-			} else if (words[1].equals("user_story")) {
-				if (UserStories.getAllNames(project).contains(words[2])) {
-					UserStory us = UserStories.find(project, words[2]);
-					if (us == null) {
-						return false;
-					}
-
-					UserStroryView usv = new UserStroryView(this, us);
-					usv.view();
-					return true;
+		} else if (words[1].equals("user_story")) {
+			if (UserStories.getAllNames(project).contains(words[2])) {
+				UserStory us = UserStories.find(project, words[2]);
+				if (us == null) {
+					return false;
 				}
+
+				UserStroryView usv = new UserStroryView(this, us);
+				usv.view();
+				return true;
 			}
+		}
 
 
 		return false;
@@ -334,22 +294,26 @@ public class ProjectView extends View implements ActionListener {
 
 	private boolean execute1Keyword(String[] words) throws IOException {
 		if (words[0].equals("info")) {
+			View.console.removeAll();
 			JLabel description = new JLabel(project.toString());
 			View.console.add(description);
 			View.console.repaint();
 			View.mainFrame.repaint();
-		//	View.mainFrame.pack();
+			//	View.mainFrame.pack();
 			View.mainFrame.setVisible(true);
 			//System.out.println("THIS IS THE PLACE" + project.toString());
 			//reader.println(project.toString());
 			return true;
 		} else if (words[0].equals("backlog")) {
+			View.console.removeAll();
 			(new ListUserStories(project.backlog, "Backlog (User Stories)")).execute();
 			return true;
 		} else if (words[0].equals("releases")) {
+			View.console.removeAll();
 			(new ListReleases(project, "Releases")).execute();
 			return true;
 		} else if (words[0].equals("sprints")) {
+			View.console.removeAll();
 
 			for (Release r : project.releases) {
 				if (!r.sprints.isEmpty()) {
@@ -360,12 +324,15 @@ public class ProjectView extends View implements ActionListener {
 			(new ListSprints(project, "Unplanned Sprints")).execute();
 			return true;
 		} else if (words[0].equals("user_stories")) {
+			View.console.removeAll();
 			(new ListUserStories(UserStories.getAll(project), "All User Stories")).execute();
 			return true;
 		} else if (words[0].equals("plan")) {
+			View.console.removeAll();
 			(new ShowPlan(project)).execute();
 			return true;
 		} else if (words[0].equals("tasks")) {
+			View.console.removeAll();
 			List<UserStory> userStories = UserStories.getAll(project);
 			for (UserStory us : userStories) {
 				if (!us.tasks.isEmpty()) {
@@ -374,8 +341,10 @@ public class ProjectView extends View implements ActionListener {
 			}
 			return true;
 		} else if (words[0].equals("show")) {
+			View.console.removeAll();
 			return (new ShowProject(project).execute());
 		} else if (words[0].equals("project_help")) {
+			View.console.removeAll();
 			return (new ProjectHelp().execute());
 		}
 
@@ -383,15 +352,14 @@ public class ProjectView extends View implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e){
-		 super.actionPerformed(e);
+		super.actionPerformed(e);
 		String command = e.getActionCommand();
 		String[] words = command.split(" ");
-//		try {
-//			System.out.println("here");
-//			executeCommand(words);
-//		} catch (IOException ioException) {
-//			ioException.printStackTrace();
-//		}
+		try {
+			executeCommand(words);
+		} catch (IOException ioException) {
+			ioException.printStackTrace();
+		}
 	}
 
 }
