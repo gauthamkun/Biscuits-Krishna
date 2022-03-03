@@ -445,6 +445,31 @@ public class BurnDownView implements ActionListener {
     }
 
     private void determineDAndC(String story) {
-        // To be implemented by Iti.
+        UserStoryPlaceholder current = null;
+        for (UserStoryPlaceholder iterator : storiesList) {
+            if (iterator.getName().equals(story)) {
+                current = iterator;
+                break;
+            }
+        }
+        if (!(current == null)) {
+            if (current.assignee.stream()
+                    .distinct()
+                    .count() <= 1 && current.assignee.size() == current.tasksList.size()) {
+                canvas.setBackground(Color.RED);
+                JLabel stop = new JLabel("STOP!!!", SwingConstants.CENTER);
+                stop.setFont(new Font("Serif", Font.BOLD, 60));
+                stop.setForeground(Color.WHITE);
+                JLabel dAndC = new JLabel(" You are following Divide and Conquer. " +
+                        "Do not assign all the tasks in a user story to a single developer.", SwingConstants.CENTER);
+                dAndC.setFont(new Font("Serif", Font.BOLD, 25));
+                dAndC.setForeground(Color.WHITE);
+                canvas.add(stop);
+                canvas.add(dAndC);
+                canvas.repaint();
+                mainFrame.repaint();
+                mainFrame.setVisible(true);
+            }
+        }
     }
 }
