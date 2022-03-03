@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.biscuit.ColorCodes;
@@ -37,6 +38,7 @@ public abstract class View implements ActionListener {
     JButton exit = new JButton("exit");
     JButton back = new JButton("add project");
     JButton go_to_pjct = new JButton("go_to project");
+    JButton burnDownChart = new JButton("BurnDownChart");
 
     JMenuItem BacklogHelper = new JMenuItem("BacklogHelp");
     JMenuItem DashBoardHelper = new JMenuItem("DashBoardHelp");
@@ -111,6 +113,8 @@ public abstract class View implements ActionListener {
             menu.add(UserStoryHelper);
             mb.add(menu);
 
+            burnDownChart.addActionListener(this);
+            panel.add(burnDownChart);
 
             panel.add(go_to);
             panel.add(back);
@@ -253,6 +257,8 @@ public abstract class View implements ActionListener {
             } else if (words[0].equals("This")) {
                 System.out.println("bypassed");
                 return true;
+            }else if(words[0].equals("BurnDownChart")){
+                new BurnDownView(Arrays.asList(new String[]{"Task 1", "Task 2", "Task 3", "Task 4"}));
             }
         } else if (words.length == 2) {
             if (words[0].equals("go_to") && words[1].equals("Dashboard")) {
@@ -322,7 +328,7 @@ public abstract class View implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         System.out.println("Action performed is called for " + e.getSource().getClass().toString());
-        if (e.getSource().getClass().toString().equals("class javax.swing.JButton") || e.getSource().getClass().toString().equals("class javax.swing.JMenuItem"))
+        if (e.getSource().getClass().toString().equals("class javax.swing.JButton") || e.getSource().getClass().toString().equals("class javax.swing.JMenuItem") && (!e.getActionCommand().equals("BurnDownChart")))
             read(e.getActionCommand());
     }
 
