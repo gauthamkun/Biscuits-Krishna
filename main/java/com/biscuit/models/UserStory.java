@@ -17,6 +17,15 @@ public class UserStory {
 
 	public String title;
 	public String description;
+
+	public String getTitle() {
+		return title;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
 	public Status state;
 	public BusinessValue businessValue;
 	public Date initiatedDate = null;

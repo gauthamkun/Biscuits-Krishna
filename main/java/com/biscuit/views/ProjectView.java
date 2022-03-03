@@ -4,7 +4,6 @@
 
 package com.biscuit.views;
 
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -19,14 +18,12 @@ import com.biscuit.commands.release.ListReleases;
 import com.biscuit.commands.sprint.AddSprint;
 import com.biscuit.commands.sprint.ListSprints;
 import com.biscuit.commands.task.ListTasks;
-import com.biscuit.commands.epic.ListMembers;
 import com.biscuit.commands.userStory.AddUserStoryToBacklog;
 import com.biscuit.commands.epic.AddEpicToBacklog;
 import com.biscuit.commands.userStory.ListUserStories;
 import com.biscuit.commands.epic.AddMember;
 import com.biscuit.factories.ProjectCompleterFactory;
 import com.biscuit.models.*;
-import com.biscuit.models.services.Finder;
 import com.biscuit.models.services.Finder.Releases;
 import com.biscuit.models.services.Finder.Sprints;
 

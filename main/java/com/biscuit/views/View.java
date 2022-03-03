@@ -38,7 +38,7 @@ public abstract class View implements ActionListener {
     JButton exit = new JButton("exit");
     JButton back = new JButton("add project");
     JButton go_to_pjct = new JButton("go_to project");
-    JButton burnDownChart = new JButton("BurnDownChart");
+    JButton burnDownChart = new JButton("ScrumBoardWithWisdom");
 
     JMenuItem BacklogHelper = new JMenuItem("BacklogHelp");
     JMenuItem DashBoardHelper = new JMenuItem("DashBoardHelp");
@@ -72,6 +72,7 @@ public abstract class View implements ActionListener {
             e.printStackTrace();
         }
     }
+
 
     public View(View previousView, String name) {
         // mainFrame.setBounds(1400,1400,1400,1400);
@@ -257,8 +258,13 @@ public abstract class View implements ActionListener {
             } else if (words[0].equals("This")) {
                 System.out.println("bypassed");
                 return true;
-            }else if(words[0].equals("BurnDownChart")){
-                new BurnDownView(Arrays.asList(new String[]{"Task 1", "Task 2", "Task 3", "Task 4"}));
+            }else if(words[0].equals("ScrumBoardWithWisdom")){
+                UserStoryPlaceholder us1 = new UserStoryPlaceholder("us1", "Create the GUI", Arrays.asList(new String[] {"Create JFrame","Create JPanel","create JButtonGroup"}));
+                UserStoryPlaceholder us2 = new UserStoryPlaceholder("us2", "Implement the GUI", Arrays.asList(new String[] {"Integrate with view class","integrate with dashboard"}));
+                UserStoryPlaceholder us3 = new UserStoryPlaceholder("us3", "Implement the Taiga API", Arrays.asList(new String[] {"Implement API calls","Implement Command line interfaces"}));
+                UserStoryPlaceholder us4 = new UserStoryPlaceholder("us4", "Add Business Value", Arrays.asList(new String[] {"Add Attribute in model class","add attribute in View class", "Test and deploy code"}));
+                UserStoryPlaceholder us5 = new UserStoryPlaceholder("us5", "Refactor Code", Arrays.asList(new String[] {"Refactor models","Refactor factories", "Refactor Views", "Update Java constructs"}));
+                new BurnDownView(Arrays.asList(new UserStoryPlaceholder[]{us1,us2,us3,us4,us5}));
             }
         } else if (words.length == 2) {
             if (words[0].equals("go_to") && words[1].equals("Dashboard")) {
