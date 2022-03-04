@@ -6,12 +6,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class AddWikiTest {
     public void AddWikiExecuteTest() {
 
-        assertEquals();
+
     }
     public void AddWikinotNull() {
 
         try {
-            assertNotNull("", AddWiki.execute());
+            assertNotNull("", AddWiki.setTitle());
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -8,6 +8,7 @@ import com.biscuit.models.Wiki;
 import jline.console.ConsoleReader;
 
 import java.io.IOException;
+import java.util.function.Supplier;
 
 public class AddWiki implements Command {
     static ConsoleReader reader;
@@ -31,9 +32,10 @@ public class AddWiki implements Command {
         return false;
     }
 
-    private static void setTitle() throws IOException {
+    public static Supplier<String> setTitle() throws IOException {
         reader.setPrompt(ColorCodes.BLUE + "Member Name: " + ColorCodes.RESET);
         wiki.title = reader.readLine();
+        return null;
     }
 
 }
