@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.biscuit.commands.help.UserStoryHelp;
+import com.biscuit.commands.issues.ListIssues;
 import com.biscuit.commands.task.AddTaskToUserStory;
 import com.biscuit.commands.task.ListTasks;
 import com.biscuit.commands.userStory.ChangeStatusUserStory;
@@ -100,7 +101,11 @@ public class UserStroryView extends View {
 		} else if (words[0].equals("tasks")) {
 			(new ListTasks(userStory, "")).execute();
 			return true;
-		} else if (words[0].equals("help")) {
+		}else if (words[0].equals("issues")) {
+			(new ListIssues(userStory, "")).execute();
+			return true;
+		}
+		else if (words[0].equals("help")) {
 			return (new UserStoryHelp()).execute();
 		}
 
