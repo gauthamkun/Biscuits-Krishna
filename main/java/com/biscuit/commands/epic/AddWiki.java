@@ -5,12 +5,7 @@ import com.biscuit.commands.Command;
 import com.biscuit.models.Members;
 import com.biscuit.models.Wiki;
 import com.biscuit.models.Project;
-import com.biscuit.models.enums.Roles;
 import jline.console.ConsoleReader;
-import jline.console.completer.ArgumentCompleter;
-import jline.console.completer.Completer;
-import jline.console.completer.NullCompleter;
-import jline.console.completer.StringsCompleter;
 
 import java.io.IOException;
 
@@ -24,7 +19,7 @@ public class AddWiki implements Command {
         this.reader = reader;
         this.project = project;
     }
-    public static boolean execute() throws IOException {
+    public boolean execute() throws IOException {
         String prompt = reader.getPrompt();
         wiki.project = project;
         setTitle();
@@ -36,9 +31,10 @@ public class AddWiki implements Command {
         return false;
     }
 
-    private static void setTitle() throws IOException {
+    public static Object setTitle() throws IOException {
         reader.setPrompt(ColorCodes.BLUE + "Member Name: " + ColorCodes.RESET);
         wiki.title = reader.readLine();
+        return null;
     }
 
 }
