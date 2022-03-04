@@ -7,6 +7,7 @@ package com.biscuit.views;
 import java.io.IOException;
 import java.util.List;
 
+import com.biscuit.commands.epic.AddWiki;
 import com.biscuit.commands.help.ProjectHelp;
 import com.biscuit.commands.planner.ShowPlan;
 import com.biscuit.commands.planner.ShowPlanDetails;
@@ -189,7 +190,10 @@ public class ProjectView extends View {
 			}else if (words[1].equals("sprint")) {
 				(new AddSprint(reader, project)).execute();
 				resetCompleters();
-
+				return true;
+			} else if (words[1].equals("wiki")) {
+				(new AddWiki(reader, project)).execute();
+				resetCompleters();
 				return true;
 			}
 
