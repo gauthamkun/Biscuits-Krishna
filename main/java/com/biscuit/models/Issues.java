@@ -15,6 +15,7 @@ public class Issues {
 
 	public String title;
 	public String description;
+	public String teamMember;
 	public IssuePriority issuePriority;
 	public IssueSeverity issueSeverity;
 	public IssueType issueType;
@@ -29,16 +30,17 @@ public class Issues {
 	List<Test> tests;
 
 	static {
-		fields = new String[9];
+		fields = new String[10];
 		fields[0] = "title";
 		fields[1] = "description";
-		fields[2] = "state";
-		fields[3] = "issue_priority";
-		fields[4] = "issue_severity";
-		fields[5] = "issue_type";
-		fields[6] = "initiated_date";
-		fields[7] = "estimatedTime";
-		fields[8] = "due_date";
+		fields[2] = "team_member";
+		fields[3] = "state";
+		fields[4] = "issue_priority";
+		fields[5] = "issue_severity";
+		fields[6] = "issue_type";
+		fields[7] = "initiated_date";
+		fields[8] = "estimatedTime";
+		fields[9] = "due_date";
 	}
 
 

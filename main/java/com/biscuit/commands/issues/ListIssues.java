@@ -68,11 +68,11 @@ public class ListIssues implements Command {
 
 		at.addRule();
 		if (!this.title.isEmpty()) {
-			at.addRow(null, null, null, null, null, null, this.title).setAlignment(new char[] { 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c' });
+			at.addRow(null, null, null, null, null, null, null, this.title).setAlignment(new char[] { 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c' });
 			at.addRule();
 		}
-		at.addRow("Title", "Description", "State", "Issue Priority", "Issue Severity", "Issue Type", "Initiated Date", "Estimated Time", "Due Date")
-				.setAlignment(new char[] { 'l', 'l', 'c', 'c', 'c', 'c', 'c', 'c', 'c' });
+		at.addRow("Title", "Description", "Team Member", "State", "Issue Priority", "Issue Severity", "Issue Type", "Initiated Date", "Estimated Time", "Due Date")
+				.setAlignment(new char[] { 'l', 'l', 'l', 'c', 'c', 'c', 'c', 'c', 'c', 'c' });
 
 		if (issues.size() == 0) {
 			String message;
@@ -82,18 +82,18 @@ public class ListIssues implements Command {
 				message = "No results";
 			}
 			at.addRule();
-			at.addRow(null, null, null, null, null, null, null, message);
+			at.addRow(null, null, null, null, null, null, null, null, message);
 		} else {
 			for (Issues t : issues) {
 				at.addRule();
 
 				at.addRow(t.title, t.description, t.state, DateService.getDateAsString(t.initiatedDate), DateService.getDateAsString(t.dueDate),
-						DateService.getDateAsString(t.dueDate), t.estimatedTime).setAlignment(new char[] { 'l', 'l', 'c', 'c', 'c', 'c', 'c' });
+						DateService.getDateAsString(t.dueDate), t.estimatedTime).setAlignment(new char[] { 'l', 'l', 'l', 'c', 'c', 'c', 'c', 'c' });
 			} // for
 		}
 
 		at.addRule();
-		at.addRow(null, null, null, null, null, null, null, null, "Total: " + issues.size());
+		at.addRow(null, null, null, null, null, null, null, null, null, "Total: " + issues.size());
 		at.addRule();
 
 		V2_AsciiTableRenderer rend = new V2_AsciiTableRenderer();
@@ -116,6 +116,7 @@ public class ListIssues implements Command {
 
 		Comparator<Issues> byTitle = (t1, t2) -> t1.title.compareTo(t2.title);
 		Comparator<Issues> byDescription = (t1, t2) -> t1.description.compareTo(t2.description);
+		Comparator<Issues> byTeamMember = (t1, t2) -> t1.teamMember.compareTo(t2.teamMember);
 		Comparator<Issues> byState = (t1, t2) -> Integer.compare(t1.state.getValue(), t2.state.getValue());
 		Comparator<Issues> byInitiatedDate = (t1, t2) -> t1.initiatedDate.compareTo(t2.initiatedDate);
 		Comparator<Issues> byDueDate = (t1, t2) -> t1.dueDate.compareTo(t2.dueDate);
@@ -127,12 +128,14 @@ public class ListIssues implements Command {
 		} else if (sortBy.equals(Issues.fields[1])) {
 			byFiled = byDescription;
 		} else if (sortBy.equals(Issues.fields[2])) {
+			byFiled = byTeamMember;
+		} else if (sortBy.equals(Issues.fields[3])) {
 			byFiled = byState;
-		} else if (sortBy.equals(Task.fields[6])) {
-			byFiled = byInitiatedDate;
-		} else if (sortBy.equals(Task.fields[8])) {
-			byFiled = byDueDate;
 		} else if (sortBy.equals(Task.fields[7])) {
+			byFiled = byInitiatedDate;
+		} else if (sortBy.equals(Task.fields[9])) {
+			byFiled = byDueDate;
+		} else if (sortBy.equals(Task.fields[8])) {
 			byFiled = byTime;
 		} else {
 			return;
@@ -158,7 +161,7 @@ public class ListIssues implements Command {
 	private void doFilter(List<Issues> issues) {
 		List<Issues> filtered = issues.stream()
 				.filter(us -> us.title.toLowerCase().contains(filterBy) || us.description.toLowerCase().contains(filterBy)
-						|| us.state.toString().toLowerCase().contains(filterBy) || String.valueOf(us.estimatedTime).contains(filterBy)
+						|| us.teamMember.toLowerCase().contains(filterBy) ||us.state.toString().toLowerCase().contains(filterBy) || String.valueOf(us.estimatedTime).contains(filterBy)
 						|| DateService.getDateAsString(us.initiatedDate).toLowerCase().contains(filterBy)
 						|| DateService.getDateAsString(us.dueDate).toLowerCase().contains(filterBy))
 				.collect(Collectors.toList());
@@ -170,6 +173,7 @@ public class ListIssues implements Command {
 	private String colorize(String tableString) {
 		tableString = tableString.replaceFirst("Title", ColorCodes.BLUE + "Title" + ColorCodes.RESET);
 		tableString = tableString.replaceFirst("Description", ColorCodes.BLUE + "Description" + ColorCodes.RESET);
+		tableString = tableString.replaceFirst("Team Member", ColorCodes.BLUE + "Description" + ColorCodes.RESET);
 		tableString = tableString.replaceFirst("State", ColorCodes.BLUE + "State" + ColorCodes.RESET);
 		tableString = tableString.replaceFirst("Issue Priority", ColorCodes.BLUE + "Issue Priority" + ColorCodes.RESET);
 		tableString = tableString.replaceFirst("Issue Severity", ColorCodes.BLUE + "Issue Severity" + ColorCodes.RESET);
