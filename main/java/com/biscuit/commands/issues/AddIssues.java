@@ -34,11 +34,13 @@ public class AddIssues implements Command {
 
 	public boolean execute() throws IOException {
 		StringBuilder description = new StringBuilder();
+		StringBuilder teamMember = new StringBuilder();
 		String prompt = reader.getPrompt();
 
 		issues.project = project;
 		setTitle();
 		setDescription(description);
+		setTeamMember(teamMember);
 		setIssuePriority();
 		setIssueSeverity();
 		setIssueType();
@@ -97,6 +99,21 @@ public class AddIssues implements Command {
 		}
 
 		issues.description = description.toString();
+	}
+
+	private void setTeamMember(StringBuilder teamMember) throws IOException {
+		String line;
+		reader.setPrompt(ColorCodes.BLUE + "\nteam member:\n" + ColorCodes.YELLOW + "(\\q to end writing)\n" + ColorCodes.RESET);
+
+		while ((line = reader.readLine()) != null) {
+			if (line.equals("\\q")) {
+				break;
+			}
+			teamMember.append(line).append("\n");
+			reader.setPrompt("");
+		}
+
+		issues.description = teamMember.toString();
 	}
 
 

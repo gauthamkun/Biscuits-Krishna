@@ -25,6 +25,8 @@ public class ShowIssues implements Command {
 		System.out.println(ColorCodes.BLUE + "title: " + ColorCodes.RESET + t.title);
 		System.out.println(ColorCodes.BLUE + "description: ");
 		System.out.println(ColorCodes.RESET + t.description);
+		System.out.println(ColorCodes.BLUE + "team member: ");
+		System.out.println(ColorCodes.RESET + t.teamMember);
 		System.out.println(ColorCodes.BLUE + "initiated date: " + ColorCodes.RESET + DateService.getDateAsString(t.initiatedDate));
 		System.out.println(ColorCodes.BLUE + "due date: " + ColorCodes.RESET + DateService.getDateAsString(t.dueDate));
 		System.out.println(ColorCodes.BLUE + "estimated time: " + ColorCodes.RESET + t.estimatedTime);

@@ -32,6 +32,7 @@ public class EditIssue implements Command {
 
 		setTitle();
 		setDescription();
+		setTeamMember();
 		setInitiatedDate();
 		setDueDate();
 		setState();
@@ -217,6 +218,27 @@ public class EditIssue implements Command {
 		}
 
 		t.description = description.toString().replace("<newline>", "\n").replace("<exclamation-mark>", "!");
+	}
+
+	private void setTeamMember() throws IOException {
+		StringBuilder teamMember = new StringBuilder();
+		String line;
+		String prompt = ColorCodes.BLUE + "Team Member: " + ColorCodes.YELLOW + "(\\q to end writing) "
+				+ ColorCodes.RESET;
+		String preload = t.description.replace("\n", "<newline>").replace("!", "<exclamation-mark>");
+
+		reader.resetPromptLine(prompt, preload, 0);
+		reader.print("\r");
+
+		while ((line = reader.readLine()) != null) {
+			if (line.equals("\\q")) {
+				break;
+			}
+			teamMember.append(line).append("\n");
+			reader.setPrompt("");
+		}
+
+		t.description = teamMember.toString().replace("<newline>", "\n").replace("<exclamation-mark>", "!");
 	}
 
 
