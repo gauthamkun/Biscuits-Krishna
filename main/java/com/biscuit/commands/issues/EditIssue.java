@@ -34,6 +34,7 @@ public class EditIssue implements Command {
 		setDescription();
 		setInitiatedDate();
 		setDueDate();
+		setState();
 		setTime();
 
 		reader.setPrompt(prompt);
@@ -228,5 +229,32 @@ public class EditIssue implements Command {
 
 		t.title = reader.readLine();
 	}
+
+	private void setState() throws IOException {
+		String prompt = ColorCodes.BLUE + "state: " + ColorCodes.RESET;
+		String preload = t.state.toString().toLowerCase();
+		String state;
+		Completer oldCompleter = (Completer) reader.getCompleters().toArray()[0];
+		Completer stateCompleter = new ArgumentCompleter(new StringsCompleter(Status.values), new NullCompleter());
+
+		reader.removeCompleter(oldCompleter);
+		reader.addCompleter(stateCompleter);
+
+		reader.resetPromptLine(prompt, preload, 0);
+		reader.print("\r");
+
+		state = reader.readLine().trim();
+
+		while (!Status.values.contains(state)) {
+			System.out.println(ColorCodes.RED + "invalid state, hit tab for auto-complete" + ColorCodes.RESET);
+			state = reader.readLine().trim();
+		}
+
+		t.state = Status.valueOf(state.toUpperCase());
+
+		reader.removeCompleter(stateCompleter);
+		reader.addCompleter(oldCompleter);
+	}
+
 
 }
