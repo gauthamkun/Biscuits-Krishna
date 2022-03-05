@@ -21,6 +21,7 @@ import com.biscuit.commands.userStory.AddUserStoryToBacklog;
 import com.biscuit.commands.epic.AddEpicToBacklog;
 import com.biscuit.commands.epic.AddMember;
 import com.biscuit.commands.userStory.ListUserStories;
+import com.biscuit.commands.epic.Listwiki;
 import com.biscuit.factories.ProjectCompleterFactory;
 import com.biscuit.models.Project;
 import com.biscuit.models.Release;
@@ -245,6 +246,11 @@ public class ProjectView extends View {
 				return true;
 			} else if (words[1].equals("user_stories")) {
 				(new ListUserStories(UserStories.getAll(project), "All User Stories")).execute();
+				return true;
+			}
+			else if (words[1].equals("wiki")) {
+				System.out.println("1");
+				(new Listwiki(project, "wiki")).execute();
 				return true;
 			}
 		} else if (words[0].equals("plan")) {

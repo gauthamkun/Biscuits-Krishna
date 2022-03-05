@@ -3,7 +3,7 @@ package com.biscuit.models;
 public class Wiki {
     public transient Project project;
 
-    public String title;
+    public static String title;
     public String description;
 
 

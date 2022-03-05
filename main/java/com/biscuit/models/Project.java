@@ -4,6 +4,8 @@
 
 package com.biscuit.models;
 
+import com.sun.deploy.net.MessageHeader;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +17,10 @@ public class Project {
 	public Epic epic = new Epic();
 	public List<Release> releases = new ArrayList<>();
 	public List<Sprint> sprints = new ArrayList<>();
+	public List<Wiki> wiki = new ArrayList<>();
 
 
-	public void save() {
+    public void save() {
 		ModelHelper.save(this, name);
 	}
 
@@ -55,7 +58,6 @@ public class Project {
 		}
 	}
 
-
 	private void updateUserStoryReferences(List<UserStory> userStories) {
 		for (UserStory us : userStories) {
 			us.project = this;
@@ -83,6 +85,8 @@ public class Project {
 	public void addSprint(Sprint s) {
 		sprints.add(s);
 	}
+
+	public void addWiki(Wiki w){wiki.add(w);}
 
 
 	@Override

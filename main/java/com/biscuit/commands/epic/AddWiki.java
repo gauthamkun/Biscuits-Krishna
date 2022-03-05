@@ -20,21 +20,38 @@ public class AddWiki implements Command {
         this.project = project;
     }
     public boolean execute() throws IOException {
+        StringBuilder description = new StringBuilder();
         String prompt = reader.getPrompt();
         wiki.project = project;
         setTitle();
-
+        setDescription(description);
+        reader.setPrompt(prompt);
         project.save();
-
+        project.addWiki(wiki);
         reader.println();
-        reader.println(ColorCodes.GREEN + "Member \"" + Members.title + "\" has been added to the project as\"" + Members.role.name() +"\"!\"" + ColorCodes.RESET);
+        reader.println(ColorCodes.GREEN + "Wiki \"" +Wiki.title + "\" has been added to the project!\"" + ColorCodes.RESET);
         return false;
+
     }
 
     public static Object setTitle() throws IOException {
-        reader.setPrompt(ColorCodes.BLUE + "Member Name: " + ColorCodes.RESET);
+        reader.setPrompt(ColorCodes.BLUE + "Wiki Title: " + ColorCodes.RESET);
         wiki.title = reader.readLine();
         return null;
+    }
+
+    private static void setDescription(StringBuilder description) throws IOException {
+        String line;
+        reader.setPrompt(ColorCodes.BLUE + "\ndescription:\n" + ColorCodes.YELLOW + "(\\q to end writing)\n" + ColorCodes.RESET);
+
+        while ((line = reader.readLine()) != null) {
+            if (line.equals("\\q")) {
+                break;
+            }
+            description.append(line).append("\n");
+            reader.setPrompt("");
+        }
+        wiki.description = description.toString();
     }
 
 }

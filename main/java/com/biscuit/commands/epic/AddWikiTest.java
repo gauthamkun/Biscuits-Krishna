@@ -5,17 +5,13 @@ import java.io.IOException;
 import static org.junit.Assert.*;
 
 class WikiTest {
-    public void AddWikiExecuteTest() {
 
-
-    }
     public void AddWikinotNull() {
 
         try {
-            assertNotNull("hi", AddWiki.setTitle());
+            assertNotNull("Hello", AddWiki.setTitle());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 }
