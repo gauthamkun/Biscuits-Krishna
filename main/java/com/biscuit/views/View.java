@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.biscuit.ColorCodes;
@@ -37,6 +38,7 @@ public abstract class View implements ActionListener {
     JButton exit = new JButton("exit");
     JButton back = new JButton("add project");
     JButton go_to_pjct = new JButton("go_to project");
+    JButton burnDownChart = new JButton("ScrumBoardWithWisdom");
 
     JMenuItem BacklogHelper = new JMenuItem("BacklogHelp");
     JMenuItem DashBoardHelper = new JMenuItem("DashBoardHelp");
@@ -70,6 +72,7 @@ public abstract class View implements ActionListener {
             e.printStackTrace();
         }
     }
+
 
     public View(View previousView, String name) {
         // mainFrame.setBounds(1400,1400,1400,1400);
@@ -111,6 +114,8 @@ public abstract class View implements ActionListener {
             menu.add(UserStoryHelper);
             mb.add(menu);
 
+            burnDownChart.addActionListener(this);
+            panel.add(burnDownChart);
 
             panel.add(go_to);
             panel.add(back);
@@ -253,6 +258,13 @@ public abstract class View implements ActionListener {
             } else if (words[0].equals("This")) {
                 System.out.println("bypassed");
                 return true;
+            }else if(words[0].equals("ScrumBoardWithWisdom")){
+                UserStoryPlaceholder us1 = new UserStoryPlaceholder("us1", "Create the GUI", Arrays.asList(new String[] {"Create JFrame","Create JPanel","create JButtonGroup"}));
+                UserStoryPlaceholder us2 = new UserStoryPlaceholder("us2", "Implement the GUI", Arrays.asList(new String[] {"Integrate with view class","integrate with dashboard"}));
+                UserStoryPlaceholder us3 = new UserStoryPlaceholder("us3", "Implement the Taiga API", Arrays.asList(new String[] {"Implement API calls","Implement Command line interfaces"}));
+                UserStoryPlaceholder us4 = new UserStoryPlaceholder("us4", "Add Business Value", Arrays.asList(new String[] {"Add Attribute in model class","add attribute in View class", "Test and deploy code"}));
+                UserStoryPlaceholder us5 = new UserStoryPlaceholder("us5", "Refactor Code", Arrays.asList(new String[] {"Refactor models","Refactor factories", "Refactor Views", "Update Java constructs"}));
+                new BurnDownView(Arrays.asList(new UserStoryPlaceholder[]{us1,us2,us3,us4,us5}));
             }
         } else if (words.length == 2) {
             if (words[0].equals("go_to") && words[1].equals("Dashboard")) {
@@ -322,7 +334,7 @@ public abstract class View implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         System.out.println("Action performed is called for " + e.getSource().getClass().toString());
-        if (e.getSource().getClass().toString().equals("class javax.swing.JButton") || e.getSource().getClass().toString().equals("class javax.swing.JMenuItem"))
+        if (e.getSource().getClass().toString().equals("class javax.swing.JButton") || e.getSource().getClass().toString().equals("class javax.swing.JMenuItem") && (!e.getActionCommand().equals("BurnDownChart")))
             read(e.getActionCommand());
     }
 
