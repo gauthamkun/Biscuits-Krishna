@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.List;
 
+import com.biscuit.commands.epic.*;
 import com.biscuit.commands.help.ProjectHelp;
 import com.biscuit.commands.planner.ShowPlan;
 import com.biscuit.commands.planner.ShowPlanDetails;
@@ -19,11 +20,8 @@ import com.biscuit.commands.release.ListReleases;
 import com.biscuit.commands.sprint.AddSprint;
 import com.biscuit.commands.sprint.ListSprints;
 import com.biscuit.commands.task.ListTasks;
-import com.biscuit.commands.epic.ListMembers;
 import com.biscuit.commands.userStory.AddUserStoryToBacklog;
-import com.biscuit.commands.epic.AddEpicToBacklog;
 import com.biscuit.commands.userStory.ListUserStories;
-import com.biscuit.commands.epic.AddMember;
 import com.biscuit.factories.ProjectCompleterFactory;
 import com.biscuit.models.*;
 import com.biscuit.models.services.Finder;
@@ -228,6 +226,11 @@ public class ProjectView extends View implements ActionListener {
 				resetCompleters();
 
 				return true;
+			}else if (words[1].equals("wiki")) {
+				(new AddWiki(reader, project)).execute();
+				resetCompleters();
+
+				return true;
 			}
 
 		} else if (words[0].equals("go_to")) {
@@ -273,10 +276,11 @@ public class ProjectView extends View implements ActionListener {
 			if (words[1].equals("releases")) {
 				(new ListReleases(project, "Releases")).execute();
 				return true;
-			} else if (words[1].equals("sprints")) {
-				(new ListSprints(project, "Sprints")).execute();
+			} else if (words[1].equals("wiki")) {
+				(new Listwiki(project, "wiki")).execute();
 				return true;
-			} else if (words[1].equals("user_stories")) {
+			}
+			else if (words[1].equals("user_stories")) {
 				(new ListUserStories(UserStories.getAll(project), "All User Stories")).execute();
 				return true;
 			}
