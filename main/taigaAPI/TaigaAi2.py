@@ -124,3 +124,49 @@ while(choiceWiki=='Y'):
         attachFileDescription = input ("Enter attach File description:")
         wikiId.attach(attachPath, description=attachFileDescription)
     choiceWiki = input ("Want to add another Wikipage (Y/N):")
+
+IssueChoice = input ("Want to update Issue(Y/N)")
+if(IssueChoice =='Y'):
+    IssueId = input ("Enter Issue number to update:")
+    IssueName=new_project.get_issue_by_ref(IssueId)
+    IssueDescription = input ("Enter Issue description:")
+    IssuePriorities = input ("Enter Issue priority(High/Low/Normal):")
+    IssueStatus= input ("Enter Issue Status(New/In progress/Ready for test/Closed/Rejected/Needs Info/Postponed):")
+    IssueType = input ("Enter Issue type(Bug/Question/Enhancement):")
+    IssueSeverity = input ("Enter Issue severity(Normal/Minor/Important/Critical/Wishlist):")
+    IssueName.update(priorities=IssuePriorities,
+    issue_statuses=IssueStatus,
+    issue_types=IssueType,
+    severities=IssueSeverity,
+    description=IssueDescription
+    )
+
+IssueChoice = input ("Want to delete Issue(Y/N)")
+if(IssueChoice =='Y'):
+    IssueNumber=input ("Enter Issue number:")
+    IssueName=new_project.get_issue_by_ref(IssueNumber)
+    IssueName.delete()
+
+epicChoice = input ("Want to add Epic(Y/N)")
+if(epicChoice =='Y'):
+     EpicName=input ("Enter Epic Name:")
+     EpicDescription = input ("Enter Epic description:")
+     newepic = new_project.add_epic(EpicName,
+         description=EpicDescription
+         )
+epicChoice = input ("Want to update Epic(Y/N)")
+if(epicChoice =='Y'):
+     EpicNumber=input ("Enter Epic number:")
+     EpicName=new_project.get_epic_by_ref(EpicNumber)
+     EpicDescription = input ("Enter Epic description:")
+     EpicStatus=input ("Enter Epic Status (New/Ready/In progress/Ready for test/Done):")
+     EpicName.update(
+     epic_statuses=EpicStatus,
+     description=EpicDescription)
+
+epicChoice = input ("Want to delete Epic(Y/N)")
+if(epicChoice =='Y'):
+    EpicNumber=input ("Enter Epic number:")
+    EpicName=new_project.get_epic_by_ref(EpicNumber)
+    EpicName.delete()
+
