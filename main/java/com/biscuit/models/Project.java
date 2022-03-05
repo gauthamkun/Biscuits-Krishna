@@ -16,6 +16,7 @@ public class Project {
 	public Epic epic = new Epic();
 	public List<Release> releases = new ArrayList<>();
 	public List<Sprint> sprints = new ArrayList<>();
+	public List<Wiki> wiki = new ArrayList<>();
     public Members members;
 
 

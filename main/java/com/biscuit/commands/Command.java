@@ -4,7 +4,5 @@ import java.io.IOException;
 
 public interface Command {
 
-	static boolean execute() throws IOException {
-		return false;
-	}
+	boolean execute() throws IOException;
 }
